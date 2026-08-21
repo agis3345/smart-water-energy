@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Smart Water & Energy</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -137,8 +141,9 @@ body{
 
 .tank-fill{
     height:100%;
-    width:82.5%;
+    width:0%;
     background:linear-gradient(90deg,#38bdf8,#2563eb);
+    transition:.5s;
 }
 
 /* ================= MODE ================= */
@@ -351,6 +356,10 @@ button{
     margin-right:6px;
 }
 
+.dot-off{
+    background:#dc2626;
+}
+
 /* ================= FOOTER ================= */
 
 .footer{
@@ -417,7 +426,9 @@ button{
     }
 
 }
+
 </style>
+
 </head>
 
 <body>
@@ -431,6 +442,7 @@ button{
 <div class="header-row">
 
 <div>
+
 <h1>💧 Smart Water & Energy</h1>
 
 <p>
@@ -440,9 +452,12 @@ Renewable Energy Monitoring & Control System
 <p id="clock">
 🕐 Loading...
 </p>
+
 </div>
 
-<div class="online">
+<div
+class="online"
+id="systemOnline">
 ● SYSTEM ONLINE
 </div>
 
@@ -461,13 +476,22 @@ Renewable Energy Monitoring & Control System
 
 <h2>Kelembapan Kebun</h2>
 
-<div class="value">38.5%</div>
+<div
+class="value"
+id="kelembapan">
+--%
+</div>
 
 <div class="unit">
+
 Status:
-<span class="status-normal">
-NORMAL
+
+<span
+class="status-normal"
+id="kelembapanStatus">
+LOADING
 </span>
+
 </div>
 
 </div>
@@ -479,19 +503,31 @@ NORMAL
 
 <h2>Level Toren</h2>
 
-<div class="value">82.5%</div>
+<div
+class="value"
+id="levelToren">
+--%
+</div>
 
 <div class="tank">
 
-<div class="tank-fill"></div>
+<div
+class="tank-fill"
+id="tankFill">
+</div>
 
 </div>
 
 <div class="unit">
+
 Kondisi:
-<span class="status-normal">
-AMAN
+
+<span
+class="status-normal"
+id="levelStatus">
+LOADING
 </span>
+
 </div>
 
 </div>
@@ -503,7 +539,11 @@ AMAN
 
 <h2>Flow Rate</h2>
 
-<div class="value">12.4</div>
+<div
+class="value"
+id="flowRate">
+--
+</div>
 
 <div class="unit">
 L/min
@@ -518,7 +558,11 @@ L/min
 
 <h2>RPM Generator</h2>
 
-<div class="value">1500</div>
+<div
+class="value"
+id="rpmGenerator">
+--
+</div>
 
 <div class="unit">
 RPM
@@ -531,7 +575,9 @@ RPM
 
 <!-- ================= SUMMARY ================= -->
 
-<div class="card" style="margin-top:16px">
+<div
+class="card"
+style="margin-top:16px">
 
 <h2>⚡ Ringkasan Energi</h2>
 
@@ -543,8 +589,10 @@ RPM
 TOTAL DAYA
 </div>
 
-<div class="summary-value">
-1320 W
+<div
+class="summary-value"
+id="totalPower">
+-- W
 </div>
 
 </div>
@@ -556,8 +604,10 @@ TOTAL DAYA
 TOTAL ENERGI
 </div>
 
-<div class="summary-value">
-3.53 kWh
+<div
+class="summary-value"
+id="totalEnergy">
+-- kWh
 </div>
 
 </div>
@@ -569,8 +619,10 @@ TOTAL ENERGI
 PZEM AKTIF
 </div>
 
-<div class="summary-value">
-4 / 4
+<div
+class="summary-value"
+id="pzemActive">
+0 / 4
 </div>
 
 </div>
@@ -588,16 +640,26 @@ PZEM AKTIF
 
 <h2>🤖 Mode Sistem</h2>
 
-<div class="mode">
+<div
+class="mode"
+id="modeDisplay">
 MANUAL
 </div>
 
-<button class="auto">
+<button
+class="auto"
+onclick="setMode('AUTO')">
+
 MODE AUTO
+
 </button>
 
-<button class="manual">
+<button
+class="manual"
+onclick="setMode('MANUAL')">
+
 MODE MANUAL
+
 </button>
 
 </div>
@@ -608,15 +670,23 @@ MODE MANUAL
 <h2>🕐 Jadwal Toren</h2>
 
 <p>
+
 ☀️ <strong>06:00 — 19:59</strong>
+
 <br>
+
 Mode ISI
+
 </p>
 
 <p>
+
 🌙 <strong>20:00 — 05:59</strong>
+
 <br>
+
 Mode BUANG
+
 </p>
 
 </div>
@@ -626,13 +696,16 @@ Mode BUANG
 
 <!-- ================= RELAY ================= -->
 
-<div class="card" style="margin-top:16px">
+<div
+class="card"
+style="margin-top:16px">
 
 <h2>🔌 Kontrol Sistem</h2>
 
 <div class="unit">
-Saat ini menggunakan simulasi LED ESP32.
-Nanti akan diganti relay asli.
+
+Status relay akan mengikuti data dari API.
+
 </div>
 
 
@@ -644,17 +717,23 @@ Nanti akan diganti relay asli.
 🌱 Relay 1 — Valve Kebun
 </div>
 
-<div class="status-on">
-ON
+<div
+class="status-off"
+id="relayStatus1">
+OFF
 </div>
 
 </div>
 
-<button class="btn-on">
+<button
+class="btn-on"
+onclick="setRelay(1,true)">
 ON
 </button>
 
-<button class="btn-off">
+<button
+class="btn-off"
+onclick="setRelay(1,false)">
 OFF
 </button>
 
@@ -669,17 +748,23 @@ OFF
 💧 Relay 2 — Valve Buang
 </div>
 
-<div class="status-off">
+<div
+class="status-off"
+id="relayStatus2">
 OFF
 </div>
 
 </div>
 
-<button class="btn-on">
+<button
+class="btn-on"
+onclick="setRelay(2,true)">
 ON
 </button>
 
-<button class="btn-off">
+<button
+class="btn-off"
+onclick="setRelay(2,false)">
 OFF
 </button>
 
@@ -694,17 +779,23 @@ OFF
 🚿 Relay 3 — Pompa Isi
 </div>
 
-<div class="status-off">
+<div
+class="status-off"
+id="relayStatus3">
 OFF
 </div>
 
 </div>
 
-<button class="btn-on">
+<button
+class="btn-on"
+onclick="setRelay(3,true)">
 ON
 </button>
 
-<button class="btn-off">
+<button
+class="btn-off"
+onclick="setRelay(3,false)">
 OFF
 </button>
 
@@ -719,17 +810,23 @@ OFF
 ⚙️ Relay 4 — Cadangan
 </div>
 
-<div class="status-off">
+<div
+class="status-off"
+id="relayStatus4">
 OFF
 </div>
 
 </div>
 
-<button class="btn-on">
+<button
+class="btn-on"
+onclick="setRelay(4,true)">
 ON
 </button>
 
-<button class="btn-off">
+<button
+class="btn-off"
+onclick="setRelay(4,false)">
 OFF
 </button>
 
@@ -740,7 +837,9 @@ OFF
 
 <!-- ================= PZEM ================= -->
 
-<div class="card" style="margin-top:16px">
+<div
+class="card"
+style="margin-top:16px">
 
 <h2>⚡ Monitoring Energi — 4 PZEM</h2>
 
@@ -754,22 +853,22 @@ OFF
 <div class="pzem-grid">
 
 <div class="pzem-value">
-<strong>220.0 V</strong>
+<strong id="pzem1Voltage">-- V</strong>
 <span>VOLTAGE</span>
 </div>
 
 <div class="pzem-value">
-<strong>2.10 A</strong>
+<strong id="pzem1Current">-- A</strong>
 <span>CURRENT</span>
 </div>
 
 <div class="pzem-value">
-<strong>462 W</strong>
+<strong id="pzem1Power">-- W</strong>
 <span>POWER</span>
 </div>
 
 <div class="pzem-value">
-<strong>1.25 kWh</strong>
+<strong id="pzem1Energy">-- kWh</strong>
 <span>ENERGY</span>
 </div>
 
@@ -786,22 +885,22 @@ OFF
 <div class="pzem-grid">
 
 <div class="pzem-value">
-<strong>220.0 V</strong>
+<strong id="pzem2Voltage">-- V</strong>
 <span>VOLTAGE</span>
 </div>
 
 <div class="pzem-value">
-<strong>1.80 A</strong>
+<strong id="pzem2Current">-- A</strong>
 <span>CURRENT</span>
 </div>
 
 <div class="pzem-value">
-<strong>396 W</strong>
+<strong id="pzem2Power">-- W</strong>
 <span>POWER</span>
 </div>
 
 <div class="pzem-value">
-<strong>0.98 kWh</strong>
+<strong id="pzem2Energy">-- kWh</strong>
 <span>ENERGY</span>
 </div>
 
@@ -818,22 +917,22 @@ OFF
 <div class="pzem-grid">
 
 <div class="pzem-value">
-<strong>220.0 V</strong>
+<strong id="pzem3Voltage">-- V</strong>
 <span>VOLTAGE</span>
 </div>
 
 <div class="pzem-value">
-<strong>0.90 A</strong>
+<strong id="pzem3Current">-- A</strong>
 <span>CURRENT</span>
 </div>
 
 <div class="pzem-value">
-<strong>198 W</strong>
+<strong id="pzem3Power">-- W</strong>
 <span>POWER</span>
 </div>
 
 <div class="pzem-value">
-<strong>0.54 kWh</strong>
+<strong id="pzem3Energy">-- kWh</strong>
 <span>ENERGY</span>
 </div>
 
@@ -850,22 +949,22 @@ OFF
 <div class="pzem-grid">
 
 <div class="pzem-value">
-<strong>220.0 V</strong>
+<strong id="pzem4Voltage">-- V</strong>
 <span>VOLTAGE</span>
 </div>
 
 <div class="pzem-value">
-<strong>1.20 A</strong>
+<strong id="pzem4Current">-- A</strong>
 <span>CURRENT</span>
 </div>
 
 <div class="pzem-value">
-<strong>264 W</strong>
+<strong id="pzem4Power">-- W</strong>
 <span>POWER</span>
 </div>
 
 <div class="pzem-value">
-<strong>0.76 kWh</strong>
+<strong id="pzem4Energy">-- kWh</strong>
 <span>ENERGY</span>
 </div>
 
@@ -877,7 +976,9 @@ OFF
 
 <!-- ================= CHART ================= -->
 
-<div class="card" style="margin-top:16px">
+<div
+class="card"
+style="margin-top:16px">
 
 <h2>📊 Grafik Daya PZEM</h2>
 
@@ -889,11 +990,17 @@ Perbandingan konsumsi daya setiap sensor
 
 <div class="bar-wrap">
 
-<div class="bar-value">
-462 W
+<div
+class="bar-value"
+id="chartPower1">
+-- W
 </div>
 
-<div class="bar" style="height:92%"></div>
+<div
+class="bar"
+id="bar1"
+style="height:5%">
+</div>
 
 <div class="bar-label">
 PZEM 1
@@ -904,11 +1011,17 @@ PZEM 1
 
 <div class="bar-wrap">
 
-<div class="bar-value">
-396 W
+<div
+class="bar-value"
+id="chartPower2">
+-- W
 </div>
 
-<div class="bar" style="height:79%"></div>
+<div
+class="bar"
+id="bar2"
+style="height:5%">
+</div>
 
 <div class="bar-label">
 PZEM 2
@@ -919,11 +1032,17 @@ PZEM 2
 
 <div class="bar-wrap">
 
-<div class="bar-value">
-198 W
+<div
+class="bar-value"
+id="chartPower3">
+-- W
 </div>
 
-<div class="bar" style="height:40%"></div>
+<div
+class="bar"
+id="bar3"
+style="height:5%">
+</div>
 
 <div class="bar-label">
 PZEM 3
@@ -934,11 +1053,17 @@ PZEM 3
 
 <div class="bar-wrap">
 
-<div class="bar-value">
-264 W
+<div
+class="bar-value"
+id="chartPower4">
+-- W
 </div>
 
-<div class="bar" style="height:53%"></div>
+<div
+class="bar"
+id="bar4"
+style="height:5%">
+</div>
 
 <div class="bar-label">
 PZEM 4
@@ -953,30 +1078,59 @@ PZEM 4
 
 <!-- ================= SYSTEM STATUS ================= -->
 
-<div class="card" style="margin-top:16px">
+<div
+class="card"
+style="margin-top:16px">
 
 <h2>🟢 Status Sistem</h2>
 
 <div class="system">
 
 <div class="system-box">
-<span class="dot"></span>
-ESP32 ONLINE
+
+<span
+class="dot"
+id="espDot">
+</span>
+
+<span id="espStatus">
+ESP32 OFFLINE
+</span>
+
 </div>
 
+
 <div class="system-box">
-<span class="dot"></span>
+
+<span class="dot">
+</span>
+
 Website ONLINE
+
 </div>
 
-<div class="system-box">
-<span class="dot"></span>
-4 PZEM AKTIF
-</div>
 
 <div class="system-box">
-<span class="dot"></span>
-Mode MANUAL
+
+<span class="dot">
+</span>
+
+<span id="pzemStatus">
+0 PZEM AKTIF
+</span>
+
+</div>
+
+
+<div class="system-box">
+
+<span class="dot">
+</span>
+
+Mode <span id="systemMode">
+MANUAL
+</span>
+
 </div>
 
 </div>
@@ -988,10 +1142,14 @@ Mode MANUAL
 
 <div class="footer">
 
-<strong>Smart Water & Energy System</strong>
+<strong>
+Smart Water & Energy System
+</strong>
+
 <br>
 
 Public Monitoring Dashboard
+
 <br><br>
 
 ESP32 • Renewable Energy • IoT
@@ -1003,7 +1161,9 @@ ESP32 • Renewable Energy • IoT
 
 <script>
 
-/* ================= CLOCK ================= */
+/* ==================================================
+   CLOCK
+================================================== */
 
 function updateClock(){
 
@@ -1038,36 +1198,509 @@ updateClock();
 
 setInterval(updateClock,1000);
 
-</script>
-<script>
 
-const API_URL = "https://smart-water-api.agisrifalharianto2.workers.dev/api/data";
+/* ==================================================
+   API
+================================================== */
 
-async function getAPIData() {
+const API_URL =
+"https://smart-water-api.agisrifalharianto2.workers.dev/api/data";
 
-    try {
 
-        const response = await fetch(
-            API_URL + "/api/data"
+/* ==================================================
+   GET DATA
+================================================== */
+
+async function getAPIData(){
+
+    try{
+
+        const response =
+            await fetch(API_URL);
+
+        if(!response.ok){
+
+            throw new Error(
+                "HTTP Error: " + response.status
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        console.log(
+            "✅ DATA API:",
+            data
         );
 
-        const data = await response.json();
+        updateDashboard(data);
 
-        console.log("DATA API:", data);
+    }
 
-    } catch (error) {
+    catch(error){
 
         console.error(
-            "Gagal mengambil data API:",
+            "❌ Gagal mengambil data API:",
             error
+        );
+
+        document.getElementById(
+            "systemOnline"
+        ).innerHTML =
+            "● API ERROR";
+
+        document.getElementById(
+            "systemOnline"
+        ).style.background =
+            "#dc2626";
+
+    }
+
+}
+
+
+/* ==================================================
+   UPDATE DASHBOARD
+================================================== */
+
+function updateDashboard(data){
+
+    /* SENSOR */
+
+    document.getElementById(
+        "kelembapan"
+    ).textContent =
+        (data.kelembapan ?? 0) + "%";
+
+
+    document.getElementById(
+        "levelToren"
+    ).textContent =
+        (data.levelToren ?? 0) + "%";
+
+
+    document.getElementById(
+        "flowRate"
+    ).textContent =
+        data.flowRate ?? 0;
+
+
+    document.getElementById(
+        "rpmGenerator"
+    ).textContent =
+        data.rpmGenerator ?? 0;
+
+
+    /* TANK */
+
+    const level =
+        Number(data.levelToren ?? 0);
+
+    document.getElementById(
+        "tankFill"
+    ).style.width =
+        Math.max(
+            0,
+            Math.min(100,level)
+        ) + "%";
+
+
+    /* TANK STATUS */
+
+    let levelStatus = "AMAN";
+
+    if(level < 30){
+        levelStatus = "RENDAH";
+    }
+    else if(level < 60){
+        levelStatus = "NORMAL";
+    }
+
+    document.getElementById(
+        "levelStatus"
+    ).textContent =
+        levelStatus;
+
+
+    /* PZEM */
+
+    const pzem =
+        Array.isArray(data.pzem)
+        ? data.pzem
+        : [];
+
+
+    let totalPower = 0;
+
+    let totalEnergy = 0;
+
+    let active = 0;
+
+
+    pzem.forEach(
+        (item,index)=>{
+
+            const number =
+                index + 1;
+
+            const voltage =
+                Number(item.voltage ?? 0);
+
+            const current =
+                Number(item.current ?? 0);
+
+            const power =
+                Number(item.power ?? 0);
+
+            const energy =
+                Number(item.energy ?? 0);
+
+
+            totalPower += power;
+
+            totalEnergy += energy;
+
+
+            if(
+                voltage > 0 ||
+                current > 0 ||
+                power > 0
+            ){
+
+                active++;
+
+            }
+
+
+            const voltageEl =
+                document.getElementById(
+                    "pzem" +
+                    number +
+                    "Voltage"
+                );
+
+            const currentEl =
+                document.getElementById(
+                    "pzem" +
+                    number +
+                    "Current"
+                );
+
+            const powerEl =
+                document.getElementById(
+                    "pzem" +
+                    number +
+                    "Power"
+                );
+
+            const energyEl =
+                document.getElementById(
+                    "pzem" +
+                    number +
+                    "Energy"
+                );
+
+
+            if(voltageEl)
+                voltageEl.textContent =
+                    voltage.toFixed(1) +
+                    " V";
+
+
+            if(currentEl)
+                currentEl.textContent =
+                    current.toFixed(2) +
+                    " A";
+
+
+            if(powerEl)
+                powerEl.textContent =
+                    power.toFixed(0) +
+                    " W";
+
+
+            if(energyEl)
+                energyEl.textContent =
+                    energy.toFixed(2) +
+                    " kWh";
+
+
+            /* CHART */
+
+            const chartPower =
+                document.getElementById(
+                    "chartPower" +
+                    number
+                );
+
+            const bar =
+                document.getElementById(
+                    "bar" +
+                    number
+                );
+
+
+            if(chartPower)
+                chartPower.textContent =
+                    power.toFixed(0) +
+                    " W";
+
+
+            if(bar){
+
+                const percent =
+                    Math.max(
+                        5,
+                        Math.min(
+                            100,
+                            (power / 500) * 100
+                        )
+                    );
+
+                bar.style.height =
+                    percent + "%";
+
+            }
+
+        }
+    );
+
+
+    /* SUMMARY */
+
+    document.getElementById(
+        "totalPower"
+    ).textContent =
+        totalPower.toFixed(0) +
+        " W";
+
+
+    document.getElementById(
+        "totalEnergy"
+    ).textContent =
+        totalEnergy.toFixed(2) +
+        " kWh";
+
+
+    document.getElementById(
+        "pzemActive"
+    ).textContent =
+        active + " / 4";
+
+
+    document.getElementById(
+        "pzemStatus"
+    ).textContent =
+        active + " PZEM AKTIF";
+
+
+    /* MODE */
+
+    const mode =
+        data.mode || "MANUAL";
+
+
+    document.getElementById(
+        "modeDisplay"
+    ).textContent =
+        mode;
+
+
+    document.getElementById(
+        "systemMode"
+    ).textContent =
+        mode;
+
+
+    /* ESP STATUS */
+
+    const espOnline =
+        data.espOnline === true;
+
+
+    document.getElementById(
+        "espStatus"
+    ).textContent =
+        espOnline
+        ? "ESP32 ONLINE"
+        : "ESP32 OFFLINE";
+
+
+    const espDot =
+        document.getElementById(
+            "espDot"
+        );
+
+
+    espDot.classList.toggle(
+        "dot-off",
+        !espOnline
+    );
+
+
+    /* API STATUS */
+
+    document.getElementById(
+        "systemOnline"
+    ).innerHTML =
+        "● SYSTEM ONLINE";
+
+
+    document.getElementById(
+        "systemOnline"
+    ).style.background =
+        "#16a34a";
+
+
+    /* RELAY */
+
+    if(data.relay){
+
+        updateRelay(
+            1,
+            data.relay.relay1
+        );
+
+        updateRelay(
+            2,
+            data.relay.relay2
+        );
+
+        updateRelay(
+            3,
+            data.relay.relay3
+        );
+
+        updateRelay(
+            4,
+            data.relay.relay4
         );
 
     }
 
 }
 
+
+/* ==================================================
+   RELAY DISPLAY
+================================================== */
+
+function updateRelay(
+    number,
+    state
+){
+
+    const element =
+        document.getElementById(
+            "relayStatus" +
+            number
+        );
+
+    if(!element)
+        return;
+
+
+    if(state === true){
+
+        element.textContent =
+            "ON";
+
+        element.className =
+            "status-on";
+
+    }
+    else{
+
+        element.textContent =
+            "OFF";
+
+        element.className =
+            "status-off";
+
+    }
+
+}
+
+
+/* ==================================================
+   MODE
+================================================== */
+
+async function setMode(mode){
+
+    console.log(
+        "Mode dipilih:",
+        mode
+    );
+
+    /*
+      Untuk sementara hanya tampilan.
+
+      Nanti kita sambungkan ke:
+      POST /api/control
+    */
+
+    document.getElementById(
+        "modeDisplay"
+    ).textContent =
+        mode;
+
+    document.getElementById(
+        "systemMode"
+    ).textContent =
+        mode;
+
+}
+
+
+/* ==================================================
+   RELAY
+================================================== */
+
+async function setRelay(
+    relayNumber,
+    state
+){
+
+    console.log(
+        "Relay:",
+        relayNumber,
+        state
+    );
+
+    /*
+      Untuk sementara hanya tampilan.
+
+      Nanti kita sambungkan ke:
+      POST /api/control
+    */
+
+    updateRelay(
+        relayNumber,
+        state
+    );
+
+}
+
+
+/* ==================================================
+   START API
+================================================== */
+
 getAPIData();
 
+
+/*
+   Update data setiap 5 detik
+*/
+
+setInterval(
+    getAPIData,
+    5000
+);
+
 </script>
+
 </body>
 </html>
