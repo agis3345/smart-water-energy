@@ -1629,30 +1629,51 @@ function updateRelay(
 
 async function setMode(mode){
 
-    console.log(
-        "Mode dipilih:",
-        mode
-    );
+    try {
 
-    /*
-      Untuk sementara hanya tampilan.
+        const response = await fetch(
+            "https://smart-water-api.agisrifalharianto2.workers.dev/api/control",
+            {
+                method: "POST",
 
-      Nanti kita sambungkan ke:
-      POST /api/control
-    */
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-    document.getElementById(
-        "modeDisplay"
-    ).textContent =
-        mode;
+                body: JSON.stringify({
+                    mode: mode
+                })
+            }
+        );
 
-    document.getElementById(
-        "systemMode"
-    ).textContent =
-        mode;
+        const result = await response.json();
+
+        console.log("✅ MODE CONTROL:", result);
+
+        if (!result.success) {
+            throw new Error(result.message);
+        }
+
+        document.getElementById(
+            "modeDisplay"
+        ).textContent = result.mode;
+
+        document.getElementById(
+            "systemMode"
+        ).textContent = result.mode;
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "❌ Gagal mengubah mode:",
+            error
+        );
+
+    }
 
 }
-
 
 /* ==================================================
    RELAY
@@ -1663,26 +1684,74 @@ async function setRelay(
     state
 ){
 
-    console.log(
-        "Relay:",
-        relayNumber,
-        state
-    );
+    try {
 
-    /*
-      Untuk sementara hanya tampilan.
+        const relay = {
+            relay1: false,
+            relay2: false,
+            relay3: false,
+            relay4: false
+        };
 
-      Nanti kita sambungkan ke:
-      POST /api/control
-    */
 
-    updateRelay(
-        relayNumber,
-        state
-    );
+        relay[
+            "relay" + relayNumber
+        ] = state;
+
+
+        const response = await fetch(
+            "https://smart-water-api.agisrifalharianto2.workers.dev/api/control",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    relay: relay
+                })
+            }
+        );
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "✅ RELAY CONTROL:",
+            result
+        );
+
+
+        if (!result.success) {
+
+            throw new Error(
+                result.message
+            );
+
+        }
+
+
+        updateRelay(
+            relayNumber,
+            state
+        );
+
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "❌ Gagal mengontrol relay:",
+            error
+        );
+
+    }
 
 }
-
 
 /* ==================================================
    START API
