@@ -1629,52 +1629,57 @@ function updateRelay(
 
 async function setMode(mode){
 
-    try {
+    try{
 
         const response = await fetch(
-            "https://smart-water-api.agisrifalharianto2.workers.dev/api/control",
+            API_URL.replace("/api/data","/api/control"),
             {
-                method: "POST",
+                method:"POST",
 
-                headers: {
-                    "Content-Type": "application/json"
+                headers:{
+                    "Content-Type":"application/json"
                 },
 
-                body: JSON.stringify({
-                    mode: mode
+                body:JSON.stringify({
+                    mode:mode
                 })
             }
         );
 
         const result = await response.json();
 
-        console.log("✅ MODE CONTROL:", result);
+        console.log(
+            "✅ MODE CONTROL:",
+            result
+        );
 
-        if (!result.success) {
-            throw new Error(result.message);
+        if(!result.success){
+
+            throw new Error(
+                result.message || "Gagal mengubah mode"
+            );
+
         }
 
-        document.getElementById(
-            "modeDisplay"
-        ).textContent = result.mode;
-
-        document.getElementById(
-            "systemMode"
-        ).textContent = result.mode;
+        updateDashboard(result.data);
 
     }
 
-    catch(error) {
+    catch(error){
 
         console.error(
             "❌ Gagal mengubah mode:",
             error
         );
 
+        alert(
+            "Gagal mengubah mode: " +
+            error.message
+        );
+
     }
 
 }
-
 /* ==================================================
    RELAY
 ================================================== */
@@ -1684,32 +1689,26 @@ async function setRelay(
     state
 ){
 
-    try {
+    try{
 
-        const relay = {
-            relay1: false,
-            relay2: false,
-            relay3: false,
-            relay4: false
-        };
+        const relayData = {};
 
-
-        relay[
+        relayData[
             "relay" + relayNumber
         ] = state;
 
 
         const response = await fetch(
-            "https://smart-water-api.agisrifalharianto2.workers.dev/api/control",
+            API_URL.replace("/api/data","/api/control"),
             {
-                method: "POST",
+                method:"POST",
 
-                headers: {
-                    "Content-Type": "application/json"
+                headers:{
+                    "Content-Type":"application/json"
                 },
 
-                body: JSON.stringify({
-                    relay: relay
+                body:JSON.stringify({
+                    relay:relayData
                 })
             }
         );
@@ -1725,34 +1724,37 @@ async function setRelay(
         );
 
 
-        if (!result.success) {
+        if(!result.success){
 
             throw new Error(
-                result.message
+                result.message ||
+                "Gagal mengontrol relay"
             );
 
         }
 
 
-        updateRelay(
-            relayNumber,
-            state
+        updateDashboard(
+            result.data
         );
-
 
     }
 
-    catch(error) {
+    catch(error){
 
         console.error(
             "❌ Gagal mengontrol relay:",
             error
         );
 
+        alert(
+            "Gagal mengontrol relay: " +
+            error.message
+        );
+
     }
 
 }
-
 /* ==================================================
    START API
 ================================================== */
