@@ -7,462 +7,415 @@
 <title>Smart Water & Energy</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef4f8;
-    color: #172033;
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef4f8;
+    color:#172033;
 }
 
-.container {
-    width: 94%;
-    max-width: 1250px;
-    margin: auto;
-    padding: 20px 0 40px;
+.container{
+    width:94%;
+    max-width:1400px;
+    margin:auto;
+    padding:22px 0 40px;
 }
 
-.header {
-    background: linear-gradient(135deg, #0f172a, #1e3a5f);
-    color: white;
-    padding: 25px;
-    border-radius: 20px;
-    margin-bottom: 20px;
+/* ================= HEADER ================= */
+
+.header{
+    background:linear-gradient(135deg,#0f172a,#1d4ed8);
+    color:white;
+    padding:28px;
+    border-radius:22px;
+    margin-bottom:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.12);
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 28px;
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
 }
 
-.header p {
-    margin: 7px 0;
-    color: #cbd5e1;
+.header h1{
+    margin:0;
+    font-size:28px;
 }
 
-.online {
-    display: inline-block;
-    background: #16a34a;
-    padding: 7px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: bold;
+.header p{
+    margin:7px 0;
+    color:#dbeafe;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
+.online{
+    background:#16a34a;
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+    white-space:nowrap;
 }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(15,23,42,0.07);
+/* ================= GRID ================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
 }
 
-.card h2 {
-    margin: 0 0 15px;
-    font-size: 17px;
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:16px;
 }
 
-.icon {
-    font-size: 27px;
+/* ================= CARD ================= */
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(15,23,42,.07);
 }
 
-.value {
-    font-size: 30px;
-    font-weight: bold;
+.card h2{
+    margin:0 0 15px;
+    font-size:17px;
 }
 
-.unit {
-    color: #64748b;
-    font-size: 13px;
-    margin-top: 4px;
+.icon{
+    font-size:27px;
+    margin-bottom:6px;
 }
 
-.tank {
-    width: 100%;
-    height: 22px;
-    background: #e2e8f0;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 15px 0 8px;
+.value{
+    font-size:30px;
+    font-weight:bold;
 }
 
-.tank-fill {
-    height: 100%;
-    width: 82.5%;
-    background: linear-gradient(90deg,#38bdf8,#2563eb);
+.unit{
+    color:#64748b;
+    font-size:13px;
+    margin-top:5px;
 }
 
-.mode {
-    display: inline-block;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    background: #ede9fe;
-    color: #6d28d9;
+/* ================= SENSOR ================= */
+
+.status-normal{
+    color:#15803d;
+    font-weight:bold;
 }
 
-button {
-    width: 100%;
-    border: none;
-    padding: 12px;
-    margin-top: 8px;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
+.status-warning{
+    color:#d97706;
+    font-weight:bold;
 }
 
-.auto {
-    background: #2563eb;
-    color: white;
+.status-danger{
+    color:#dc2626;
+    font-weight:bold;
 }
 
-.manual {
-    background: #7c3aed;
-    color: white;
+/* ================= TANK ================= */
+
+.tank{
+    width:100%;
+    height:22px;
+    background:#e2e8f0;
+    border-radius:20px;
+    overflow:hidden;
+    margin:15px 0 8px;
 }
 
-.relay {
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 15px;
-    margin-top: 12px;
+.tank-fill{
+    height:100%;
+    width:82.5%;
+    background:linear-gradient(90deg,#38bdf8,#2563eb);
 }
 
-.relay-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* ================= MODE ================= */
+
+.mode{
+    display:inline-block;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+    background:#ede9fe;
+    color:#6d28d9;
 }
 
-.relay-name {
-    font-weight: bold;
+button{
+    width:100%;
+    border:none;
+    padding:12px;
+    margin-top:8px;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:14px;
+    cursor:pointer;
 }
 
-.status {
-    padding: 6px 10px;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: bold;
+.auto{
+    background:#2563eb;
+    color:white;
 }
 
-.on {
-    color: #15803d;
-    background: #dcfce7;
+.manual{
+    background:#7c3aed;
+    color:white;
 }
 
-.off {
-    color: #b91c1c;
-    background: #fee2e2;
+/* ================= RELAY ================= */
+
+.relay{
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:15px;
+    margin-top:12px;
 }
 
-.btn-on {
-    background: #16a34a;
-    color: white;
+.relay-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
-.btn-off {
-    background: #dc2626;
-    color: white;
+.relay-name{
+    font-weight:bold;
 }
 
-.pzem {
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 15px;
-    margin-top: 12px;
+.status-on{
+    color:#15803d;
+    background:#dcfce7;
+    padding:6px 10px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
 }
 
-.pzem-title {
-    font-weight: bold;
-    margin-bottom: 12px;
+.status-off{
+    color:#b91c1c;
+    background:#fee2e2;
+    padding:6px 10px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
 }
 
-.pzem-grid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 8px;
+.btn-on{
+    background:#16a34a;
+    color:white;
 }
 
-.pzem-value {
-    background: #f8fafc;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
+.btn-off{
+    background:#dc2626;
+    color:white;
 }
 
-.pzem-value strong {
-    display: block;
-    font-size: 16px;
+/* ================= PZEM ================= */
+
+.pzem{
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:16px;
+    margin-top:12px;
 }
 
-.pzem-value span {
-    color: #64748b;
-    font-size: 11px;
+.pzem-title{
+    font-size:17px;
+    font-weight:bold;
+    margin-bottom:12px;
 }
 
-.footer {
-    text-align: center;
-    color: #64748b;
-    font-size: 12px;
-    margin-top: 25px;
+.pzem-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
 }
 
-/* ==================================================
-   DASHBOARD ENHANCEMENT
-================================================== */
-
-/* Efek card lebih modern */
-.card {
-  transition: 
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+.pzem-value{
+    background:#f8fafc;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 10px 30px rgba(15, 23, 42, 0.12);
+.pzem-value strong{
+    display:block;
+    font-size:16px;
 }
 
-
-/* Header lebih modern */
-.header {
-  position: relative;
-  overflow: hidden;
+.pzem-value span{
+    color:#64748b;
+    font-size:11px;
 }
 
-.header::after {
-  content: "";
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  right: -60px;
-  top: -70px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
+/* ================= SUMMARY ================= */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
 }
 
-
-/* Nilai sensor */
-.value {
-  letter-spacing: -0.5px;
+.summary-box{
+    background:#f8fafc;
+    border-radius:14px;
+    padding:16px;
 }
 
-
-/* Status online */
-.online {
-  box-shadow:
-    0 3px 10px rgba(22,163,74,0.25);
+.summary-title{
+    font-size:12px;
+    color:#64748b;
 }
 
-
-/* Relay lebih rapi */
-.relay {
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+.summary-value{
+    font-size:25px;
+    font-weight:bold;
+    margin-top:5px;
 }
 
-.relay:hover {
-  background: #f8fafc;
-  transform: translateX(2px);
+/* ================= CHART ================= */
+
+.chart{
+    height:270px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-around;
+    gap:25px;
+    padding:25px 20px 5px;
+    background:#f8fafc;
+    border-radius:16px;
+    position:relative;
 }
 
-
-/* Tombol */
-button {
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease;
+.bar-wrap{
+    height:100%;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
 }
 
-button:hover {
-  opacity: 0.9;
-  transform: scale(1.01);
+.bar-value{
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:6px;
 }
 
-button:active {
-  transform: scale(0.98);
+.bar{
+    width:65%;
+    max-width:100px;
+    min-height:8px;
+    border-radius:10px 10px 3px 3px;
+    background:linear-gradient(to top,#2563eb,#38bdf8);
+    transition:.4s;
 }
 
-
-/* PZEM */
-.pzem {
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+.bar-label{
+    margin-top:8px;
+    font-size:12px;
+    color:#64748b;
 }
 
-.pzem:hover {
-  box-shadow:
-    0 5px 18px rgba(15,23,42,0.08);
-  transform: translateY(-2px);
+/* ================= SYSTEM ================= */
+
+.system{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
 }
 
-
-/* Nilai PZEM */
-.pzem-value {
-  border: 1px solid #eef2f7;
-  transition:
-    background 0.2s ease;
+.system-box{
+    padding:15px;
+    border-radius:14px;
+    background:#f8fafc;
 }
 
-.pzem-value:hover {
-  background: #eef6ff;
+.dot{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#16a34a;
+    margin-right:6px;
 }
 
+/* ================= FOOTER ================= */
 
-/* ==================================================
-   CHART YANG LEBIH BAGUS
-================================================== */
-
-.chart {
-  position: relative;
-  height: 220px;
-  padding: 20px;
-  align-items: flex-end;
-  background:
-    linear-gradient(
-      180deg,
-      #f8fbff,
-      #eef5fb
-    );
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
+.footer{
+    margin-top:25px;
+    padding:20px;
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+    border-top:1px solid #dbe3ea;
 }
 
+/* ================= MOBILE ================= */
 
-/* Garis bantu chart */
-.chart::before {
-  content: "";
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 25%;
-  border-top: 1px dashed #cbd5e1;
-}
+@media(max-width:900px){
 
-.chart::after {
-  content: "";
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 50%;
-  border-top: 1px dashed #cbd5e1;
-}
-
-
-/* Bar */
-.bar {
-  position: relative;
-  z-index: 2;
-
-  background:
-    linear-gradient(
-      to top,
-      #2563eb,
-      #38bdf8
-    );
-
-  border-radius:
-    8px 8px 3px 3px;
-
-  min-height:
-    20px;
-
-  box-shadow:
-    0 5px 12px
-    rgba(37,99,235,0.20);
-
-  transition:
-    height 0.4s ease,
-    transform 0.2s ease;
-}
-
-
-/* Efek hover bar */
-.bar:hover {
-  transform:
-    scaleX(1.05);
-
-  box-shadow:
-    0 8px 18px
-    rgba(37,99,235,0.30);
-}
-
-
-/* Label chart */
-.bar-label {
-  font-weight:
-    bold;
-
-  color:
-    #475569;
-}
-
-
-/* ==================================================
-   FOOTER MODERN
-================================================== */
-
-.footer {
-  padding:
-    18px;
-
-  margin-top:
-    30px;
-
-  border-top:
-    1px solid #dbe3ec;
-
-  background:
-    rgba(255,255,255,0.6);
-
-  border-radius:
-    14px;
-
-  line-height:
-    1.7;
-}
-
-
-/* ==================================================
-   SCROLLBAR
-================================================== */
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #eef4f8;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #94a3b8;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
-}
-    
-@media(max-width:600px) {
-    .pzem-grid {
-        grid-template-columns: repeat(2,1fr);
+    .grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .header h1 {
-        font-size: 23px;
+    .pzem-grid{
+        grid-template-columns:repeat(2,1fr);
     }
+
+    .system{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:94%;
+    }
+
+    .header-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header h1{
+        font-size:23px;
+    }
+
+    .grid,
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .pzem-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .system{
+        grid-template-columns:1fr;
+    }
+
+    .chart{
+        height:230px;
+    }
+
 }
 </style>
 </head>
@@ -471,50 +424,83 @@ button:active {
 
 <div class="container">
 
+<!-- ================= HEADER ================= -->
+
 <div class="header">
 
+<div class="header-row">
+
+<div>
 <h1>💧 Smart Water & Energy</h1>
 
-<p>Renewable Energy Monitoring & Control System</p>
+<p>
+Renewable Energy Monitoring & Control System
+</p>
 
-<p>🕐 <span id="clock">--:--:--</span> WIB</p>
+<p id="clock">
+🕐 Loading...
+</p>
+</div>
 
-<span class="online">
+<div class="online">
 ● SYSTEM ONLINE
-</span>
+</div>
 
 </div>
 
+</div>
+
+
+<!-- ================= SENSOR ================= -->
 
 <div class="grid">
 
 <div class="card">
+
 <div class="icon">🌱</div>
+
 <h2>Kelembapan Kebun</h2>
-<div class="value">38.5 %</div>
-<div class="unit">Status: NORMAL</div>
+
+<div class="value">38.5%</div>
+
+<div class="unit">
+Status:
+<span class="status-normal">
+NORMAL
+</span>
+</div>
+
 </div>
 
 
 <div class="card">
+
 <div class="icon">🚰</div>
+
 <h2>Level Toren</h2>
 
-<div class="value">82.5 %</div>
+<div class="value">82.5%</div>
 
 <div class="tank">
+
 <div class="tank-fill"></div>
+
 </div>
 
 <div class="unit">
-Batas: 30% — 99%
+Kondisi:
+<span class="status-normal">
+AMAN
+</span>
 </div>
 
 </div>
 
 
 <div class="card">
+
 <div class="icon">💧</div>
+
 <h2>Flow Rate</h2>
 
 <div class="value">12.4</div>
@@ -527,7 +513,9 @@ L/min
 
 
 <div class="card">
+
 <div class="icon">⚙️</div>
+
 <h2>RPM Generator</h2>
 
 <div class="value">1500</div>
@@ -541,7 +529,60 @@ RPM
 </div>
 
 
-<div class="grid" style="margin-top:16px;">
+<!-- ================= SUMMARY ================= -->
+
+<div class="card" style="margin-top:16px">
+
+<h2>⚡ Ringkasan Energi</h2>
+
+<div class="summary">
+
+<div class="summary-box">
+
+<div class="summary-title">
+TOTAL DAYA
+</div>
+
+<div class="summary-value">
+1320 W
+</div>
+
+</div>
+
+
+<div class="summary-box">
+
+<div class="summary-title">
+TOTAL ENERGI
+</div>
+
+<div class="summary-value">
+3.53 kWh
+</div>
+
+</div>
+
+
+<div class="summary-box">
+
+<div class="summary-title">
+PZEM AKTIF
+</div>
+
+<div class="summary-value">
+4 / 4
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= MODE ================= -->
+
+<div class="grid-2">
 
 <div class="card">
 
@@ -583,13 +624,16 @@ Mode BUANG
 </div>
 
 
-<div class="card" style="margin-top:16px;">
+<!-- ================= RELAY ================= -->
+
+<div class="card" style="margin-top:16px">
 
 <h2>🔌 Kontrol Sistem</h2>
 
-<p class="unit">
-Simulasi relay — nanti akan dikontrol oleh ESP32.
-</p>
+<div class="unit">
+Saat ini menggunakan simulasi LED ESP32.
+Nanti akan diganti relay asli.
+</div>
 
 
 <div class="relay">
@@ -600,17 +644,17 @@ Simulasi relay — nanti akan dikontrol oleh ESP32.
 🌱 Relay 1 — Valve Kebun
 </div>
 
-<div id="status1" class="status off">
-OFF
+<div class="status-on">
+ON
 </div>
 
 </div>
 
-<button class="btn-on" onclick="relayOn(1)">
+<button class="btn-on">
 ON
 </button>
 
-<button class="btn-off" onclick="relayOff(1)">
+<button class="btn-off">
 OFF
 </button>
 
@@ -625,17 +669,17 @@ OFF
 💧 Relay 2 — Valve Buang
 </div>
 
-<div id="status2" class="status off">
+<div class="status-off">
 OFF
 </div>
 
 </div>
 
-<button class="btn-on" onclick="relayOn(2)">
+<button class="btn-on">
 ON
 </button>
 
-<button class="btn-off" onclick="relayOff(2)">
+<button class="btn-off">
 OFF
 </button>
 
@@ -650,17 +694,17 @@ OFF
 🚿 Relay 3 — Pompa Isi
 </div>
 
-<div id="status3" class="status off">
+<div class="status-off">
 OFF
 </div>
 
 </div>
 
-<button class="btn-on" onclick="relayOn(3)">
+<button class="btn-on">
 ON
 </button>
 
-<button class="btn-off" onclick="relayOff(3)">
+<button class="btn-off">
 OFF
 </button>
 
@@ -675,17 +719,17 @@ OFF
 ⚙️ Relay 4 — Cadangan
 </div>
 
-<div id="status4" class="status off">
+<div class="status-off">
 OFF
 </div>
 
 </div>
 
-<button class="btn-on" onclick="relayOn(4)">
+<button class="btn-on">
 ON
 </button>
 
-<button class="btn-off" onclick="relayOff(4)">
+<button class="btn-off">
 OFF
 </button>
 
@@ -694,7 +738,9 @@ OFF
 </div>
 
 
-<div class="card" style="margin-top:16px;">
+<!-- ================= PZEM ================= -->
+
+<div class="card" style="margin-top:16px">
 
 <h2>⚡ Monitoring Energi — 4 PZEM</h2>
 
@@ -718,7 +764,7 @@ OFF
 </div>
 
 <div class="pzem-value">
-<strong>462.0 W</strong>
+<strong>462 W</strong>
 <span>POWER</span>
 </div>
 
@@ -750,7 +796,7 @@ OFF
 </div>
 
 <div class="pzem-value">
-<strong>396.0 W</strong>
+<strong>396 W</strong>
 <span>POWER</span>
 </div>
 
@@ -782,7 +828,7 @@ OFF
 </div>
 
 <div class="pzem-value">
-<strong>198.0 W</strong>
+<strong>198 W</strong>
 <span>POWER</span>
 </div>
 
@@ -814,7 +860,7 @@ OFF
 </div>
 
 <div class="pzem-value">
-<strong>264.0 W</strong>
+<strong>264 W</strong>
 <span>POWER</span>
 </div>
 
@@ -828,162 +874,76 @@ OFF
 
 </div>
 
-<!-- =================================================
-     ENERGY SUMMARY
-================================================== -->
 
-<div class="grid" style="margin-top:16px;">
+<!-- ================= CHART ================= -->
 
-<div class="card energy-summary">
+<div class="card" style="margin-top:16px">
 
-<div class="icon">⚡</div>
-
-<h2>Total Daya</h2>
-
-<div class="value">
-1320 W
-</div>
-
-<div class="unit">
-Gabungan 4 PZEM
-</div>
-
-</div>
-
-
-<div class="card energy-summary">
-
-<div class="icon">🔋</div>
-
-<h2>Total Energi</h2>
-
-<div class="value">
-3.53 kWh
-</div>
-
-<div class="unit">
-Energi terukur
-</div>
-
-</div>
-
-
-<div class="card energy-summary">
-
-<div class="icon">📊</div>
-
-<h2>Jumlah PZEM</h2>
-
-<div class="value">
-4
-</div>
-
-<div class="unit">
-Sensor aktif
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =================================================
-     POWER CHART
-================================================== -->
-
-<div class="card" style="margin-top:16px;">
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:10px;
-">
-
-<div>
-
-<h2 style="margin-bottom:5px;">
-📊 Grafik Daya PZEM
-</h2>
+<h2>📊 Grafik Daya PZEM</h2>
 
 <div class="unit">
 Perbandingan konsumsi daya setiap sensor
 </div>
 
+<div class="chart">
+
+<div class="bar-wrap">
+
+<div class="bar-value">
+462 W
 </div>
 
-<div class="chart-badge">
-LIVE DATA
-</div>
+<div class="bar" style="height:92%"></div>
 
-</div>
-
-
-<div class="chart-container">
-
-<canvas id="powerChart"></canvas>
-
-</div>
-
-
-<div class="chart-total">
-
-<div>
-<span>PZEM 1</span>
-<strong>462 W</strong>
-</div>
-
-<div>
-<span>PZEM 2</span>
-<strong>396 W</strong>
-</div>
-
-<div>
-<span>PZEM 3</span>
-<strong>198 W</strong>
-</div>
-
-<div>
-<span>PZEM 4</span>
-<strong>264 W</strong>
-</div>
-
+<div class="bar-label">
+PZEM 1
 </div>
 
 </div>
 
 
-<!-- =================================================
-     SYSTEM STATUS
-================================================== -->
+<div class="bar-wrap">
 
-<div class="card" style="margin-top:16px;">
-
-<h2>
-🟢 Status Sistem
-</h2>
-
-<div class="system-status">
-
-<div class="status-item">
-<span>ESP32</span>
-<strong class="good">ONLINE</strong>
+<div class="bar-value">
+396 W
 </div>
 
-<div class="status-item">
-<span>Website</span>
-<strong class="good">ONLINE</strong>
+<div class="bar" style="height:79%"></div>
+
+<div class="bar-label">
+PZEM 2
 </div>
 
-<div class="status-item">
-<span>PZEM</span>
-<strong class="good">4 AKTIF</strong>
 </div>
 
-<div class="status-item">
-<span>Mode</span>
-<strong>MANUAL</strong>
+
+<div class="bar-wrap">
+
+<div class="bar-value">
+198 W
+</div>
+
+<div class="bar" style="height:40%"></div>
+
+<div class="bar-label">
+PZEM 3
+</div>
+
+</div>
+
+
+<div class="bar-wrap">
+
+<div class="bar-value">
+264 W
+</div>
+
+<div class="bar" style="height:53%"></div>
+
+<div class="bar-label">
+PZEM 4
+</div>
+
 </div>
 
 </div>
@@ -991,151 +951,50 @@ LIVE DATA
 </div>
 
 
-<!-- =================================================
-     CHART SCRIPT
-================================================== -->
+<!-- ================= SYSTEM STATUS ================= -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="card" style="margin-top:16px">
 
-<script>
+<h2>🟢 Status Sistem</h2>
 
-const powerData = [
-    462,
-    396,
-    198,
-    264
-];
+<div class="system">
 
-const ctx =
-document.getElementById(
-    'powerChart'
-).getContext('2d');
+<div class="system-box">
+<span class="dot"></span>
+ESP32 ONLINE
+</div>
 
+<div class="system-box">
+<span class="dot"></span>
+Website ONLINE
+</div>
 
-const gradient =
-ctx.createLinearGradient(
-    0,
-    0,
-    0,
-    300
-);
+<div class="system-box">
+<span class="dot"></span>
+4 PZEM AKTIF
+</div>
 
-gradient.addColorStop(
-    0,
-    '#2563eb'
-);
+<div class="system-box">
+<span class="dot"></span>
+Mode MANUAL
+</div>
 
-gradient.addColorStop(
-    1,
-    '#38bdf8'
-);
+</div>
+
+</div>
 
 
-new Chart(ctx, {
+<!-- ================= FOOTER ================= -->
 
-    type: 'bar',
-
-    data: {
-
-        labels: [
-            'PZEM 1',
-            'PZEM 2',
-            'PZEM 3',
-            'PZEM 4'
-        ],
-
-        datasets: [{
-
-            label: 'Daya',
-
-            data: powerData,
-
-            backgroundColor:
-                gradient,
-
-            borderRadius: 10,
-
-            borderSkipped: false,
-
-            barThickness: 55
-
-        }]
-
-    },
-
-    options: {
-
-        responsive: true,
-
-        maintainAspectRatio: false,
-
-        plugins: {
-
-            legend: {
-                display: false
-            },
-
-            tooltip: {
-
-                callbacks: {
-
-                    label: function(context) {
-
-                        return ' ' +
-                        context.raw +
-                        ' W';
-
-                    }
-
-                }
-
-            }
-
-        },
-
-        scales: {
-
-            y: {
-
-                beginAtZero: true,
-
-                grid: {
-                    color: '#e2e8f0'
-                },
-
-                ticks: {
-
-                    callback:
-                    function(value) {
-
-                        return value +
-                        ' W';
-
-                    }
-
-                }
-
-            },
-
-            x: {
-
-                grid: {
-                    display: false
-                }
-
-            }
-
-        }
-
-    }
-
-});
-
-</script>
 <div class="footer">
 
-Smart Water & Energy System<br>
+<strong>Smart Water & Energy System</strong>
+<br>
+
 Public Monitoring Dashboard
+<br><br>
+
+ESP32 • Renewable Energy • IoT
 
 </div>
 
@@ -1144,54 +1003,40 @@ Public Monitoring Dashboard
 
 <script>
 
-function updateClock() {
+/* ================= CLOCK ================= */
+
+function updateClock(){
 
     const now = new Date();
 
-    const time =
+    const waktu =
         now.toLocaleTimeString(
-            'id-ID',
+            "id-ID",
             {
-                hour12:false,
-                timeZone:'Asia/Jakarta'
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit",
+                hour12:false
             }
         );
 
-    document.getElementById("clock").innerText = time;
+    const tanggal =
+        now.toLocaleDateString(
+            "id-ID",
+            {
+                day:"2-digit",
+                month:"long",
+                year:"numeric"
+            }
+        );
 
+    document.getElementById("clock").innerHTML =
+        "🕐 " + waktu + " WIB • " + tanggal;
 }
-
-setInterval(updateClock,1000);
 
 updateClock();
 
-
-function relayOn(number) {
-
-    const status =
-        document.getElementById(
-            "status" + number
-        );
-
-    status.innerText = "ON";
-
-    status.className =
-        "status on";
-}
-
-
-function relayOff(number) {
-
-    const status =
-        document.getElementById(
-            "status" + number
-        );
-
-    status.innerText = "OFF";
-
-    status.className =
-        "status off";
-}
+setInterval(updateClock,1000);
 
 </script>
 
