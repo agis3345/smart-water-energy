@@ -1039,6 +1039,35 @@ updateClock();
 setInterval(updateClock,1000);
 
 </script>
+<script>
 
+const API_URL = "https://smart-water-api.agisrifalharianto2.workers.dev/api/data";
+
+async function getAPIData() {
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/data"
+        );
+
+        const data = await response.json();
+
+        console.log("DATA API:", data);
+
+    } catch (error) {
+
+        console.error(
+            "Gagal mengambil data API:",
+            error
+        );
+
+    }
+
+}
+
+getAPIData();
+
+</script>
 </body>
 </html>
