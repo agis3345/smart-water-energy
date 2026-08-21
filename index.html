@@ -1,1 +1,656 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Smart Water & Energy</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef4f8;
+    color: #172033;
+}
+
+.container {
+    width: 94%;
+    max-width: 1250px;
+    margin: auto;
+    padding: 20px 0 40px;
+}
+
+.header {
+    background: linear-gradient(135deg, #0f172a, #1e3a5f);
+    color: white;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.header p {
+    margin: 7px 0;
+    color: #cbd5e1;
+}
+
+.online {
+    display: inline-block;
+    background: #16a34a;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(15,23,42,0.07);
+}
+
+.card h2 {
+    margin: 0 0 15px;
+    font-size: 17px;
+}
+
+.icon {
+    font-size: 27px;
+}
+
+.value {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.unit {
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.tank {
+    width: 100%;
+    height: 22px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px 0 8px;
+}
+
+.tank-fill {
+    height: 100%;
+    width: 82.5%;
+    background: linear-gradient(90deg,#38bdf8,#2563eb);
+}
+
+.mode {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+button {
+    width: 100%;
+    border: none;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auto {
+    background: #2563eb;
+    color: white;
+}
+
+.manual {
+    background: #7c3aed;
+    color: white;
+}
+
+.relay {
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 15px;
+    margin-top: 12px;
+}
+
+.relay-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.relay-name {
+    font-weight: bold;
+}
+
+.status {
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.on {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.off {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+.btn-on {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-off {
+    background: #dc2626;
+    color: white;
+}
+
+.pzem {
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 15px;
+    margin-top: 12px;
+}
+
+.pzem-title {
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.pzem-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 8px;
+}
+
+.pzem-value {
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.pzem-value strong {
+    display: block;
+    font-size: 16px;
+}
+
+.pzem-value span {
+    color: #64748b;
+    font-size: 11px;
+}
+
+.footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+@media(max-width:600px) {
+    .pzem-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>💧 Smart Water & Energy</h1>
+
+<p>Renewable Energy Monitoring & Control System</p>
+
+<p>🕐 <span id="clock">--:--:--</span> WIB</p>
+
+<span class="online">
+● SYSTEM ONLINE
+</span>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🌱</div>
+<h2>Kelembapan Kebun</h2>
+<div class="value">38.5 %</div>
+<div class="unit">Status: NORMAL</div>
+</div>
+
+
+<div class="card">
+<div class="icon">🚰</div>
+<h2>Level Toren</h2>
+
+<div class="value">82.5 %</div>
+
+<div class="tank">
+<div class="tank-fill"></div>
+</div>
+
+<div class="unit">
+Batas: 30% — 99%
+</div>
+
+</div>
+
+
+<div class="card">
+<div class="icon">💧</div>
+<h2>Flow Rate</h2>
+
+<div class="value">12.4</div>
+
+<div class="unit">
+L/min
+</div>
+
+</div>
+
+
+<div class="card">
+<div class="icon">⚙️</div>
+<h2>RPM Generator</h2>
+
+<div class="value">1500</div>
+
+<div class="unit">
+RPM
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid" style="margin-top:16px;">
+
+<div class="card">
+
+<h2>🤖 Mode Sistem</h2>
+
+<div class="mode">
+MANUAL
+</div>
+
+<button class="auto">
+MODE AUTO
+</button>
+
+<button class="manual">
+MODE MANUAL
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>🕐 Jadwal Toren</h2>
+
+<p>
+☀️ <strong>06:00 — 19:59</strong>
+<br>
+Mode ISI
+</p>
+
+<p>
+🌙 <strong>20:00 — 05:59</strong>
+<br>
+Mode BUANG
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card" style="margin-top:16px;">
+
+<h2>🔌 Kontrol Sistem</h2>
+
+<p class="unit">
+Simulasi relay — nanti akan dikontrol oleh ESP32.
+</p>
+
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div class="relay-name">
+🌱 Relay 1 — Valve Kebun
+</div>
+
+<div id="status1" class="status off">
+OFF
+</div>
+
+</div>
+
+<button class="btn-on" onclick="relayOn(1)">
+ON
+</button>
+
+<button class="btn-off" onclick="relayOff(1)">
+OFF
+</button>
+
+</div>
+
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div class="relay-name">
+💧 Relay 2 — Valve Buang
+</div>
+
+<div id="status2" class="status off">
+OFF
+</div>
+
+</div>
+
+<button class="btn-on" onclick="relayOn(2)">
+ON
+</button>
+
+<button class="btn-off" onclick="relayOff(2)">
+OFF
+</button>
+
+</div>
+
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div class="relay-name">
+🚿 Relay 3 — Pompa Isi
+</div>
+
+<div id="status3" class="status off">
+OFF
+</div>
+
+</div>
+
+<button class="btn-on" onclick="relayOn(3)">
+ON
+</button>
+
+<button class="btn-off" onclick="relayOff(3)">
+OFF
+</button>
+
+</div>
+
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div class="relay-name">
+⚙️ Relay 4 — Cadangan
+</div>
+
+<div id="status4" class="status off">
+OFF
+</div>
+
+</div>
+
+<button class="btn-on" onclick="relayOn(4)">
+ON
+</button>
+
+<button class="btn-off" onclick="relayOff(4)">
+OFF
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card" style="margin-top:16px;">
+
+<h2>⚡ Monitoring Energi — 4 PZEM</h2>
+
+
+<div class="pzem">
+
+<div class="pzem-title">
+⚡ PZEM 1
+</div>
+
+<div class="pzem-grid">
+
+<div class="pzem-value">
+<strong>220.0 V</strong>
+<span>VOLTAGE</span>
+</div>
+
+<div class="pzem-value">
+<strong>2.10 A</strong>
+<span>CURRENT</span>
+</div>
+
+<div class="pzem-value">
+<strong>462.0 W</strong>
+<span>POWER</span>
+</div>
+
+<div class="pzem-value">
+<strong>1.25 kWh</strong>
+<span>ENERGY</span>
+</div>
+
+</div>
+</div>
+
+
+<div class="pzem">
+
+<div class="pzem-title">
+⚡ PZEM 2
+</div>
+
+<div class="pzem-grid">
+
+<div class="pzem-value">
+<strong>220.0 V</strong>
+<span>VOLTAGE</span>
+</div>
+
+<div class="pzem-value">
+<strong>1.80 A</strong>
+<span>CURRENT</span>
+</div>
+
+<div class="pzem-value">
+<strong>396.0 W</strong>
+<span>POWER</span>
+</div>
+
+<div class="pzem-value">
+<strong>0.98 kWh</strong>
+<span>ENERGY</span>
+</div>
+
+</div>
+</div>
+
+
+<div class="pzem">
+
+<div class="pzem-title">
+⚡ PZEM 3
+</div>
+
+<div class="pzem-grid">
+
+<div class="pzem-value">
+<strong>220.0 V</strong>
+<span>VOLTAGE</span>
+</div>
+
+<div class="pzem-value">
+<strong>0.90 A</strong>
+<span>CURRENT</span>
+</div>
+
+<div class="pzem-value">
+<strong>198.0 W</strong>
+<span>POWER</span>
+</div>
+
+<div class="pzem-value">
+<strong>0.54 kWh</strong>
+<span>ENERGY</span>
+</div>
+
+</div>
+</div>
+
+
+<div class="pzem">
+
+<div class="pzem-title">
+⚡ PZEM 4
+</div>
+
+<div class="pzem-grid">
+
+<div class="pzem-value">
+<strong>220.0 V</strong>
+<span>VOLTAGE</span>
+</div>
+
+<div class="pzem-value">
+<strong>1.20 A</strong>
+<span>CURRENT</span>
+</div>
+
+<div class="pzem-value">
+<strong>264.0 W</strong>
+<span>POWER</span>
+</div>
+
+<div class="pzem-value">
+<strong>0.76 kWh</strong>
+<span>ENERGY</span>
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+<div class="footer">
+
+Smart Water & Energy System<br>
+Public Monitoring Dashboard
+
+</div>
+
+</div>
+
+
+<script>
+
+function updateClock() {
+
+    const now = new Date();
+
+    const time =
+        now.toLocaleTimeString(
+            'id-ID',
+            {
+                hour12:false,
+                timeZone:'Asia/Jakarta'
+            }
+        );
+
+    document.getElementById("clock").innerText = time;
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+
+function relayOn(number) {
+
+    const status =
+        document.getElementById(
+            "status" + number
+        );
+
+    status.innerText = "ON";
+
+    status.className =
+        "status on";
+}
+
+
+function relayOff(number) {
+
+    const status =
+        document.getElementById(
+            "status" + number
+        );
+
+    status.innerText = "OFF";
+
+    status.className =
+        "status off";
+}
+
+</script>
+
+</body>
+</html>
