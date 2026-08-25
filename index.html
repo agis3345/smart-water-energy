@@ -533,15 +533,17 @@ LOADING
 </div>
 
 
+<!-- ================= FLOW 1 ================= -->
+
 <div class="card">
 
 <div class="icon">💧</div>
 
-<h2>Flow Rate</h2>
+<h2>Flow Rate 1</h2>
 
 <div
 class="value"
-id="flowRate">
+id="flowRate1">
 --
 </div>
 
@@ -551,6 +553,8 @@ L/min
 
 </div>
 
+
+<!-- ================= RPM ================= -->
 
 <div class="card">
 
@@ -568,6 +572,29 @@ id="rpmGenerator">
 RPM
 </div>
 
+</div>
+
+</div>
+
+
+<!-- ================= FLOW 2 ================= -->
+
+<div
+class="card"
+style="margin-top:16px">
+
+<div class="icon">💧</div>
+
+<h2>Flow Rate 2</h2>
+
+<div
+class="value"
+id="flowRate2">
+--
+</div>
+
+<div class="unit">
+L/min
 </div>
 
 </div>
@@ -1280,16 +1307,36 @@ function updateDashboard(data){
         (data.levelToren ?? 0) + "%";
 
 
-    document.getElementById(
-        "flowRate"
-    ).textContent =
-        data.flowRate ?? 0;
+    /* FLOW 1 */
 
+    document.getElementById(
+        "flowRate1"
+    ).textContent =
+        Number(
+            data.flowRate1 ??
+            data.flowRate ??
+            0
+        ).toFixed(2);
+
+
+    /* FLOW 2 */
+
+    document.getElementById(
+        "flowRate2"
+    ).textContent =
+        Number(
+            data.flowRate2 ?? 0
+        ).toFixed(2);
+
+
+    /* RPM */
 
     document.getElementById(
         "rpmGenerator"
     ).textContent =
-        data.rpmGenerator ?? 0;
+        Number(
+            data.rpmGenerator ?? 0
+        ).toFixed(0);
 
 
     /* TANK */
@@ -1680,6 +1727,8 @@ async function setMode(mode){
     }
 
 }
+
+
 /* ==================================================
    RELAY
 ================================================== */
@@ -1755,6 +1804,8 @@ async function setRelay(
     }
 
 }
+
+
 /* ==================================================
    START API
 ================================================== */
