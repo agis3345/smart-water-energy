@@ -112,7 +112,7 @@ body{
     margin-top:5px;
 }
 
-/* ================= SENSOR ================= */
+/* ================= STATUS ================= */
 
 .status-normal{
     color:#15803d;
@@ -167,6 +167,18 @@ button{
     font-weight:bold;
     font-size:14px;
     cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    opacity:.88;
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
 }
 
 .auto{
@@ -199,6 +211,12 @@ button{
     font-weight:bold;
 }
 
+.relay-desc{
+    color:#64748b;
+    font-size:12px;
+    margin-top:5px;
+}
+
 .status-on{
     color:#15803d;
     background:#dcfce7;
@@ -225,6 +243,44 @@ button{
 .btn-off{
     background:#dc2626;
     color:white;
+}
+
+.btn-neutral{
+    background:#64748b;
+    color:white;
+}
+
+/* ================= VALVE ================= */
+
+.valve-control{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+}
+
+.valve-control button{
+    margin-top:0;
+}
+
+.valve-open{
+    background:#16a34a;
+    color:white;
+}
+
+.valve-close{
+    background:#dc2626;
+    color:white;
+}
+
+.valve-warning{
+    margin-top:12px;
+    padding:10px;
+    background:#fff7ed;
+    color:#c2410c;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:bold;
 }
 
 /* ================= PZEM ================= */
@@ -265,6 +321,35 @@ button{
     font-size:11px;
 }
 
+/* ================= BATTERY ================= */
+
+.battery-box{
+    margin-top:12px;
+    padding:15px;
+    border-radius:14px;
+    background:#f8fafc;
+}
+
+.battery-percent{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.battery-bar{
+    height:18px;
+    background:#e2e8f0;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.battery-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    transition:.5s;
+}
+
 /* ================= SUMMARY ================= */
 
 .summary{
@@ -301,7 +386,6 @@ button{
     padding:25px 20px 5px;
     background:#f8fafc;
     border-radius:16px;
-    position:relative;
 }
 
 .bar-wrap{
@@ -422,10 +506,6 @@ button{
         grid-template-columns:1fr;
     }
 
-    .chart{
-        height:230px;
-    }
-
 }
 
 </style>
@@ -437,8 +517,9 @@ button{
 
 <div class="container">
 
-
-<!-- ================= HEADER ================= -->
+<!-- ==================================================
+     HEADER
+================================================== -->
 
 <div class="header">
 
@@ -471,12 +552,11 @@ id="systemOnline">
 </div>
 
 
-<!-- ================= SENSOR ================= -->
+<!-- ==================================================
+     SENSOR
+================================================== -->
 
 <div class="grid">
-
-
-<!-- KELEMBAPAN -->
 
 <div class="card">
 
@@ -495,7 +575,6 @@ id="kelembapan">
 <div class="unit">
 
 Status:
-
 <span
 class="status-normal"
 id="kelembapanStatus">
@@ -508,8 +587,6 @@ LOADING
 
 </div>
 
-
-<!-- LEVEL TOREN -->
 
 <div class="card">
 
@@ -537,7 +614,6 @@ id="tankFill">
 <div class="unit">
 
 Kondisi:
-
 <span
 class="status-normal"
 id="levelStatus">
@@ -550,8 +626,6 @@ LOADING
 
 </div>
 
-
-<!-- ================= FLOW 1 ================= -->
 
 <div class="card">
 
@@ -574,8 +648,6 @@ L/min
 </div>
 
 
-<!-- ================= FLOW 2 ================= -->
-
 <div class="card">
 
 <div class="icon">💧</div>
@@ -597,8 +669,6 @@ L/min
 </div>
 
 
-<!-- ================= RPM ================= -->
-
 <div class="card">
 
 <div class="icon">⚙️</div>
@@ -619,11 +689,12 @@ RPM
 
 </div>
 
-
 </div>
 
 
-<!-- ================= SUMMARY ================= -->
+<!-- ==================================================
+     ENERGY SUMMARY
+================================================== -->
 
 <div
 class="card"
@@ -632,7 +703,6 @@ style="margin-top:16px">
 <h2>⚡ Ringkasan Energi</h2>
 
 <div class="summary">
-
 
 <div class="summary-box">
 
@@ -684,16 +754,16 @@ id="pzemActive">
 
 </div>
 
-
 </div>
 
 </div>
 
 
-<!-- ================= MODE ================= -->
+<!-- ==================================================
+     MODE
+================================================== -->
 
 <div class="grid-2">
-
 
 <div class="card">
 
@@ -728,62 +798,233 @@ MODE MANUAL
 
 <div class="card">
 
-<h2>🕐 Jadwal Toren</h2>
+<h2>🕐 Jadwal Sistem</h2>
 
 <p>
-
 ☀️ <strong>06:00 — 19:59</strong>
-
 <br>
-
-Mode ISI
-
+Mode SIANG / PENGISIAN
 </p>
 
 <p>
-
 🌙 <strong>20:00 — 05:59</strong>
-
 <br>
+Mode MALAM / PEMBUANGAN
+</p>
 
-Mode BUANG
-
+<p>
+🛣️ <strong>18:00 — 05:00</strong>
+<br>
+Lampu Jalan AUTO
 </p>
 
 </div>
 
-
 </div>
 
 
-<!-- ================= RELAY ================= -->
+<!-- ==================================================
+     BATTERY
+================================================== -->
 
 <div
 class="card"
 style="margin-top:16px">
 
-<h2>🔌 Kontrol Sistem</h2>
+<h2>🔋 Kondisi Baterai</h2>
+
+<div class="battery-box">
+
+<div class="unit">
+Tegangan Baterai — PZEM 3
+</div>
+
+<div
+class="value"
+id="batteryVoltage">
+
+-- V
+
+</div>
+
+<div
+class="battery-percent"
+id="batteryPercent">
+
+--%
+
+</div>
+
+<div class="battery-bar">
+
+<div
+class="battery-fill"
+id="batteryFill">
+
+</div>
+
+</div>
+
+<div
+class="unit"
+id="batteryStatus">
+
+STATUS: LOADING
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     CONTROL SYSTEM
+================================================== -->
+
+<div
+class="card"
+style="margin-top:16px">
+
+<h2>🔌 Kontrol Sistem — 8 Relay</h2>
 
 <div class="unit">
 
-Status relay akan mengikuti data dari API.
+AUTO = dikendalikan logika ESP32.
+MANUAL = relay dapat dikendalikan dari dashboard.
 
 </div>
 
 
-<!-- RELAY 1 -->
+<!-- ================= VALVE TURBIN ================= -->
 
 <div class="relay">
 
 <div class="relay-top">
 
+<div>
+
 <div class="relay-name">
-🌱 Relay 1 — Valve Kebun
+🔀 Valve Sumber / Turbin
+</div>
+
+<div class="relay-desc">
+K1 = OPEN • K2 = CLOSE
+</div>
+
 </div>
 
 <div
 class="status-off"
-id="relayStatus1">
+id="valveTurbinStatus">
+
+CLOSED
+
+</div>
+
+</div>
+
+<div class="valve-control">
+
+<button
+class="valve-open"
+onclick="setValve('turbin','open')">
+
+OPEN
+
+</button>
+
+<button
+class="valve-close"
+onclick="setValve('turbin','close')">
+
+CLOSE
+
+</button>
+
+</div>
+
+<div
+class="valve-warning">
+
+⚠️ Interlock: Valve Turbin dan Valve Kebun tidak boleh OPEN bersamaan.
+
+</div>
+
+</div>
+
+
+<!-- ================= VALVE KEBUN ================= -->
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div>
+
+<div class="relay-name">
+🌱 Valve Kebun
+</div>
+
+<div class="relay-desc">
+K3 = OPEN • K4 = CLOSE
+</div>
+
+</div>
+
+<div
+class="status-off"
+id="valveKebunStatus">
+
+CLOSED
+
+</div>
+
+</div>
+
+<div class="valve-control">
+
+<button
+class="valve-open"
+onclick="setValve('kebun','open')">
+
+OPEN
+
+</button>
+
+<button
+class="valve-close"
+onclick="setValve('kebun','close')">
+
+CLOSE
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= RELAY 5 ================= -->
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div>
+
+<div class="relay-name">
+🚿 K5 — Pompa Pengisian
+</div>
+
+<div class="relay-desc">
+Pompa mengisi baterai / sistem sesuai logika AUTO.</div>
+
+</div>
+
+<div
+class="status-off"
+id="relayStatus5">
 
 OFF
 
@@ -793,7 +1034,7 @@ OFF
 
 <button
 class="btn-on"
-onclick="setRelay(1,true)">
+onclick="setRelay(5,true)">
 
 ON
 
@@ -801,7 +1042,7 @@ ON
 
 <button
 class="btn-off"
-onclick="setRelay(1,false)">
+onclick="setRelay(5,false)">
 
 OFF
 
@@ -810,19 +1051,26 @@ OFF
 </div>
 
 
-<!-- RELAY 2 -->
+<!-- ================= RELAY 6 ================= -->
 
 <div class="relay">
 
 <div class="relay-top">
 
+<div>
+
 <div class="relay-name">
-💧 Relay 2 — Valve Buang
+🌱 K6 — Lampu Kebun
+</div>
+
+<div class="relay-desc">
+Kontrol lampu area kebun.</div>
+
 </div>
 
 <div
 class="status-off"
-id="relayStatus2">
+id="relayStatus6">
 
 OFF
 
@@ -832,7 +1080,7 @@ OFF
 
 <button
 class="btn-on"
-onclick="setRelay(2,true)">
+onclick="setRelay(6,true)">
 
 ON
 
@@ -840,7 +1088,7 @@ ON
 
 <button
 class="btn-off"
-onclick="setRelay(2,false)">
+onclick="setRelay(6,false)">
 
 OFF
 
@@ -849,19 +1097,26 @@ OFF
 </div>
 
 
-<!-- RELAY 3 -->
+<!-- ================= RELAY 7 ================= -->
 
 <div class="relay">
 
 <div class="relay-top">
 
+<div>
+
 <div class="relay-name">
-🚿 Relay 3 — Pompa Isi
+🛣️ K7 — Lampu Jalan
+</div>
+
+<div class="relay-desc">
+AUTO: 18:00 — 05:00</div>
+
 </div>
 
 <div
 class="status-off"
-id="relayStatus3">
+id="relayStatus7">
 
 OFF
 
@@ -871,7 +1126,7 @@ OFF
 
 <button
 class="btn-on"
-onclick="setRelay(3,true)">
+onclick="setRelay(7,true)">
 
 ON
 
@@ -879,7 +1134,7 @@ ON
 
 <button
 class="btn-off"
-onclick="setRelay(3,false)">
+onclick="setRelay(7,false)">
 
 OFF
 
@@ -888,19 +1143,26 @@ OFF
 </div>
 
 
-<!-- RELAY 4 -->
+<!-- ================= RELAY 8 ================= -->
 
 <div class="relay">
 
 <div class="relay-top">
 
+<div>
+
 <div class="relay-name">
-⚙️ Relay 4 — Cadangan
+🔥 K8 — Dummy Load
+</div>
+
+<div class="relay-desc">
+Menjaga baterai sekitar 90% saat pengisian.</div>
+
 </div>
 
 <div
 class="status-off"
-id="relayStatus4">
+id="relayStatus8">
 
 OFF
 
@@ -910,7 +1172,7 @@ OFF
 
 <button
 class="btn-on"
-onclick="setRelay(4,true)">
+onclick="setRelay(8,true)">
 
 ON
 
@@ -918,7 +1180,7 @@ ON
 
 <button
 class="btn-off"
-onclick="setRelay(4,false)">
+onclick="setRelay(8,false)">
 
 OFF
 
@@ -930,7 +1192,9 @@ OFF
 </div>
 
 
-<!-- ================= PZEM ================= -->
+<!-- ==================================================
+     PZEM
+================================================== -->
 
 <div
 class="card"
@@ -944,49 +1208,29 @@ style="margin-top:16px">
 <div class="pzem">
 
 <div class="pzem-title">
-⚡ PZEM 1
+☀️ PZEM 1 — PV
 </div>
 
 <div class="pzem-grid">
 
 <div class="pzem-value">
-
-<strong id="pzem1Voltage">
--- V
-</strong>
-
+<strong id="pzem1Voltage">-- V</strong>
 <span>VOLTAGE</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem1Current">
--- A
-</strong>
-
+<strong id="pzem1Current">-- A</strong>
 <span>CURRENT</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem1Power">
--- W
-</strong>
-
+<strong id="pzem1Power">-- W</strong>
 <span>POWER</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem1Energy">
--- kWh
-</strong>
-
+<strong id="pzem1Energy">-- kWh</strong>
 <span>ENERGY</span>
-
 </div>
 
 </div>
@@ -999,49 +1243,29 @@ style="margin-top:16px">
 <div class="pzem">
 
 <div class="pzem-title">
-⚡ PZEM 2
+⚙️ PZEM 2 — Generator
 </div>
 
 <div class="pzem-grid">
 
 <div class="pzem-value">
-
-<strong id="pzem2Voltage">
--- V
-</strong>
-
+<strong id="pzem2Voltage">-- V</strong>
 <span>VOLTAGE</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem2Current">
--- A
-</strong>
-
+<strong id="pzem2Current">-- A</strong>
 <span>CURRENT</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem2Power">
--- W
-</strong>
-
+<strong id="pzem2Power">-- W</strong>
 <span>POWER</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem2Energy">
--- kWh
-</strong>
-
+<strong id="pzem2Energy">-- kWh</strong>
 <span>ENERGY</span>
-
 </div>
 
 </div>
@@ -1054,49 +1278,29 @@ style="margin-top:16px">
 <div class="pzem">
 
 <div class="pzem-title">
-⚡ PZEM 3
+🔋 PZEM 3 — Baterai
 </div>
 
 <div class="pzem-grid">
 
 <div class="pzem-value">
-
-<strong id="pzem3Voltage">
--- V
-</strong>
-
+<strong id="pzem3Voltage">-- V</strong>
 <span>VOLTAGE</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem3Current">
--- A
-</strong>
-
+<strong id="pzem3Current">-- A</strong>
 <span>CURRENT</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem3Power">
--- W
-</strong>
-
+<strong id="pzem3Power">-- W</strong>
 <span>POWER</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem3Energy">
--- kWh
-</strong>
-
+<strong id="pzem3Energy">-- kWh</strong>
 <span>ENERGY</span>
-
 </div>
 
 </div>
@@ -1109,60 +1313,41 @@ style="margin-top:16px">
 <div class="pzem">
 
 <div class="pzem-title">
-⚡ PZEM 4
+🔥 PZEM 4 — Dummy Load
 </div>
 
 <div class="pzem-grid">
 
 <div class="pzem-value">
-
-<strong id="pzem4Voltage">
--- V
-</strong>
-
+<strong id="pzem4Voltage">-- V</strong>
 <span>VOLTAGE</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem4Current">
--- A
-</strong>
-
+<strong id="pzem4Current">-- A</strong>
 <span>CURRENT</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem4Power">
--- W
-</strong>
-
+<strong id="pzem4Power">-- W</strong>
 <span>POWER</span>
-
 </div>
 
 <div class="pzem-value">
-
-<strong id="pzem4Energy">
--- kWh
-</strong>
-
+<strong id="pzem4Energy">-- kWh</strong>
 <span>ENERGY</span>
-
 </div>
 
 </div>
 
 </div>
 
-
 </div>
 
 
-<!-- ================= CHART ================= -->
+<!-- ==================================================
+     CHART
+================================================== -->
 
 <div
 class="card"
@@ -1171,28 +1356,30 @@ style="margin-top:16px">
 <h2>📊 Grafik Daya PZEM</h2>
 
 <div class="unit">
-Perbandingan konsumsi daya setiap sensor
+Perbandingan daya PV, Generator, Baterai dan Dummy Load
 </div>
 
 <div class="chart">
-
 
 <div class="bar-wrap">
 
 <div
 class="bar-value"
 id="chartPower1">
+
 -- W
+
 </div>
 
 <div
 class="bar"
 id="bar1"
 style="height:5%">
+
 </div>
 
 <div class="bar-label">
-PZEM 1
+PV
 </div>
 
 </div>
@@ -1203,17 +1390,20 @@ PZEM 1
 <div
 class="bar-value"
 id="chartPower2">
+
 -- W
+
 </div>
 
 <div
 class="bar"
 id="bar2"
 style="height:5%">
+
 </div>
 
 <div class="bar-label">
-PZEM 2
+GENERATOR
 </div>
 
 </div>
@@ -1224,17 +1414,20 @@ PZEM 2
 <div
 class="bar-value"
 id="chartPower3">
+
 -- W
+
 </div>
 
 <div
 class="bar"
 id="bar3"
 style="height:5%">
+
 </div>
 
 <div class="bar-label">
-PZEM 3
+BATERAI
 </div>
 
 </div>
@@ -1245,28 +1438,32 @@ PZEM 3
 <div
 class="bar-value"
 id="chartPower4">
+
 -- W
+
 </div>
 
 <div
 class="bar"
 id="bar4"
 style="height:5%">
+
 </div>
 
 <div class="bar-label">
-PZEM 4
+DUMMY
+</div>
+
+</div>
+
 </div>
 
 </div>
 
 
-</div>
-
-</div>
-
-
-<!-- ================= SYSTEM STATUS ================= -->
+<!-- ==================================================
+     SYSTEM STATUS
+================================================== -->
 
 <div
 class="card"
@@ -1275,7 +1472,6 @@ style="margin-top:16px">
 <h2>🟢 Status Sistem</h2>
 
 <div class="system">
-
 
 <div class="system-box">
 
@@ -1324,13 +1520,14 @@ MANUAL
 
 </div>
 
-
 </div>
 
 </div>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- ==================================================
+     FOOTER
+================================================== -->
 
 <div class="footer">
 
@@ -1348,11 +1545,24 @@ ESP32 • Renewable Energy • IoT
 
 </div>
 
-
 </div>
 
 
 <script>
+
+/* ==================================================
+   API
+================================================== */
+
+const API_URL =
+"https://smart-water-api.agisrifalharianto2.workers.dev/api/data";
+
+const CONTROL_URL =
+API_URL.replace(
+    "/api/data",
+    "/api/control"
+);
+
 
 /* ==================================================
    CLOCK
@@ -1393,11 +1603,193 @@ setInterval(updateClock,1000);
 
 
 /* ==================================================
-   API
+   BATTERY ESTIMATION
 ================================================== */
 
-const API_URL =
-"https://smart-water-api.agisrifalharianto2.workers.dev/api/data";
+function batteryPercentage(voltage){
+
+    /*
+       Berdasarkan tabel baterai yang diberikan.
+
+       14.2 V = 100%
+       13.6 V = 100% rising
+       13.4 V = 99%
+       13.3 V = 90%
+       13.2 V = 70%
+       13.1 V = 40%
+       13.0 V = 30%
+       12.9 V = 20%
+       12.8 V = 17%
+       12.5 V = 14%
+       12.0 V = 9%
+       10.0 V = 0%
+    */
+
+    if(voltage >= 13.6)
+        return 100;
+
+    if(voltage >= 13.4)
+        return 99;
+
+    if(voltage >= 13.3)
+        return 90;
+
+    if(voltage >= 13.2)
+        return 70;
+
+    if(voltage >= 13.1)
+        return 40;
+
+    if(voltage >= 13.0)
+        return 30;
+
+    if(voltage >= 12.9)
+        return 20;
+
+    if(voltage >= 12.8)
+        return 17;
+
+    if(voltage >= 12.5)
+        return 14;
+
+    if(voltage >= 12.0)
+        return 9;
+
+    if(voltage <= 10.0)
+        return 0;
+
+
+    /*
+       Interpolasi sederhana
+       untuk tegangan di antara
+       titik tabel.
+    */
+
+    const points = [
+
+        [10.0,0],
+        [12.0,9],
+        [12.5,14],
+        [12.8,17],
+        [12.9,20],
+        [13.0,30],
+        [13.1,40],
+        [13.2,70],
+        [13.3,90],
+        [13.4,99],
+        [13.6,100]
+
+    ];
+
+
+    for(
+        let i=0;
+        i<points.length-1;
+        i++
+    ){
+
+        const v1 =
+            points[i][0];
+
+        const p1 =
+            points[i][1];
+
+        const v2 =
+            points[i+1][0];
+
+        const p2 =
+            points[i+1][1];
+
+
+        if(
+            voltage >= v1 &&
+            voltage < v2
+        ){
+
+            return Math.round(
+                p1 +
+                (
+                    (voltage-v1) /
+                    (v2-v1)
+                ) *
+                (p2-p1)
+            );
+
+        }
+
+    }
+
+    return 0;
+}
+
+
+/* ==================================================
+   BATTERY DISPLAY
+================================================== */
+
+function updateBattery(voltage){
+
+    const percent =
+        batteryPercentage(voltage);
+
+
+    document.getElementById(
+        "batteryVoltage"
+    ).textContent =
+        voltage.toFixed(2) + " V";
+
+
+    document.getElementById(
+        "batteryPercent"
+    ).textContent =
+        percent + "%";
+
+
+    document.getElementById(
+        "batteryFill"
+    ).style.width =
+        percent + "%";
+
+
+    let status =
+        "NORMAL";
+
+
+    if(percent >= 90){
+
+        status =
+            "TINGGI — DUMMY LOAD DAPAT AKTIF";
+
+    }
+
+    else if(percent >= 40){
+
+        status =
+            "NORMAL";
+
+    }
+
+    else if(percent >= 20){
+
+        status =
+            "RENDAH";
+
+    }
+
+    else{
+
+        status =
+            "KRITIS";
+
+    }
+
+
+    document.getElementById(
+        "batteryStatus"
+    ).textContent =
+        "STATUS: " + status;
+
+}
 
 
 /* ==================================================
@@ -1409,23 +1801,27 @@ async function getAPIData(){
     try{
 
         const response =
-            await fetch(API_URL);
+            await fetch(
+                API_URL,
+                {
+                    cache:"no-store"
+                }
+            );
+
 
         if(!response.ok){
 
             throw new Error(
-                "HTTP Error: " + response.status
+                "HTTP Error: " +
+                response.status
             );
 
         }
 
+
         const data =
             await response.json();
 
-        console.log(
-            "✅ DATA API:",
-            data
-        );
 
         updateDashboard(data);
 
@@ -1434,14 +1830,16 @@ async function getAPIData(){
     catch(error){
 
         console.error(
-            "❌ Gagal mengambil data API:",
+            "Gagal mengambil data API:",
             error
         );
+
 
         document.getElementById(
             "systemOnline"
         ).innerHTML =
             "● API ERROR";
+
 
         document.getElementById(
             "systemOnline"
@@ -1459,79 +1857,42 @@ async function getAPIData(){
 
 function updateDashboard(data){
 
-    /* ==================================================
-       SENSOR
-    ================================================== */
+    /* ================= SENSOR ================= */
+
+    const humidity =
+        Number(
+            data.kelembapan ?? 0
+        );
+
 
     document.getElementById(
         "kelembapan"
     ).textContent =
-        (data.kelembapan ?? 0) + "%";
+        humidity.toFixed(1) + "%";
+
+
+    let humidityStatus =
+        humidity < 30
+        ? "KERING"
+        : "NORMAL";
 
 
     document.getElementById(
-        "levelToren"
+        "kelembapanStatus"
     ).textContent =
-        (data.levelToren ?? 0) + "%";
+        humidityStatus;
 
-
-    /* ==================================================
-       FLOW 1
-    ================================================== */
-
-    const flow1 =
-        Number(
-            data.flowRate1 ??
-            data.flow1 ??
-            data.flowRate ??
-            0
-        );
-
-
-    document.getElementById(
-        "flowRate1"
-    ).textContent =
-        flow1.toFixed(2);
-
-
-    /* ==================================================
-       FLOW 2
-    ================================================== */
-
-    const flow2 =
-        Number(
-            data.flowRate2 ??
-            data.flow2 ??
-            0
-        );
-
-
-    document.getElementById(
-        "flowRate2"
-    ).textContent =
-        flow2.toFixed(2);
-
-
-    /* ==================================================
-       RPM GENERATOR
-    ================================================== */
-
-    document.getElementById(
-        "rpmGenerator"
-    ).textContent =
-        Number(
-            data.rpmGenerator ?? 0
-        ).toFixed(0);
-
-
-    /* ==================================================
-       TANK
-    ================================================== */
 
     const level =
         Number(
             data.levelToren ?? 0
         );
+
+
+    document.getElementById(
+        "levelToren"
+    ).textContent =
+        level.toFixed(1) + "%";
 
 
     document.getElementById(
@@ -1545,10 +1906,6 @@ function updateDashboard(data){
             )
         ) + "%";
 
-
-    /* ==================================================
-       TANK STATUS
-    ================================================== */
 
     let levelStatus =
         "AMAN";
@@ -1575,9 +1932,43 @@ function updateDashboard(data){
         levelStatus;
 
 
-    /* ==================================================
-       PZEM
-    ================================================== */
+    const flow1 =
+        Number(
+            data.flowRate1 ??
+            data.flow1 ??
+            0
+        );
+
+
+    const flow2 =
+        Number(
+            data.flowRate2 ??
+            data.flow2 ??
+            0
+        );
+
+
+    document.getElementById(
+        "flowRate1"
+    ).textContent =
+        flow1.toFixed(2);
+
+
+    document.getElementById(
+        "flowRate2"
+    ).textContent =
+        flow2.toFixed(2);
+
+
+    document.getElementById(
+        "rpmGenerator"
+    ).textContent =
+        Number(
+            data.rpmGenerator ?? 0
+        ).toFixed(0);
+
+
+    /* ================= PZEM ================= */
 
     const pzem =
         Array.isArray(data.pzem)
@@ -1586,9 +1977,7 @@ function updateDashboard(data){
 
 
     let totalPower = 0;
-
     let totalEnergy = 0;
-
     let active = 0;
 
 
@@ -1623,12 +2012,8 @@ function updateDashboard(data){
                 );
 
 
-            totalPower +=
-                power;
-
-
-            totalEnergy +=
-                energy;
+            totalPower += power;
+            totalEnergy += energy;
 
 
             if(
@@ -1674,45 +2059,29 @@ function updateDashboard(data){
                 );
 
 
-            if(voltageEl){
-
+            if(voltageEl)
                 voltageEl.textContent =
                     voltage.toFixed(1) +
                     " V";
 
-            }
 
-
-            if(currentEl){
-
+            if(currentEl)
                 currentEl.textContent =
                     current.toFixed(2) +
                     " A";
 
-            }
 
-
-            if(powerEl){
-
+            if(powerEl)
                 powerEl.textContent =
                     power.toFixed(0) +
                     " W";
 
-            }
 
-
-            if(energyEl){
-
+            if(energyEl)
                 energyEl.textContent =
                     energy.toFixed(2) +
                     " kWh";
 
-            }
-
-
-            /* ==================================================
-               CHART
-            ================================================== */
 
             const chartPower =
                 document.getElementById(
@@ -1728,13 +2097,10 @@ function updateDashboard(data){
                 );
 
 
-            if(chartPower){
-
+            if(chartPower)
                 chartPower.textContent =
                     power.toFixed(0) +
                     " W";
-
-            }
 
 
             if(bar){
@@ -1758,9 +2124,24 @@ function updateDashboard(data){
     );
 
 
-    /* ==================================================
-       SUMMARY
-    ================================================== */
+    /* ================= BATTERY ================= */
+
+    const batteryVoltage =
+        Number(
+            pzem[2]?.voltage ?? 0
+        );
+
+
+    if(batteryVoltage > 0){
+
+        updateBattery(
+            batteryVoltage
+        );
+
+    }
+
+
+    /* ================= SUMMARY ================= */
 
     document.getElementById(
         "totalPower"
@@ -1788,9 +2169,7 @@ function updateDashboard(data){
         active + " PZEM AKTIF";
 
 
-    /* ==================================================
-       MODE
-    ================================================== */
+    /* ================= MODE ================= */
 
     const mode =
         data.mode ||
@@ -1809,9 +2188,7 @@ function updateDashboard(data){
         mode;
 
 
-    /* ==================================================
-       ESP STATUS
-    ================================================== */
+    /* ================= ESP ================= */
 
     const espOnline =
         data.espOnline === true;
@@ -1825,21 +2202,15 @@ function updateDashboard(data){
         : "ESP32 OFFLINE";
 
 
-    const espDot =
-        document.getElementById(
-            "espDot"
-        );
-
-
-    espDot.classList.toggle(
+    document.getElementById(
+        "espDot"
+    ).classList.toggle(
         "dot-off",
         !espOnline
     );
 
 
-    /* ==================================================
-       API STATUS
-    ================================================== */
+    /* ================= API ================= */
 
     document.getElementById(
         "systemOnline"
@@ -1853,33 +2224,24 @@ function updateDashboard(data){
         "#16a34a";
 
 
-    /* ==================================================
-       RELAY
-    ================================================== */
+    /* ================= RELAY ================= */
 
     if(data.relay){
 
-        updateRelay(
-            1,
-            data.relay.relay1
-        );
+        for(let i=1;i<=8;i++){
+
+            updateRelay(
+                i,
+                data.relay[
+                    "relay" + i
+                ]
+            );
+
+        }
 
 
-        updateRelay(
-            2,
-            data.relay.relay2
-        );
-
-
-        updateRelay(
-            3,
-            data.relay.relay3
-        );
-
-
-        updateRelay(
-            4,
-            data.relay.relay4
+        updateValveStatus(
+            data.relay
         );
 
     }
@@ -1888,7 +2250,7 @@ function updateDashboard(data){
 
 
 /* ==================================================
-   RELAY DISPLAY
+   UPDATE RELAY
 ================================================== */
 
 function updateRelay(
@@ -1912,7 +2274,6 @@ function updateRelay(
         element.textContent =
             "ON";
 
-
         element.className =
             "status-on";
 
@@ -1923,9 +2284,94 @@ function updateRelay(
         element.textContent =
             "OFF";
 
-
         element.className =
             "status-off";
+
+    }
+
+}
+
+
+/* ==================================================
+   VALVE STATUS
+================================================== */
+
+function updateValveStatus(relay){
+
+    const turbinOpen =
+        relay.relay1 === true;
+
+
+    const turbinClose =
+        relay.relay2 === true;
+
+
+    const kebunOpen =
+        relay.relay3 === true;
+
+
+    const kebunClose =
+        relay.relay4 === true;
+
+
+    const turbin =
+        document.getElementById(
+            "valveTurbinStatus"
+        );
+
+
+    const kebun =
+        document.getElementById(
+            "valveKebunStatus"
+        );
+
+
+    if(turbin){
+
+        if(turbinOpen){
+
+            turbin.textContent =
+                "OPEN";
+
+            turbin.className =
+                "status-on";
+
+        }
+
+        else{
+
+            turbin.textContent =
+                "CLOSED";
+
+            turbin.className =
+                "status-off";
+
+        }
+
+    }
+
+
+    if(kebun){
+
+        if(kebunOpen){
+
+            kebun.textContent =
+                "OPEN";
+
+            kebun.className =
+                "status-on";
+
+        }
+
+        else{
+
+            kebun.textContent =
+                "CLOSED";
+
+            kebun.className =
+                "status-off";
+
+        }
 
     }
 
@@ -1942,10 +2388,7 @@ async function setMode(mode){
 
         const response =
             await fetch(
-                API_URL.replace(
-                    "/api/data",
-                    "/api/control"
-                ),
+                CONTROL_URL,
                 {
                     method:"POST",
 
@@ -1966,17 +2409,11 @@ async function setMode(mode){
             await response.json();
 
 
-        console.log(
-            "✅ MODE CONTROL:",
-            result
-        );
-
-
         if(!result.success){
 
             throw new Error(
                 result.message ||
-                "Gagal mengubah mode"
+                "Control gagal"
             );
 
         }
@@ -1986,15 +2423,17 @@ async function setMode(mode){
             result.data
         );
 
+
+        console.log(
+            "Mode:",
+            mode
+        );
+
     }
 
     catch(error){
 
-        console.error(
-            "❌ Gagal mengubah mode:",
-            error
-        );
-
+        console.error(error);
 
         alert(
             "Gagal mengubah mode: " +
@@ -2028,10 +2467,7 @@ async function setRelay(
 
         const response =
             await fetch(
-                API_URL.replace(
-                    "/api/data",
-                    "/api/control"
-                ),
+                CONTROL_URL,
                 {
                     method:"POST",
 
@@ -2052,17 +2488,145 @@ async function setRelay(
             await response.json();
 
 
-        console.log(
-            "✅ RELAY CONTROL:",
-            result
+        if(!result.success){
+
+            throw new Error(
+                result.message ||
+                "Relay gagal dikontrol"
+            );
+
+        }
+
+
+        updateDashboard(
+            result.data
         );
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Gagal mengontrol relay: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   VALVE CONTROL
+================================================== */
+
+async function setValve(
+    valve,
+    action
+){
+
+    /*
+       TURBIN:
+       OPEN  = K1 ON + K2 OFF
+       CLOSE = K1 OFF + K2 ON
+
+       KEBUN:
+       OPEN  = K3 ON + K4 OFF
+       CLOSE = K3 OFF + K4 ON
+
+       INTERLOCK:
+       Tidak boleh K1 dan K3 ON bersamaan.
+    */
+
+
+    const relayData = {};
+
+
+    if(valve === "turbin"){
+
+        if(action === "open"){
+
+            /*
+               Saat Turbin OPEN,
+               Kebun OPEN harus dimatikan.
+            */
+
+            relayData.relay1 = true;
+            relayData.relay2 = false;
+
+            relayData.relay3 = false;
+
+        }
+
+        else{
+
+            relayData.relay1 = false;
+            relayData.relay2 = true;
+
+        }
+
+    }
+
+
+    if(valve === "kebun"){
+
+        if(action === "open"){
+
+            /*
+               Saat Kebun OPEN,
+               Turbin OPEN harus dimatikan.
+            */
+
+            relayData.relay3 = true;
+            relayData.relay4 = false;
+
+            relayData.relay1 = false;
+
+        }
+
+        else{
+
+            relayData.relay3 = false;
+            relayData.relay4 = true;
+
+        }
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                CONTROL_URL,
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            relay:relayData
+                        })
+                }
+            );
+
+
+        const result =
+            await response.json();
 
 
         if(!result.success){
 
             throw new Error(
                 result.message ||
-                "Gagal mengontrol relay"
+                "Valve gagal dikontrol"
             );
 
         }
@@ -2076,14 +2640,10 @@ async function setRelay(
 
     catch(error){
 
-        console.error(
-            "❌ Gagal mengontrol relay:",
-            error
-        );
-
+        console.error(error);
 
         alert(
-            "Gagal mengontrol relay: " +
+            "Gagal mengontrol valve: " +
             error.message
         );
 
@@ -2093,19 +2653,23 @@ async function setRelay(
 
 
 /* ==================================================
-   START API
+   START
 ================================================== */
 
 getAPIData();
 
 
 /*
-   Update data setiap 5 detik
+   Refresh 1 detik.
+
+   Ini membuat dashboard lebih responsif.
+   Namun data tetap bergantung pada interval
+   pengiriman ESP32 dan kecepatan API.
 */
 
 setInterval(
     getAPIData,
-    5000
+    1000
 );
 
 </script>
