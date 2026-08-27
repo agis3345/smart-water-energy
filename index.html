@@ -144,7 +144,7 @@ body{
     height:100%;
     width:0%;
     background:linear-gradient(90deg,#38bdf8,#2563eb);
-    transition:.5s;
+    transition:.3s;
 }
 
 /* ================= MODE ================= */
@@ -167,12 +167,16 @@ button{
     font-weight:bold;
     font-size:14px;
     cursor:pointer;
-    transition:.2s;
+    transition:.15s;
 }
 
 button:hover{
     opacity:.88;
     transform:translateY(-1px);
+}
+
+button:active{
+    transform:scale(.98);
 }
 
 button:disabled{
@@ -233,6 +237,8 @@ button:disabled{
     font-size:12px;
     font-weight:bold;
 }
+
+/* ================= BUTTON ================= */
 
 .btn-on{
     background:#16a34a;
@@ -348,7 +354,7 @@ button:disabled{
         #eab308,
         #22c55e
     );
-    transition:.5s;
+    transition:.3s;
 }
 
 /* ================= SUMMARY ================= */
@@ -414,7 +420,7 @@ button:disabled{
         #2563eb,
         #38bdf8
     );
-    transition:.4s;
+    transition:.3s;
 }
 
 .bar-label{
@@ -448,6 +454,29 @@ button:disabled{
 
 .dot-off{
     background:#dc2626;
+}
+
+/* ================= CONTROL FEEDBACK ================= */
+
+.control-feedback{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#0f172a;
+    color:white;
+    padding:10px 15px;
+    border-radius:12px;
+    font-size:13px;
+    opacity:0;
+    transform:translateY(10px);
+    pointer-events:none;
+    transition:.2s;
+    z-index:9999;
+}
+
+.control-feedback.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 /* ================= FOOTER ================= */
@@ -728,7 +757,6 @@ style="margin-top:16px">
 
 <div class="summary">
 
-
 <div class="summary-box">
 
 <div class="summary-title">
@@ -779,7 +807,6 @@ id="pzemActive">
 
 </div>
 
-
 </div>
 
 </div>
@@ -806,6 +833,7 @@ MANUAL
 
 <button
 class="auto"
+id="autoButton"
 onclick="setMode('AUTO')">
 
 MODE AUTO
@@ -814,6 +842,7 @@ MODE AUTO
 
 <button
 class="manual"
+id="manualButton"
 onclick="setMode('MANUAL')">
 
 MODE MANUAL
@@ -830,7 +859,7 @@ MODE MANUAL
 <p>
 🛣️ Lampu Jalan
 <br>
-<strong>18:00 — 05:00</strong>
+<strong>18:00 — 05:59</strong>
 </p>
 
 <p>
@@ -959,6 +988,7 @@ CLOSED
 
 <button
 class="open-btn"
+id="valve3OpenButton"
 onclick="openValve3()">
 
 OPEN
@@ -967,6 +997,7 @@ OPEN
 
 <button
 class="close-btn"
+id="valve3CloseButton"
 onclick="closeValve3()">
 
 CLOSE
@@ -1013,6 +1044,7 @@ CLOSED
 
 <button
 class="open-btn"
+id="valve2OpenButton"
 onclick="openValve2()">
 
 OPEN
@@ -1021,6 +1053,7 @@ OPEN
 
 <button
 class="close-btn"
+id="valve2CloseButton"
 onclick="closeValve2()">
 
 CLOSE
@@ -1141,7 +1174,7 @@ OFF
 </div>
 
 <div class="relay-desc">
-AUTO: 18:00 — 05:00
+AUTO: 18:00 — 05:59
 </div>
 
 </div>
@@ -1230,7 +1263,7 @@ style="margin-top:15px">
 
 ⚠️ Safety interlock valve tetap berlaku.
 
-Valve 3-Way OPEN dan Valve 2-Way OPEN
+K1 = OPEN Valve 3-Way dan K3 = OPEN Valve 2-Way
 tidak boleh aktif bersamaan.
 
 </div>
@@ -1681,6 +1714,19 @@ ESP32 • Renewable Energy • IoT
 </div>
 
 
+<!-- ==================================================
+     CONTROL FEEDBACK
+================================================== -->
+
+<div
+id="controlFeedback"
+class="control-feedback">
+
+Perintah terkirim ✓
+
+</div>
+
+
 <script>
 
 /* ==================================================
@@ -1691,10 +1737,31 @@ const API_URL =
 "https://smart-water-api.agisrifalharianto2.workers.dev/api/data";
 
 const CONTROL_URL =
-API_URL.replace(
-    "/api/data",
-    "/api/control"
-);
+"https://smart-water-api.agisrifalharianto2.workers.dev/api/control";
+
+
+/* ==================================================
+   LOCAL STATE
+================================================== */
+
+let relayState = {
+
+    relay1:false,
+    relay2:false,
+    relay3:false,
+    relay4:false,
+    relay5:false,
+    relay6:false,
+    relay7:false,
+    relay8:false
+
+};
+
+let currentMode =
+"MANUAL";
+
+let controlBusy =
+false;
 
 
 /* ==================================================
@@ -1745,29 +1812,76 @@ setInterval(
 
 
 /* ==================================================
-   BATTERY PERCENTAGE
+   FEEDBACK
+================================================== */
+
+let feedbackTimer = null;
+
+function showFeedback(
+    message
+){
+
+    const el =
+        document.getElementById(
+            "controlFeedback"
+        );
+
+    el.textContent =
+        message;
+
+    el.classList.add(
+        "show"
+    );
+
+    clearTimeout(
+        feedbackTimer
+    );
+
+    feedbackTimer =
+        setTimeout(
+            ()=>{
+                el.classList.remove(
+                    "show"
+                );
+            },
+            1200
+        );
+}
+
+
+/* ==================================================
+   BUTTON LOCK
+================================================== */
+
+function setControlBusy(
+    busy
+){
+
+    controlBusy =
+        busy;
+
+    const buttons =
+        document.querySelectorAll(
+            ".open-btn, .close-btn, .btn-on, .btn-off, .auto, .manual"
+        );
+
+    buttons.forEach(
+        button=>{
+            button.disabled =
+                busy;
+        }
+    );
+
+}
+
+
+/* ==================================================
+   BATTERY
 ================================================== */
 
 function batteryPercentage(
     voltage
 ){
-
-    /*
-       Tabel baterai:
-
-       14.2 V = 100%
-       13.6 V = 100%
-       13.4 V = 99%
-       13.3 V = 90%
-       13.2 V = 70%
-       13.1 V = 40%
-       13.0 V = 30%
-       12.9 V = 20%
-       12.8 V = 17%
-       12.5 V = 14%
-       12.0 V = 9%
-       10.0 V = 0%
-    */
 
     if(voltage >= 13.6)
         return 100;
@@ -1799,64 +1913,6 @@ function batteryPercentage(
     if(voltage >= 12.0)
         return 9;
 
-    if(voltage <= 10.0)
-        return 0;
-
-
-    const points = [
-
-        [10.0,0],
-        [12.0,9],
-        [12.5,14],
-        [12.8,17],
-        [12.9,20],
-        [13.0,30],
-        [13.1,40],
-        [13.2,70],
-        [13.3,90],
-        [13.4,99],
-        [13.6,100]
-
-    ];
-
-
-    for(
-        let i=0;
-        i<points.length-1;
-        i++
-    ){
-
-        const v1 =
-            points[i][0];
-
-        const p1 =
-            points[i][1];
-
-        const v2 =
-            points[i+1][0];
-
-        const p2 =
-            points[i+1][1];
-
-
-        if(
-            voltage >= v1 &&
-            voltage < v2
-        ){
-
-            return Math.round(
-                p1 +
-                (
-                    (voltage-v1) /
-                    (v2-v1)
-                ) *
-                (p2-p1)
-            );
-
-        }
-
-    }
-
     return 0;
 
 }
@@ -1875,13 +1931,11 @@ function updateBattery(
             voltage
         );
 
-
     document.getElementById(
         "batteryVoltage"
     ).textContent =
         voltage.toFixed(2) +
         " V";
-
 
     document.getElementById(
         "batteryPercent"
@@ -1889,17 +1943,14 @@ function updateBattery(
         percent +
         "%";
 
-
     document.getElementById(
         "batteryFill"
     ).style.width =
         percent +
         "%";
 
-
     let status =
         "NORMAL";
-
 
     if(percent >= 90){
 
@@ -1929,7 +1980,6 @@ function updateBattery(
 
     }
 
-
     document.getElementById(
         "batteryStatus"
     ).textContent =
@@ -1943,18 +1993,34 @@ function updateBattery(
    GET API DATA
 ================================================== */
 
+let apiRequestRunning =
+false;
+
 async function getAPIData(){
+
+    /*
+       Jangan izinkan request GET
+       bertumpuk.
+    */
+
+    if(apiRequestRunning)
+        return;
+
+    apiRequestRunning =
+        true;
 
     try{
 
         const response =
             await fetch(
-                API_URL,
+                API_URL +
+                "?t=" +
+                Date.now(),
                 {
+                    method:"GET",
                     cache:"no-store"
                 }
             );
-
 
         if(!response.ok){
 
@@ -1965,36 +2031,38 @@ async function getAPIData(){
 
         }
 
-
         const data =
             await response.json();
-
 
         updateDashboard(
             data
         );
-
 
     }
 
     catch(error){
 
         console.error(
-            "❌ API ERROR:",
+            "API ERROR:",
             error
         );
-
 
         document.getElementById(
             "systemOnline"
         ).innerHTML =
             "● API ERROR";
 
-
         document.getElementById(
             "systemOnline"
         ).style.background =
             "#dc2626";
+
+    }
+
+    finally{
+
+        apiRequestRunning =
+            false;
 
     }
 
@@ -2018,19 +2086,19 @@ function updateDashboard(
             data.kelembapan ?? 0
         );
 
-
     document.getElementById(
         "kelembapan"
     ).textContent =
         humidity.toFixed(1) +
         "%";
 
-
     document.getElementById(
         "kelembapanStatus"
     ).textContent =
         humidity < 30
         ? "KERING"
+        : humidity >= 70
+        ? "BASAH"
         : "NORMAL";
 
 
@@ -2039,13 +2107,11 @@ function updateDashboard(
             data.levelToren ?? 0
         );
 
-
     document.getElementById(
         "levelToren"
     ).textContent =
         level.toFixed(1) +
         "%";
-
 
     document.getElementById(
         "tankFill"
@@ -2063,7 +2129,6 @@ function updateDashboard(
     let levelStatus =
         "AMAN";
 
-
     if(level < 30){
 
         levelStatus =
@@ -2077,7 +2142,6 @@ function updateDashboard(
             "NORMAL";
 
     }
-
 
     document.getElementById(
         "levelStatus"
@@ -2096,7 +2160,6 @@ function updateDashboard(
             0
         );
 
-
     const flow2 =
         Number(
             data.flowRate2 ??
@@ -2104,12 +2167,10 @@ function updateDashboard(
             0
         );
 
-
     document.getElementById(
         "flowRate1"
     ).textContent =
         flow1.toFixed(2);
-
 
     document.getElementById(
         "flowRate2"
@@ -2138,12 +2199,14 @@ function updateDashboard(
         ? data.pzem
         : [];
 
+    let totalPower =
+        0;
 
-    let totalPower = 0;
+    let totalEnergy =
+        0;
 
-    let totalEnergy = 0;
-
-    let active = 0;
+    let active =
+        0;
 
 
     pzem.forEach(
@@ -2155,24 +2218,20 @@ function updateDashboard(
             const number =
                 index + 1;
 
-
             const voltage =
                 Number(
                     item.voltage ?? 0
                 );
-
 
             const current =
                 Number(
                     item.current ?? 0
                 );
 
-
             const power =
                 Number(
                     item.power ?? 0
                 );
-
 
             const energy =
                 Number(
@@ -2182,7 +2241,6 @@ function updateDashboard(
 
             totalPower +=
                 power;
-
 
             totalEnergy +=
                 energy;
@@ -2206,7 +2264,6 @@ function updateDashboard(
                     "Voltage"
                 );
 
-
             const currentEl =
                 document.getElementById(
                     "pzem" +
@@ -2214,14 +2271,12 @@ function updateDashboard(
                     "Current"
                 );
 
-
             const powerEl =
                 document.getElementById(
                     "pzem" +
                     number +
                     "Power"
                 );
-
 
             const energyEl =
                 document.getElementById(
@@ -2277,7 +2332,6 @@ function updateDashboard(
                     number
                 );
 
-
             const bar =
                 document.getElementById(
                     "bar" +
@@ -2309,7 +2363,6 @@ function updateDashboard(
                         )
                     );
 
-
                 bar.style.height =
                     percent +
                     "%";
@@ -2328,7 +2381,6 @@ function updateDashboard(
         Number(
             pzem[2]?.voltage ?? 0
         );
-
 
     if(
         batteryVoltage > 0
@@ -2351,20 +2403,17 @@ function updateDashboard(
         totalPower.toFixed(0) +
         " W";
 
-
     document.getElementById(
         "totalEnergy"
     ).textContent =
         totalEnergy.toFixed(2) +
         " kWh";
 
-
     document.getElementById(
         "pzemActive"
     ).textContent =
         active +
         " / 4";
-
 
     document.getElementById(
         "pzemStatus"
@@ -2377,21 +2426,24 @@ function updateDashboard(
        MODE
     ================================================== */
 
-    const mode =
-        data.mode ||
-        "MANUAL";
+    if(
+        data.mode
+    ){
 
+        currentMode =
+            data.mode;
+
+    }
 
     document.getElementById(
         "modeDisplay"
     ).textContent =
-        mode;
-
+        currentMode;
 
     document.getElementById(
         "systemMode"
     ).textContent =
-        mode;
+        currentMode;
 
 
     /* ==================================================
@@ -2401,14 +2453,12 @@ function updateDashboard(
     const espOnline =
         data.espOnline === true;
 
-
     document.getElementById(
         "espStatus"
     ).textContent =
         espOnline
         ? "ESP32 ONLINE"
         : "ESP32 OFFLINE";
-
 
     document.getElementById(
         "espDot"
@@ -2426,7 +2476,6 @@ function updateDashboard(
         "systemOnline"
     ).innerHTML =
         "● SYSTEM ONLINE";
-
 
     document.getElementById(
         "systemOnline"
@@ -2446,15 +2495,22 @@ function updateDashboard(
             i++
         ){
 
-            updateRelay(
-                i,
+            const state =
                 data.relay[
                     "relay" + i
-                ] === true
+                ] === true;
+
+            relayState[
+                "relay" + i
+            ] =
+                state;
+
+            updateRelay(
+                i,
+                state
             );
 
         }
-
 
         updateValveStatus(
             data.relay
@@ -2479,7 +2535,6 @@ function updateRelay(
             "relayStatus" +
             number
         );
-
 
     if(!element)
         return;
@@ -2520,7 +2575,6 @@ function updateValveStatus(
         document.getElementById(
             "valve3Status"
         );
-
 
     const valve2 =
         document.getElementById(
@@ -2609,20 +2663,28 @@ function updateValveStatus(
 
 
 /* ==================================================
-   MODE CONTROL
+   KIRIM CONTROL — SATU REQUEST
 ================================================== */
 
-async function setMode(
-    mode
+async function sendControl(
+    payload
 ){
+
+    if(controlBusy)
+        return false;
+
+    setControlBusy(
+        true
+    );
 
     try{
 
         const response =
             await fetch(
-                CONTROL_URL,
+                CONTROL_URL +
+                "?t=" +
+                Date.now(),
                 {
-
                     method:"POST",
 
                     headers:{
@@ -2630,46 +2692,158 @@ async function setMode(
                             "application/json"
                     },
 
-                    body:
-                        JSON.stringify({
-                            mode:mode
-                        })
+                    cache:"no-store",
 
+                    body:
+                        JSON.stringify(
+                            payload
+                        )
                 }
             );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
 
 
         const result =
             await response.json();
 
 
-        if(!result.success){
+        if(
+            !result.success
+        ){
 
             throw new Error(
+                result.error ||
                 result.message ||
-                "Gagal mengubah mode"
+                "Control gagal"
             );
 
         }
 
 
-        updateDashboard(
-            result.data
+        /*
+           Worker mengembalikan:
+
+           mode
+           relay
+           updated_at
+
+           Jadi kita langsung pakai
+           response tersebut.
+
+           TIDAK memakai result.data.
+        */
+
+        if(
+            result.mode
+        ){
+
+            currentMode =
+                result.mode;
+
+        }
+
+
+        if(
+            result.relay
+        ){
+
+            for(
+                let i=1;
+                i<=8;
+                i++
+            ){
+
+                const key =
+                    "relay" + i;
+
+                if(
+                    result.relay[key]
+                    !== undefined
+                ){
+
+                    relayState[key] =
+                        result.relay[key];
+
+                }
+
+            }
+
+            updateValveStatus(
+                relayState
+            );
+
+
+            for(
+                let i=1;
+                i<=8;
+                i++
+            ){
+
+                updateRelay(
+                    i,
+                    relayState[
+                        "relay" + i
+                    ]
+                );
+
+            }
+
+        }
+
+
+        document.getElementById(
+            "modeDisplay"
+        ).textContent =
+            currentMode;
+
+        document.getElementById(
+            "systemMode"
+        ).textContent =
+            currentMode;
+
+
+        showFeedback(
+            "Perintah terkirim ✓"
         );
 
+
+        return true;
 
     }
 
     catch(error){
 
         console.error(
+            "CONTROL ERROR:",
             error
         );
 
+        showFeedback(
+            "Gagal mengirim perintah"
+        );
 
         alert(
-            "Gagal mengubah mode: " +
+            "Gagal mengirim perintah: " +
             error.message
+        );
+
+        return false;
+
+    }
+
+    finally{
+
+        setControlBusy(
+            false
         );
 
     }
@@ -2678,7 +2852,27 @@ async function setMode(
 
 
 /* ==================================================
-   GENERIC RELAY CONTROL
+   MODE CONTROL
+================================================== */
+
+async function setMode(
+    mode
+){
+
+    /*
+       Cuma 1 POST.
+    */
+
+    await sendControl({
+        mode:
+            mode
+    });
+
+}
+
+
+/* ==================================================
+   GENERIC RELAY
 ================================================== */
 
 async function setRelay(
@@ -2686,207 +2880,111 @@ async function setRelay(
     state
 ){
 
-    /*
-       Interlock:
-
-       K1 = Valve 3-Way OPEN
-       K2 = Valve 3-Way CLOSE
-
-       K3 = Valve 2-Way OPEN
-       K4 = Valve 2-Way CLOSE
-
-       K1 dan K3 tidak boleh ON
-       bersamaan.
-    */
+    const newState = {
+        ...relayState
+    };
 
 
-    if(
-        state === true &&
-        relayNumber === 1
-    ){
-
-        /*
-           Membuka valve 3-way
-           → pastikan valve 2-way
-           tidak OPEN.
-        */
-
-        await sendRelay(
-            3,
-            false
-        );
-
-    }
-
-
-    if(
-        state === true &&
-        relayNumber === 3
-    ){
-
-        /*
-           Membuka valve 2-way
-           → pastikan valve 3-way
-           tidak OPEN.
-        */
-
-        await sendRelay(
-            1,
-            false
-        );
-
-    }
-
-
-    if(
-        state === true &&
-        relayNumber === 1
-    ){
-
-        /*
-           OPEN 3-way
-           → CLOSE command 3-way OFF
-        */
-
-        await sendRelay(
-            2,
-            false
-        );
-
-    }
-
-
-    if(
-        state === true &&
-        relayNumber === 2
-    ){
-
-        /*
-           CLOSE 3-way
-           → OPEN command OFF
-        */
-
-        await sendRelay(
-            1,
-            false
-        );
-
-    }
-
-
-    if(
-        state === true &&
-        relayNumber === 3
-    ){
-
-        /*
-           OPEN 2-way
-           → CLOSE command OFF
-        */
-
-        await sendRelay(
-            4,
-            false
-        );
-
-    }
-
-
-    if(
-        state === true &&
-        relayNumber === 4
-    ){
-
-        /*
-           CLOSE 2-way
-           → OPEN command OFF
-        */
-
-        await sendRelay(
-            3,
-            false
-        );
-
-    }
-
-
-    await sendRelay(
-        relayNumber,
-        state
-    );
-
-}
-
-
-/* ==================================================
-   SEND RELAY
-================================================== */
-
-async function sendRelay(
-    relayNumber,
-    state
-){
-
-    const relayData = {};
-
-
-    relayData[
+    newState[
         "relay" +
         relayNumber
-    ] = state;
+    ] =
+        state;
 
 
-    const response =
-        await fetch(
-            CONTROL_URL,
-            {
+    /*
+       INTERLOCK:
 
-                method:"POST",
+       K1 OPEN 3-WAY
+       tidak boleh bersamaan
+       dengan K3 OPEN 2-WAY.
+    */
 
-                headers:{
-                    "Content-Type":
-                        "application/json"
-                },
+    if(
+        relayNumber === 1 &&
+        state === true
+    ){
 
-                body:
-                    JSON.stringify({
-
-                        relay:
-                            relayData
-
-                    })
-
-            }
-        );
-
-
-    if(!response.ok){
-
-        throw new Error(
-            "HTTP " +
-            response.status
-        );
+        newState.relay3 =
+            false;
 
     }
 
 
-    const result =
-        await response.json();
+    if(
+        relayNumber === 3 &&
+        state === true
+    ){
 
-
-    if(!result.success){
-
-        throw new Error(
-            result.message ||
-            "Relay control gagal"
-        );
+        newState.relay1 =
+            false;
 
     }
 
 
-    updateDashboard(
-        result.data
-    );
+    /*
+       Interlock OPEN/CLOSE
+       valve masing-masing.
+    */
+
+    if(
+        relayNumber === 1 &&
+        state === true
+    ){
+
+        newState.relay2 =
+            false;
+
+    }
+
+
+    if(
+        relayNumber === 2 &&
+        state === true
+    ){
+
+        newState.relay1 =
+            false;
+
+    }
+
+
+    if(
+        relayNumber === 3 &&
+        state === true
+    ){
+
+        newState.relay4 =
+            false;
+
+    }
+
+
+    if(
+        relayNumber === 4 &&
+        state === true
+    ){
+
+        newState.relay3 =
+            false;
+
+    }
+
+
+    /*
+       Kirim SEMUA state dalam
+       SATU request.
+    */
+
+    await sendControl({
+
+        mode:
+            currentMode,
+
+        relay:
+            newState
+
+    });
 
 }
 
@@ -2898,39 +2996,44 @@ async function sendRelay(
 async function openValve3(){
 
     /*
-       Matikan:
+       SEBELUM:
 
-       K2 CLOSE
-       K3 2-WAY OPEN
+       POST K2 OFF
+       POST K3 OFF
+       POST K1 ON
+
+       SEKARANG:
+
+       SATU POST:
+       K1 ON
+       K2 OFF
+       K3 OFF
     */
 
-    try{
+    const newState = {
+        ...relayState
+    };
 
-        await sendRelay(
-            2,
-            false
-        );
 
-        await sendRelay(
-            3,
-            false
-        );
+    newState.relay1 =
+        true;
 
-        await sendRelay(
-            1,
-            true
-        );
+    newState.relay2 =
+        false;
 
-    }
+    newState.relay3 =
+        false;
 
-    catch(error){
 
-        alert(
-            "Gagal membuka Valve 3-Way: " +
-            error.message
-        );
+    await sendControl({
 
-    }
+        mode:
+            currentMode,
+
+        relay:
+            newState
+
+    });
 
 }
 
@@ -2941,28 +3044,34 @@ async function openValve3(){
 
 async function closeValve3(){
 
-    try{
+    /*
+       SATU POST:
 
-        await sendRelay(
-            1,
-            false
-        );
+       K1 OFF
+       K2 ON
+    */
 
-        await sendRelay(
-            2,
-            true
-        );
+    const newState = {
+        ...relayState
+    };
 
-    }
 
-    catch(error){
+    newState.relay1 =
+        false;
 
-        alert(
-            "Gagal menutup Valve 3-Way: " +
-            error.message
-        );
+    newState.relay2 =
+        true;
 
-    }
+
+    await sendControl({
+
+        mode:
+            currentMode,
+
+        relay:
+            newState
+
+    });
 
 }
 
@@ -2974,39 +3083,37 @@ async function closeValve3(){
 async function openValve2(){
 
     /*
-       Matikan:
+       SATU POST:
 
-       K4 CLOSE
-       K1 3-WAY OPEN
+       K3 ON
+       K4 OFF
+       K1 OFF
     */
 
-    try{
+    const newState = {
+        ...relayState
+    };
 
-        await sendRelay(
-            4,
-            false
-        );
 
-        await sendRelay(
-            1,
-            false
-        );
+    newState.relay1 =
+        false;
 
-        await sendRelay(
-            3,
-            true
-        );
+    newState.relay3 =
+        true;
 
-    }
+    newState.relay4 =
+        false;
 
-    catch(error){
 
-        alert(
-            "Gagal membuka Valve 2-Way: " +
-            error.message
-        );
+    await sendControl({
 
-    }
+        mode:
+            currentMode,
+
+        relay:
+            newState
+
+    });
 
 }
 
@@ -3017,47 +3124,48 @@ async function openValve2(){
 
 async function closeValve2(){
 
-    try{
+    /*
+       SATU POST:
 
-        await sendRelay(
-            3,
-            false
-        );
+       K3 OFF
+       K4 ON
+    */
 
-        await sendRelay(
-            4,
-            true
-        );
+    const newState = {
+        ...relayState
+    };
 
-    }
 
-    catch(error){
+    newState.relay3 =
+        false;
 
-        alert(
-            "Gagal menutup Valve 2-Way: " +
-            error.message
-        );
+    newState.relay4 =
+        true;
 
-    }
+
+    await sendControl({
+
+        mode:
+            currentMode,
+
+        relay:
+            newState
+
+    });
 
 }
 
 
 /* ==================================================
-   START
+   INITIAL LOAD
 ================================================== */
 
 getAPIData();
 
 
-/*
-   Dashboard refresh:
-   1 detik.
-
-   Ini hanya refresh tampilan.
-   Kecepatan data aktual tetap
-   mengikuti interval ESP32 → API.
-*/
+/* ==================================================
+   DASHBOARD REFRESH
+================================================== */
 
 setInterval(
     getAPIData,
