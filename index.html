@@ -450,6 +450,19 @@ button:disabled{
         1px solid #dbe3ea;
 }
 
+.wifi-name{
+    font-size:17px;
+    font-weight:bold;
+    margin-top:5px;
+    word-break:break-word;
+}
+
+.wifi-rssi{
+    margin-top:5px;
+    font-size:12px;
+    color:#64748b;
+}
+
 @media(max-width:900px){
 
     .grid{
@@ -513,7 +526,9 @@ button:disabled{
 <div class="container">
 
 
-<!-- HEADER -->
+<!-- =====================================================
+HEADER
+===================================================== -->
 
 <div class="header">
 
@@ -548,7 +563,9 @@ id="systemOnline">
 </div>
 
 
-<!-- SENSOR -->
+<!-- =====================================================
+SENSOR
+===================================================== -->
 
 <div class="grid">
 
@@ -706,7 +723,9 @@ RPM
 </div>
 
 
-<!-- ENERGY -->
+<!-- =====================================================
+ENERGY
+===================================================== -->
 
 <div
 class="card"
@@ -771,7 +790,9 @@ id="pzemActive">
 </div>
 
 
-<!-- MODE -->
+<!-- =====================================================
+MODE
+===================================================== -->
 
 <div class="grid-2">
 
@@ -851,7 +872,9 @@ Malam + toren penuh → OPEN
 </div>
 
 
-<!-- BATTERY -->
+<!-- =====================================================
+BATTERY
+===================================================== -->
 
 <div
 class="card"
@@ -905,7 +928,9 @@ STATUS: LOADING
 </div>
 
 
-<!-- RELAY -->
+<!-- =====================================================
+RELAY
+===================================================== -->
 
 <div
 class="card"
@@ -925,7 +950,9 @@ MANUAL = dikontrol dari dashboard.
 </div>
 
 
-<!-- VALVE 3 -->
+<!-- =====================================================
+VALVE 3-WAY
+===================================================== -->
 
 <div class="valve-box">
 
@@ -947,7 +974,7 @@ K1 = OPEN • K2 = CLOSE
 class="status-off"
 id="valve3Status">
 
-STOP
+CLOSED
 
 </div>
 
@@ -976,7 +1003,9 @@ CLOSE
 </div>
 
 
-<!-- VALVE 2 -->
+<!-- =====================================================
+VALVE 2-WAY
+===================================================== -->
 
 <div class="valve-box">
 
@@ -998,7 +1027,7 @@ K3 = OPEN • K4 = CLOSE
 class="status-off"
 id="valve2Status">
 
-STOP
+CLOSED
 
 </div>
 
@@ -1027,7 +1056,9 @@ CLOSE
 </div>
 
 
-<!-- K5 -->
+<!-- =====================================================
+K5
+===================================================== -->
 
 <div class="relay">
 
@@ -1074,7 +1105,9 @@ OFF
 </div>
 
 
-<!-- K6 -->
+<!-- =====================================================
+K6
+===================================================== -->
 
 <div class="relay">
 
@@ -1117,7 +1150,9 @@ OFF
 </div>
 
 
-<!-- K7 -->
+<!-- =====================================================
+K7
+===================================================== -->
 
 <div class="relay">
 
@@ -1164,7 +1199,9 @@ OFF
 </div>
 
 
-<!-- K8 -->
+<!-- =====================================================
+K8
+===================================================== -->
 
 <div class="relay">
 
@@ -1215,17 +1252,21 @@ OFF
 class="unit"
 style="margin-top:15px">
 
-⚠️ Interlock server aktif:
+⚠️ Interlock sistem aktif:
 K1/K2 tidak bersamaan,
 K3/K4 tidak bersamaan,
-dan K1/K3 tidak bersamaan.
+dan saat berpindah valve,
+posisi valve sebelumnya akan diarahkan
+ke CLOSE, bukan STOP.
 
 </div>
 
 </div>
 
 
-<!-- PZEM -->
+<!-- =====================================================
+PZEM
+===================================================== -->
 
 <div
 class="card"
@@ -1235,12 +1276,6 @@ style="margin-top:16px">
 ⚡ Monitoring Energi — 4 PZEM
 </h2>
 
-
-<script>
-</script>
-
-
-<!-- PZEM TEMPLATE -->
 
 <div class="pzem">
 
@@ -1376,7 +1411,9 @@ style="margin-top:16px">
 </div>
 
 
-<!-- CHART -->
+<!-- =====================================================
+CHART
+===================================================== -->
 
 <div
 class="card"
@@ -1476,7 +1513,9 @@ DUMMY
 </div>
 
 
-<!-- SYSTEM -->
+<!-- =====================================================
+SYSTEM
+===================================================== -->
 
 <div
 class="card"
@@ -1501,6 +1540,37 @@ ESP32 OFFLINE
 
 </div>
 
+
+<!-- WIFI ESP32 -->
+
+<div class="system-box">
+
+<span
+class="dot"
+id="wifiDot">
+</span>
+
+📶 WiFi ESP32
+
+<div
+class="wifi-name"
+id="wifiSSID">
+
+--
+
+</div>
+
+<div
+class="wifi-rssi"
+id="wifiRSSI">
+
+RSSI: -- dBm
+
+</div>
+
+</div>
+
+
 <div class="system-box">
 
 <span class="dot">
@@ -1509,6 +1579,7 @@ ESP32 OFFLINE
 Website ONLINE
 
 </div>
+
 
 <div class="system-box">
 
@@ -1520,6 +1591,7 @@ Website ONLINE
 </span>
 
 </div>
+
 
 <div class="system-box">
 
@@ -1665,13 +1737,11 @@ function updateBattery(
             voltage
         );
 
-
     document.getElementById(
         "batteryVoltage"
     ).textContent =
         voltage.toFixed(2) +
         " V";
-
 
     document.getElementById(
         "batteryPercent"
@@ -1679,17 +1749,14 @@ function updateBattery(
         percent +
         "%";
 
-
     document.getElementById(
         "batteryFill"
     ).style.width =
         percent +
         "%";
 
-
     let status =
         "NORMAL";
-
 
     if(percent >= 90)
         status =
@@ -1706,7 +1773,6 @@ function updateBattery(
     else
         status =
             "KRITIS";
-
 
     document.getElementById(
         "batteryStatus"
@@ -1735,7 +1801,6 @@ async function getAPIData(){
                 }
             );
 
-
         if(!response.ok){
 
             throw new Error(
@@ -1745,15 +1810,12 @@ async function getAPIData(){
 
         }
 
-
         const data =
             await response.json();
-
 
         updateDashboard(
             data
         );
-
 
     }
 
@@ -1764,12 +1826,10 @@ async function getAPIData(){
             error
         );
 
-
         const online =
             document.getElementById(
                 "systemOnline"
             );
-
 
         online.textContent =
             "● API ERROR";
@@ -1803,13 +1863,11 @@ function updateDashboard(
             data.kelembapan ?? 0
         );
 
-
     document.getElementById(
         "kelembapan"
     ).textContent =
         humidity.toFixed(1) +
         "%";
-
 
     document.getElementById(
         "kelembapanStatus"
@@ -1830,13 +1888,11 @@ function updateDashboard(
             data.levelToren ?? 0
         );
 
-
     document.getElementById(
         "levelToren"
     ).textContent =
         level.toFixed(1) +
         "%";
-
 
     document.getElementById(
         "tankFill"
@@ -1850,10 +1906,8 @@ function updateDashboard(
         ) +
         "%";
 
-
     let levelStatus =
         "AMAN";
-
 
     if(level < 30)
         levelStatus =
@@ -1866,7 +1920,6 @@ function updateDashboard(
     else if(level >= 99)
         levelStatus =
             "PENUH";
-
 
     document.getElementById(
         "levelStatus"
@@ -1890,12 +1943,10 @@ function updateDashboard(
             0
         );
 
-
     document.getElementById(
         "flowRate1"
     ).textContent =
         flow1.toFixed(2);
-
 
     document.getElementById(
         "flowRate2"
@@ -1924,11 +1975,9 @@ function updateDashboard(
             ? data.pzem
             : [];
 
-
     let totalPower = 0;
     let totalEnergy = 0;
     let active = 0;
-
 
     pzem.forEach(
         (
@@ -1938,7 +1987,6 @@ function updateDashboard(
 
             const number =
                 index + 1;
-
 
             const voltage =
                 Number(
@@ -1960,13 +2008,11 @@ function updateDashboard(
                     item.energy ?? 0
                 );
 
-
             totalPower +=
                 power;
 
             totalEnergy +=
                 energy;
-
 
             if(
                 voltage !== 0 ||
@@ -1975,7 +2021,6 @@ function updateDashboard(
             ){
                 active++;
             }
-
 
             const v =
                 document.getElementById(
@@ -2004,7 +2049,6 @@ function updateDashboard(
                     number +
                     "Energy"
                 );
-
 
             if(v)
                 v.textContent =
@@ -2039,12 +2083,10 @@ function updateDashboard(
                     number
                 );
 
-
             if(chartPower)
                 chartPower.textContent =
                     power.toFixed(0) +
                     " W";
-
 
             if(bar){
 
@@ -2079,7 +2121,6 @@ function updateDashboard(
             pzem[2]?.voltage ?? 0
         );
 
-
     if(
         batteryVoltage > 0
     ){
@@ -2099,20 +2140,17 @@ function updateDashboard(
         totalPower.toFixed(0) +
         " W";
 
-
     document.getElementById(
         "totalEnergy"
     ).textContent =
         totalEnergy.toFixed(2) +
         " kWh";
 
-
     document.getElementById(
         "pzemActive"
     ).textContent =
         active +
         " / 4";
-
 
     document.getElementById(
         "pzemStatus"
@@ -2129,12 +2167,10 @@ function updateDashboard(
         data.mode ||
         "AUTO";
 
-
     document.getElementById(
         "modeDisplay"
     ).textContent =
         mode;
-
 
     document.getElementById(
         "systemMode"
@@ -2149,14 +2185,12 @@ function updateDashboard(
     const espOnline =
         data.espOnline === true;
 
-
     document.getElementById(
         "espStatus"
     ).textContent =
         espOnline
             ? "ESP32 ONLINE"
             : "ESP32 OFFLINE";
-
 
     document.getElementById(
         "espDot"
@@ -2167,6 +2201,59 @@ function updateDashboard(
 
 
     // =================================================
+    // WIFI ESP32
+    // =================================================
+
+    const wifiSSID =
+        data.wifiSSID ||
+        "--";
+
+    const wifiRSSI =
+        Number(
+            data.wifiRSSI ?? 0
+        );
+
+    const wifiSSIDElement =
+        document.getElementById(
+            "wifiSSID"
+        );
+
+    const wifiRSSElement =
+        document.getElementById(
+            "wifiRSSI"
+        );
+
+    if(wifiSSIDElement){
+
+        wifiSSIDElement.textContent =
+            wifiSSID;
+
+    }
+
+    if(wifiRSSElement){
+
+        if(
+            wifiRSSI !== 0
+        ){
+
+            wifiRSSElement.textContent =
+                "RSSI: " +
+                wifiRSSI +
+                " dBm";
+
+        }
+
+        else{
+
+            wifiRSSElement.textContent =
+                "RSSI: -- dBm";
+
+        }
+
+    }
+
+
+    // =================================================
     // API
     // =================================================
 
@@ -2174,7 +2261,6 @@ function updateDashboard(
         "systemOnline"
     ).textContent =
         "● SYSTEM ONLINE";
-
 
     document.getElementById(
         "systemOnline"
@@ -2203,7 +2289,6 @@ function updateDashboard(
 
         }
 
-
         updateValveStatus(
             data.relay
         );
@@ -2228,10 +2313,8 @@ function updateRelay(
             number
         );
 
-
     if(!element)
         return;
-
 
     if(state){
 
@@ -2275,6 +2358,10 @@ function updateValveStatus(
         );
 
 
+    // =================================================
+    // VALVE 1
+    // =================================================
+
     if(
         relay.relay1 === true
     ){
@@ -2302,13 +2389,17 @@ function updateValveStatus(
     else{
 
         valve3.textContent =
-            "STOP";
+            "UNKNOWN";
 
         valve3.className =
             "status-warning";
 
     }
 
+
+    // =================================================
+    // VALVE 2
+    // =================================================
 
     if(
         relay.relay3 === true
@@ -2337,7 +2428,7 @@ function updateValveStatus(
     else{
 
         valve2.textContent =
-            "STOP";
+            "UNKNOWN";
 
         valve2.className =
             "status-warning";
@@ -2377,7 +2468,6 @@ async function setMode(
                 }
             );
 
-
         if(!response.ok){
 
             throw new Error(
@@ -2387,10 +2477,8 @@ async function setMode(
 
         }
 
-
         const result =
             await response.json();
-
 
         if(!result.success){
 
@@ -2401,15 +2489,9 @@ async function setMode(
 
         }
 
-
-        // FIX:
-        // Worker mengembalikan state
-        // langsung, bukan result.data.
-
         applyControlResult(
             result
         );
-
 
     }
 
@@ -2440,7 +2522,6 @@ function applyControlResult(
     if(!result)
         return;
 
-
     if(result.mode){
 
         document.getElementById(
@@ -2448,14 +2529,12 @@ function applyControlResult(
         ).textContent =
             result.mode;
 
-
         document.getElementById(
             "systemMode"
         ).textContent =
             result.mode;
 
     }
-
 
     if(result.relay){
 
@@ -2473,7 +2552,6 @@ function applyControlResult(
             );
 
         }
-
 
         updateValveStatus(
             result.relay
@@ -2497,12 +2575,10 @@ async function setRelay(
 
         const relayData = {};
 
-
         relayData[
             "relay" +
             relayNumber
         ] = state;
-
 
         const response =
             await fetch(
@@ -2527,7 +2603,6 @@ async function setRelay(
                 }
             );
 
-
         if(!response.ok){
 
             throw new Error(
@@ -2537,10 +2612,8 @@ async function setRelay(
 
         }
 
-
         const result =
             await response.json();
-
 
         if(!result.success){
 
@@ -2551,14 +2624,9 @@ async function setRelay(
 
         }
 
-
-        // LANGSUNG update
-        // tanpa menunggu polling.
-
         applyControlResult(
             result
         );
-
 
     }
 
@@ -2579,9 +2647,12 @@ async function setRelay(
 
 
 // =====================================================
-// VALVE 3 OPEN
-// 1 REQUEST SAJA
-// Worker menangani interlock.
+// OPEN VALVE 1
+// K1 = ON
+// K2 = OFF
+//
+// Worker/ESP32 melakukan interlock
+// terhadap Valve 2.
 // =====================================================
 
 async function openValve3(){
@@ -2595,7 +2666,9 @@ async function openValve3(){
 
 
 // =====================================================
-// VALVE 3 CLOSE
+// CLOSE VALVE 1
+// K1 = OFF
+// K2 = ON
 // =====================================================
 
 async function closeValve3(){
@@ -2609,7 +2682,12 @@ async function closeValve3(){
 
 
 // =====================================================
-// VALVE 2 OPEN
+// OPEN VALVE 2
+// K3 = ON
+// K4 = OFF
+//
+// Worker/ESP32 melakukan interlock
+// terhadap Valve 1.
 // =====================================================
 
 async function openValve2(){
@@ -2623,7 +2701,9 @@ async function openValve2(){
 
 
 // =====================================================
-// VALVE 2 CLOSE
+// CLOSE VALVE 2
+// K3 = OFF
+// K4 = ON
 // =====================================================
 
 async function closeValve2(){
@@ -2643,8 +2723,7 @@ async function closeValve2(){
 getAPIData();
 
 
-// Dashboard refresh 3 detik.
-// Tidak terlalu berat ke Worker.
+// Dashboard refresh 3 detik
 
 setInterval(
     getAPIData,
