@@ -248,30 +248,6 @@ button:disabled{
     color:white;
 }
 
-.valve-box{
-    background:#f8fafc;
-    border-radius:14px;
-    padding:15px;
-    margin-top:12px;
-}
-
-.valve-buttons{
-    display:grid;
-    grid-template-columns:
-        1fr 1fr;
-    gap:10px;
-}
-
-.open-btn{
-    background:#16a34a;
-    color:white;
-}
-
-.close-btn{
-    background:#dc2626;
-    color:white;
-}
-
 .pzem{
     border:
         1px solid #e2e8f0;
@@ -860,10 +836,10 @@ Siang → isi melalui pipa pompa
 </p>
 
 <p>
-🔀 Valve 3-Way
+🔀 Valve
 <br>
 <strong>
-Malam + toren penuh → OPEN
+Kontrol manual K1–K4 untuk pengujian
 </strong>
 </p>
 
@@ -945,113 +921,203 @@ style="margin-top:16px">
 AUTO = dikendalikan ESP32.
 <br>
 
-MANUAL = dikontrol dari dashboard.
+MANUAL = dikontrol satu per satu dari dashboard.
 
 </div>
 
 
 <!-- =====================================================
-VALVE 3-WAY
+K1
 ===================================================== -->
 
-<div class="valve-box">
+<div class="relay">
 
 <div class="relay-top">
 
 <div>
 
 <div class="relay-name">
-🔀 Valve 3-Way
+🔀 Relay 1 — Valve 1 OPEN
 </div>
 
 <div class="relay-desc">
-K1 = OPEN • K2 = CLOSE
+K1 • Relay independen
 </div>
 
 </div>
 
 <div
 class="status-off"
-id="valve3Status">
+id="relayStatus1">
 
-CLOSED
-
-</div>
+OFF
 
 </div>
 
-<div class="valve-buttons">
+</div>
 
 <button
-class="open-btn"
-onclick="openValve3()">
+class="btn-on"
+onclick="setRelay(1,true)">
 
-OPEN
+K1 ON
 
 </button>
 
 <button
-class="close-btn"
-onclick="closeValve3()">
+class="btn-off"
+onclick="setRelay(1,false)">
 
-CLOSE
+K1 OFF
 
 </button>
-
-</div>
 
 </div>
 
 
 <!-- =====================================================
-VALVE 2-WAY
+K2
 ===================================================== -->
 
-<div class="valve-box">
+<div class="relay">
 
 <div class="relay-top">
 
 <div>
 
 <div class="relay-name">
-🌱 Valve 2-Way
+🔀 Relay 2 — Valve 1 CLOSE
 </div>
 
 <div class="relay-desc">
-K3 = OPEN • K4 = CLOSE
+K2 • Relay independen
 </div>
 
 </div>
 
 <div
 class="status-off"
-id="valve2Status">
+id="relayStatus2">
 
-CLOSED
-
-</div>
+OFF
 
 </div>
 
-<div class="valve-buttons">
+</div>
 
 <button
-class="open-btn"
-onclick="openValve2()">
+class="btn-on"
+onclick="setRelay(2,true)">
 
-OPEN
+K2 ON
 
 </button>
 
 <button
-class="close-btn"
-onclick="closeValve2()">
+class="btn-off"
+onclick="setRelay(2,false)">
 
-CLOSE
+K2 OFF
 
 </button>
 
 </div>
+
+
+<!-- =====================================================
+K3
+===================================================== -->
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div>
+
+<div class="relay-name">
+🌱 Relay 3 — Valve 2 OPEN
+</div>
+
+<div class="relay-desc">
+K3 • Relay independen
+</div>
+
+</div>
+
+<div
+class="status-off"
+id="relayStatus3">
+
+OFF
+
+</div>
+
+</div>
+
+<button
+class="btn-on"
+onclick="setRelay(3,true)">
+
+K3 ON
+
+</button>
+
+<button
+class="btn-off"
+onclick="setRelay(3,false)">
+
+K3 OFF
+
+</button>
+
+</div>
+
+
+<!-- =====================================================
+K4
+===================================================== -->
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div>
+
+<div class="relay-name">
+🌱 Relay 4 — Valve 2 CLOSE
+</div>
+
+<div class="relay-desc">
+K4 • Relay independen
+</div>
+
+</div>
+
+<div
+class="status-off"
+id="relayStatus4">
+
+OFF
+
+</div>
+
+</div>
+
+<button
+class="btn-on"
+onclick="setRelay(4,true)">
+
+K4 ON
+
+</button>
+
+<button
+class="btn-off"
+onclick="setRelay(4,false)">
+
+K4 OFF
+
+</button>
 
 </div>
 
@@ -1117,8 +1183,6 @@ K6
 
 <div class="relay-name">
 🌱 Relay 6 — Lampu Kebun
-</div>
-
 </div>
 
 <div
@@ -1252,12 +1316,11 @@ OFF
 class="unit"
 style="margin-top:15px">
 
-⚠️ Interlock sistem aktif:
-K1/K2 tidak bersamaan,
-K3/K4 tidak bersamaan,
-dan saat berpindah valve,
-posisi valve sebelumnya akan diarahkan
-ke CLOSE, bukan STOP.
+🧪 MODE TEST VALVE:
+K1, K2, K3, dan K4 sekarang
+sepenuhnya independen.
+Tidak ada perintah OPEN/CLOSE otomatis
+dan tidak ada STOP/interlock dari dashboard.
 
 </div>
 
@@ -1540,8 +1603,6 @@ ESP32 OFFLINE
 
 </div>
 
-
-<!-- WIFI ESP32 -->
 
 <div class="system-box">
 
@@ -2289,10 +2350,6 @@ function updateDashboard(
 
         }
 
-        updateValveStatus(
-            data.relay
-        );
-
     }
 
 }
@@ -2333,105 +2390,6 @@ function updateRelay(
 
         element.className =
             "status-off";
-
-    }
-
-}
-
-
-// =====================================================
-// VALVE DISPLAY
-// =====================================================
-
-function updateValveStatus(
-    relay
-){
-
-    const valve3 =
-        document.getElementById(
-            "valve3Status"
-        );
-
-    const valve2 =
-        document.getElementById(
-            "valve2Status"
-        );
-
-
-    // =================================================
-    // VALVE 1
-    // =================================================
-
-    if(
-        relay.relay1 === true
-    ){
-
-        valve3.textContent =
-            "OPEN";
-
-        valve3.className =
-            "status-on";
-
-    }
-
-    else if(
-        relay.relay2 === true
-    ){
-
-        valve3.textContent =
-            "CLOSED";
-
-        valve3.className =
-            "status-off";
-
-    }
-
-    else{
-
-        valve3.textContent =
-            "UNKNOWN";
-
-        valve3.className =
-            "status-warning";
-
-    }
-
-
-    // =================================================
-    // VALVE 2
-    // =================================================
-
-    if(
-        relay.relay3 === true
-    ){
-
-        valve2.textContent =
-            "OPEN";
-
-        valve2.className =
-            "status-on";
-
-    }
-
-    else if(
-        relay.relay4 === true
-    ){
-
-        valve2.textContent =
-            "CLOSED";
-
-        valve2.className =
-            "status-off";
-
-    }
-
-    else{
-
-        valve2.textContent =
-            "UNKNOWN";
-
-        valve2.className =
-            "status-warning";
 
     }
 
@@ -2553,10 +2511,6 @@ function applyControlResult(
 
         }
 
-        updateValveStatus(
-            result.relay
-        );
-
     }
 
 }
@@ -2647,83 +2601,10 @@ async function setRelay(
 
 
 // =====================================================
-// OPEN VALVE 1
-// K1 = ON
-// K2 = OFF
-//
-// Worker/ESP32 melakukan interlock
-// terhadap Valve 2.
-// =====================================================
-
-async function openValve3(){
-
-    await setRelay(
-        1,
-        true
-    );
-
-}
-
-
-// =====================================================
-// CLOSE VALVE 1
-// K1 = OFF
-// K2 = ON
-// =====================================================
-
-async function closeValve3(){
-
-    await setRelay(
-        2,
-        true
-    );
-
-}
-
-
-// =====================================================
-// OPEN VALVE 2
-// K3 = ON
-// K4 = OFF
-//
-// Worker/ESP32 melakukan interlock
-// terhadap Valve 1.
-// =====================================================
-
-async function openValve2(){
-
-    await setRelay(
-        3,
-        true
-    );
-
-}
-
-
-// =====================================================
-// CLOSE VALVE 2
-// K3 = OFF
-// K4 = ON
-// =====================================================
-
-async function closeValve2(){
-
-    await setRelay(
-        4,
-        true
-    );
-
-}
-
-
-// =====================================================
 // START
 // =====================================================
 
 getAPIData();
-
-
-// Dashboard refresh 3 detik
 
 setInterval(
     getAPIData,
