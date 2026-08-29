@@ -248,30 +248,6 @@ button:disabled{
     color:white;
 }
 
-.valve-box{
-    background:#f8fafc;
-    border-radius:14px;
-    padding:15px;
-    margin-top:12px;
-}
-
-.valve-buttons{
-    display:grid;
-    grid-template-columns:
-        1fr 1fr;
-    gap:10px;
-}
-
-.open-btn{
-    background:#16a34a;
-    color:white;
-}
-
-.close-btn{
-    background:#dc2626;
-    color:white;
-}
-
 .pzem{
     border:
         1px solid #e2e8f0;
@@ -450,6 +426,19 @@ button:disabled{
         1px solid #dbe3ea;
 }
 
+.wifi-name{
+    font-size:17px;
+    font-weight:bold;
+    margin-top:5px;
+    word-break:break-word;
+}
+
+.wifi-rssi{
+    margin-top:5px;
+    font-size:12px;
+    color:#64748b;
+}
+
 @media(max-width:900px){
 
     .grid{
@@ -513,7 +502,9 @@ button:disabled{
 <div class="container">
 
 
-<!-- HEADER -->
+<!-- =====================================================
+HEADER
+===================================================== -->
 
 <div class="header">
 
@@ -548,7 +539,9 @@ id="systemOnline">
 </div>
 
 
-<!-- SENSOR -->
+<!-- =====================================================
+SENSOR
+===================================================== -->
 
 <div class="grid">
 
@@ -706,7 +699,9 @@ RPM
 </div>
 
 
-<!-- ENERGY -->
+<!-- =====================================================
+ENERGY
+===================================================== -->
 
 <div
 class="card"
@@ -771,7 +766,9 @@ id="pzemActive">
 </div>
 
 
-<!-- MODE -->
+<!-- =====================================================
+MODE
+===================================================== -->
 
 <div class="grid-2">
 
@@ -839,10 +836,10 @@ Siang → isi melalui pipa pompa
 </p>
 
 <p>
-🔀 Valve 3-Way
+🔀 Valve
 <br>
 <strong>
-Malam + toren penuh → OPEN
+Kontrol manual K1–K4 untuk pengujian
 </strong>
 </p>
 
@@ -851,7 +848,9 @@ Malam + toren penuh → OPEN
 </div>
 
 
-<!-- BATTERY -->
+<!-- =====================================================
+BATTERY
+===================================================== -->
 
 <div
 class="card"
@@ -905,7 +904,9 @@ STATUS: LOADING
 </div>
 
 
-<!-- RELAY -->
+<!-- =====================================================
+RELAY
+===================================================== -->
 
 <div
 class="card"
@@ -920,114 +921,210 @@ style="margin-top:16px">
 AUTO = dikendalikan ESP32.
 <br>
 
-MANUAL = dikontrol dari dashboard.
+MANUAL = dikontrol satu per satu dari dashboard.
 
 </div>
 
 
-<!-- VALVE 3 -->
+<!-- =====================================================
+K1
+===================================================== -->
 
-<div class="valve-box">
+<div class="relay">
 
 <div class="relay-top">
 
 <div>
 
 <div class="relay-name">
-🔀 Valve 3-Way
+🔀 Relay 1 — Valve 1 OPEN
 </div>
 
 <div class="relay-desc">
-K1 = OPEN • K2 = CLOSE
+K1 • Relay independen
 </div>
 
 </div>
 
 <div
 class="status-off"
-id="valve3Status">
+id="relayStatus1">
 
-STOP
-
-</div>
+OFF
 
 </div>
 
-<div class="valve-buttons">
+</div>
 
 <button
-class="open-btn"
-onclick="openValve3()">
+class="btn-on"
+onclick="setRelay(1,true)">
 
-OPEN
+K1 ON
 
 </button>
 
 <button
-class="close-btn"
-onclick="closeValve3()">
+class="btn-off"
+onclick="setRelay(1,false)">
 
-CLOSE
+K1 OFF
 
 </button>
 
 </div>
 
-</div>
 
+<!-- =====================================================
+K2
+===================================================== -->
 
-<!-- VALVE 2 -->
-
-<div class="valve-box">
+<div class="relay">
 
 <div class="relay-top">
 
 <div>
 
 <div class="relay-name">
-🌱 Valve 2-Way
+🔀 Relay 2 — Valve 1 CLOSE
 </div>
 
 <div class="relay-desc">
-K3 = OPEN • K4 = CLOSE
+K2 • Relay independen
 </div>
 
 </div>
 
 <div
 class="status-off"
-id="valve2Status">
+id="relayStatus2">
 
-STOP
-
-</div>
+OFF
 
 </div>
 
-<div class="valve-buttons">
+</div>
 
 <button
-class="open-btn"
-onclick="openValve2()">
+class="btn-on"
+onclick="setRelay(2,true)">
 
-OPEN
+K2 ON
 
 </button>
 
 <button
-class="close-btn"
-onclick="closeValve2()">
+class="btn-off"
+onclick="setRelay(2,false)">
 
-CLOSE
+K2 OFF
 
 </button>
 
 </div>
 
+
+<!-- =====================================================
+K3
+===================================================== -->
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div>
+
+<div class="relay-name">
+🌱 Relay 3 — Valve 2 OPEN
+</div>
+
+<div class="relay-desc">
+K3 • Relay independen
+</div>
+
+</div>
+
+<div
+class="status-off"
+id="relayStatus3">
+
+OFF
+
+</div>
+
+</div>
+
+<button
+class="btn-on"
+onclick="setRelay(3,true)">
+
+K3 ON
+
+</button>
+
+<button
+class="btn-off"
+onclick="setRelay(3,false)">
+
+K3 OFF
+
+</button>
+
 </div>
 
 
-<!-- K5 -->
+<!-- =====================================================
+K4
+===================================================== -->
+
+<div class="relay">
+
+<div class="relay-top">
+
+<div>
+
+<div class="relay-name">
+🌱 Relay 4 — Valve 2 CLOSE
+</div>
+
+<div class="relay-desc">
+K4 • Relay independen
+</div>
+
+</div>
+
+<div
+class="status-off"
+id="relayStatus4">
+
+OFF
+
+</div>
+
+</div>
+
+<button
+class="btn-on"
+onclick="setRelay(4,true)">
+
+K4 ON
+
+</button>
+
+<button
+class="btn-off"
+onclick="setRelay(4,false)">
+
+K4 OFF
+
+</button>
+
+</div>
+
+
+<!-- =====================================================
+K5
+===================================================== -->
 
 <div class="relay">
 
@@ -1074,7 +1171,9 @@ OFF
 </div>
 
 
-<!-- K6 -->
+<!-- =====================================================
+K6
+===================================================== -->
 
 <div class="relay">
 
@@ -1084,8 +1183,6 @@ OFF
 
 <div class="relay-name">
 🌱 Relay 6 — Lampu Kebun
-</div>
-
 </div>
 
 <div
@@ -1117,7 +1214,9 @@ OFF
 </div>
 
 
-<!-- K7 -->
+<!-- =====================================================
+K7
+===================================================== -->
 
 <div class="relay">
 
@@ -1164,7 +1263,9 @@ OFF
 </div>
 
 
-<!-- K8 -->
+<!-- =====================================================
+K8
+===================================================== -->
 
 <div class="relay">
 
@@ -1215,17 +1316,20 @@ OFF
 class="unit"
 style="margin-top:15px">
 
-⚠️ Interlock server aktif:
-K1/K2 tidak bersamaan,
-K3/K4 tidak bersamaan,
-dan K1/K3 tidak bersamaan.
+🧪 MODE TEST VALVE:
+K1, K2, K3, dan K4 sekarang
+sepenuhnya independen.
+Tidak ada perintah OPEN/CLOSE otomatis
+dan tidak ada STOP/interlock dari dashboard.
 
 </div>
 
 </div>
 
 
-<!-- PZEM -->
+<!-- =====================================================
+PZEM
+===================================================== -->
 
 <div
 class="card"
@@ -1235,12 +1339,6 @@ style="margin-top:16px">
 ⚡ Monitoring Energi — 4 PZEM
 </h2>
 
-
-<script>
-</script>
-
-
-<!-- PZEM TEMPLATE -->
 
 <div class="pzem">
 
@@ -1376,7 +1474,9 @@ style="margin-top:16px">
 </div>
 
 
-<!-- CHART -->
+<!-- =====================================================
+CHART
+===================================================== -->
 
 <div
 class="card"
@@ -1476,7 +1576,9 @@ DUMMY
 </div>
 
 
-<!-- SYSTEM -->
+<!-- =====================================================
+SYSTEM
+===================================================== -->
 
 <div
 class="card"
@@ -1501,6 +1603,35 @@ ESP32 OFFLINE
 
 </div>
 
+
+<div class="system-box">
+
+<span
+class="dot"
+id="wifiDot">
+</span>
+
+📶 WiFi ESP32
+
+<div
+class="wifi-name"
+id="wifiSSID">
+
+--
+
+</div>
+
+<div
+class="wifi-rssi"
+id="wifiRSSI">
+
+RSSI: -- dBm
+
+</div>
+
+</div>
+
+
 <div class="system-box">
 
 <span class="dot">
@@ -1509,6 +1640,7 @@ ESP32 OFFLINE
 Website ONLINE
 
 </div>
+
 
 <div class="system-box">
 
@@ -1520,6 +1652,7 @@ Website ONLINE
 </span>
 
 </div>
+
 
 <div class="system-box">
 
@@ -1665,13 +1798,11 @@ function updateBattery(
             voltage
         );
 
-
     document.getElementById(
         "batteryVoltage"
     ).textContent =
         voltage.toFixed(2) +
         " V";
-
 
     document.getElementById(
         "batteryPercent"
@@ -1679,17 +1810,14 @@ function updateBattery(
         percent +
         "%";
 
-
     document.getElementById(
         "batteryFill"
     ).style.width =
         percent +
         "%";
 
-
     let status =
         "NORMAL";
-
 
     if(percent >= 90)
         status =
@@ -1706,7 +1834,6 @@ function updateBattery(
     else
         status =
             "KRITIS";
-
 
     document.getElementById(
         "batteryStatus"
@@ -1735,7 +1862,6 @@ async function getAPIData(){
                 }
             );
 
-
         if(!response.ok){
 
             throw new Error(
@@ -1745,15 +1871,12 @@ async function getAPIData(){
 
         }
 
-
         const data =
             await response.json();
-
 
         updateDashboard(
             data
         );
-
 
     }
 
@@ -1764,12 +1887,10 @@ async function getAPIData(){
             error
         );
 
-
         const online =
             document.getElementById(
                 "systemOnline"
             );
-
 
         online.textContent =
             "● API ERROR";
@@ -1803,13 +1924,11 @@ function updateDashboard(
             data.kelembapan ?? 0
         );
 
-
     document.getElementById(
         "kelembapan"
     ).textContent =
         humidity.toFixed(1) +
         "%";
-
 
     document.getElementById(
         "kelembapanStatus"
@@ -1830,13 +1949,11 @@ function updateDashboard(
             data.levelToren ?? 0
         );
 
-
     document.getElementById(
         "levelToren"
     ).textContent =
         level.toFixed(1) +
         "%";
-
 
     document.getElementById(
         "tankFill"
@@ -1850,10 +1967,8 @@ function updateDashboard(
         ) +
         "%";
 
-
     let levelStatus =
         "AMAN";
-
 
     if(level < 30)
         levelStatus =
@@ -1866,7 +1981,6 @@ function updateDashboard(
     else if(level >= 99)
         levelStatus =
             "PENUH";
-
 
     document.getElementById(
         "levelStatus"
@@ -1890,12 +2004,10 @@ function updateDashboard(
             0
         );
 
-
     document.getElementById(
         "flowRate1"
     ).textContent =
         flow1.toFixed(2);
-
 
     document.getElementById(
         "flowRate2"
@@ -1924,11 +2036,9 @@ function updateDashboard(
             ? data.pzem
             : [];
 
-
     let totalPower = 0;
     let totalEnergy = 0;
     let active = 0;
-
 
     pzem.forEach(
         (
@@ -1938,7 +2048,6 @@ function updateDashboard(
 
             const number =
                 index + 1;
-
 
             const voltage =
                 Number(
@@ -1960,13 +2069,11 @@ function updateDashboard(
                     item.energy ?? 0
                 );
 
-
             totalPower +=
                 power;
 
             totalEnergy +=
                 energy;
-
 
             if(
                 voltage !== 0 ||
@@ -1975,7 +2082,6 @@ function updateDashboard(
             ){
                 active++;
             }
-
 
             const v =
                 document.getElementById(
@@ -2004,7 +2110,6 @@ function updateDashboard(
                     number +
                     "Energy"
                 );
-
 
             if(v)
                 v.textContent =
@@ -2039,12 +2144,10 @@ function updateDashboard(
                     number
                 );
 
-
             if(chartPower)
                 chartPower.textContent =
                     power.toFixed(0) +
                     " W";
-
 
             if(bar){
 
@@ -2079,7 +2182,6 @@ function updateDashboard(
             pzem[2]?.voltage ?? 0
         );
 
-
     if(
         batteryVoltage > 0
     ){
@@ -2099,20 +2201,17 @@ function updateDashboard(
         totalPower.toFixed(0) +
         " W";
 
-
     document.getElementById(
         "totalEnergy"
     ).textContent =
         totalEnergy.toFixed(2) +
         " kWh";
 
-
     document.getElementById(
         "pzemActive"
     ).textContent =
         active +
         " / 4";
-
 
     document.getElementById(
         "pzemStatus"
@@ -2129,12 +2228,10 @@ function updateDashboard(
         data.mode ||
         "AUTO";
 
-
     document.getElementById(
         "modeDisplay"
     ).textContent =
         mode;
-
 
     document.getElementById(
         "systemMode"
@@ -2149,14 +2246,12 @@ function updateDashboard(
     const espOnline =
         data.espOnline === true;
 
-
     document.getElementById(
         "espStatus"
     ).textContent =
         espOnline
             ? "ESP32 ONLINE"
             : "ESP32 OFFLINE";
-
 
     document.getElementById(
         "espDot"
@@ -2167,6 +2262,59 @@ function updateDashboard(
 
 
     // =================================================
+    // WIFI ESP32
+    // =================================================
+
+    const wifiSSID =
+        data.wifiSSID ||
+        "--";
+
+    const wifiRSSI =
+        Number(
+            data.wifiRSSI ?? 0
+        );
+
+    const wifiSSIDElement =
+        document.getElementById(
+            "wifiSSID"
+        );
+
+    const wifiRSSElement =
+        document.getElementById(
+            "wifiRSSI"
+        );
+
+    if(wifiSSIDElement){
+
+        wifiSSIDElement.textContent =
+            wifiSSID;
+
+    }
+
+    if(wifiRSSElement){
+
+        if(
+            wifiRSSI !== 0
+        ){
+
+            wifiRSSElement.textContent =
+                "RSSI: " +
+                wifiRSSI +
+                " dBm";
+
+        }
+
+        else{
+
+            wifiRSSElement.textContent =
+                "RSSI: -- dBm";
+
+        }
+
+    }
+
+
+    // =================================================
     // API
     // =================================================
 
@@ -2174,7 +2322,6 @@ function updateDashboard(
         "systemOnline"
     ).textContent =
         "● SYSTEM ONLINE";
-
 
     document.getElementById(
         "systemOnline"
@@ -2203,11 +2350,6 @@ function updateDashboard(
 
         }
 
-
-        updateValveStatus(
-            data.relay
-        );
-
     }
 
 }
@@ -2228,10 +2370,8 @@ function updateRelay(
             number
         );
 
-
     if(!element)
         return;
-
 
     if(state){
 
@@ -2250,97 +2390,6 @@ function updateRelay(
 
         element.className =
             "status-off";
-
-    }
-
-}
-
-
-// =====================================================
-// VALVE DISPLAY
-// =====================================================
-
-function updateValveStatus(
-    relay
-){
-
-    const valve3 =
-        document.getElementById(
-            "valve3Status"
-        );
-
-    const valve2 =
-        document.getElementById(
-            "valve2Status"
-        );
-
-
-    if(
-        relay.relay1 === true
-    ){
-
-        valve3.textContent =
-            "OPEN";
-
-        valve3.className =
-            "status-on";
-
-    }
-
-    else if(
-        relay.relay2 === true
-    ){
-
-        valve3.textContent =
-            "CLOSED";
-
-        valve3.className =
-            "status-off";
-
-    }
-
-    else{
-
-        valve3.textContent =
-            "STOP";
-
-        valve3.className =
-            "status-warning";
-
-    }
-
-
-    if(
-        relay.relay3 === true
-    ){
-
-        valve2.textContent =
-            "OPEN";
-
-        valve2.className =
-            "status-on";
-
-    }
-
-    else if(
-        relay.relay4 === true
-    ){
-
-        valve2.textContent =
-            "CLOSED";
-
-        valve2.className =
-            "status-off";
-
-    }
-
-    else{
-
-        valve2.textContent =
-            "STOP";
-
-        valve2.className =
-            "status-warning";
 
     }
 
@@ -2377,7 +2426,6 @@ async function setMode(
                 }
             );
 
-
         if(!response.ok){
 
             throw new Error(
@@ -2387,10 +2435,8 @@ async function setMode(
 
         }
 
-
         const result =
             await response.json();
-
 
         if(!result.success){
 
@@ -2401,15 +2447,9 @@ async function setMode(
 
         }
 
-
-        // FIX:
-        // Worker mengembalikan state
-        // langsung, bukan result.data.
-
         applyControlResult(
             result
         );
-
 
     }
 
@@ -2440,7 +2480,6 @@ function applyControlResult(
     if(!result)
         return;
 
-
     if(result.mode){
 
         document.getElementById(
@@ -2448,14 +2487,12 @@ function applyControlResult(
         ).textContent =
             result.mode;
 
-
         document.getElementById(
             "systemMode"
         ).textContent =
             result.mode;
 
     }
-
 
     if(result.relay){
 
@@ -2473,11 +2510,6 @@ function applyControlResult(
             );
 
         }
-
-
-        updateValveStatus(
-            result.relay
-        );
 
     }
 
@@ -2497,12 +2529,10 @@ async function setRelay(
 
         const relayData = {};
 
-
         relayData[
             "relay" +
             relayNumber
         ] = state;
-
 
         const response =
             await fetch(
@@ -2527,7 +2557,6 @@ async function setRelay(
                 }
             );
 
-
         if(!response.ok){
 
             throw new Error(
@@ -2537,10 +2566,8 @@ async function setRelay(
 
         }
 
-
         const result =
             await response.json();
-
 
         if(!result.success){
 
@@ -2551,14 +2578,9 @@ async function setRelay(
 
         }
 
-
-        // LANGSUNG update
-        // tanpa menunggu polling.
-
         applyControlResult(
             result
         );
-
 
     }
 
@@ -2579,72 +2601,10 @@ async function setRelay(
 
 
 // =====================================================
-// VALVE 3 OPEN
-// 1 REQUEST SAJA
-// Worker menangani interlock.
-// =====================================================
-
-async function openValve3(){
-
-    await setRelay(
-        1,
-        true
-    );
-
-}
-
-
-// =====================================================
-// VALVE 3 CLOSE
-// =====================================================
-
-async function closeValve3(){
-
-    await setRelay(
-        2,
-        true
-    );
-
-}
-
-
-// =====================================================
-// VALVE 2 OPEN
-// =====================================================
-
-async function openValve2(){
-
-    await setRelay(
-        3,
-        true
-    );
-
-}
-
-
-// =====================================================
-// VALVE 2 CLOSE
-// =====================================================
-
-async function closeValve2(){
-
-    await setRelay(
-        4,
-        true
-    );
-
-}
-
-
-// =====================================================
 // START
 // =====================================================
 
 getAPIData();
-
-
-// Dashboard refresh 3 detik.
-// Tidak terlalu berat ke Worker.
 
 setInterval(
     getAPIData,
