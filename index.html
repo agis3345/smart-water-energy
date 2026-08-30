@@ -1,523 +1,910 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Water & Energy</title>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Smart Water & Energy — SCADA
+</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#eef4f8;
-    color:#172033;
+
+margin:0;
+
+font-family:
+Arial,
+Helvetica,
+sans-serif;
+
+background:#eef3f8;
+
+color:#172033;
+
 }
 
 .container{
-    width:94%;
-    max-width:1400px;
-    margin:auto;
-    padding:22px 0 40px;
+
+max-width:1400px;
+
+margin:auto;
+
+padding:20px;
+
 }
+
+
+/* =====================================================
+HEADER
+===================================================== */
 
 .header{
-    background:linear-gradient(135deg,#0f172a,#1d4ed8);
-    color:white;
-    padding:28px;
-    border-radius:22px;
-    margin-bottom:18px;
-    box-shadow:0 8px 25px rgba(0,0,0,.12);
-}
 
-.header-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
+background:
+linear-gradient(
+135deg,
+#173b8f,
+#2457d6
+);
+
+color:white;
+
+border-radius:24px;
+
+padding:28px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.12);
+
 }
 
 .header h1{
-    margin:0;
-    font-size:28px;
+
+margin:0;
+
+font-size:32px;
+
 }
 
 .header p{
-    margin:7px 0;
-    color:#dbeafe;
+
+margin:8px 0 0;
+
+opacity:.85;
+
+}
+
+.header-info{
+
+margin-top:16px;
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:10px;
+
 }
 
 .badge{
-    background:#16a34a;
-    padding:8px 14px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:bold;
+
+padding:8px 14px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.15);
+
+font-size:14px;
+
 }
 
-.badge.off{
-    background:#dc2626;
+
+/* =====================================================
+ONLINE
+===================================================== */
+
+.online{
+
+background:#d9f7e2;
+
+color:#15803d;
+
 }
+
+.offline{
+
+background:#ffe1e1;
+
+color:#b42318;
+
+}
+
+
+/* =====================================================
+GRID
+===================================================== */
 
 .grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-}
 
-.grid-2{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-    margin-top:16px;
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:16px;
+
 }
 
 .card{
-    background:white;
-    padding:20px;
-    border-radius:18px;
-    box-shadow:0 5px 20px rgba(15,23,42,.07);
+
+background:white;
+
+border-radius:20px;
+
+padding:22px;
+
+box-shadow:
+0 5px 20px
+rgba(0,0,0,.06);
+
 }
 
-.card h2{
-    margin:0 0 15px;
-    font-size:17px;
+.card h3{
+
+margin:0 0 12px;
+
+font-size:18px;
+
 }
 
 .icon{
-    font-size:27px;
-    margin-bottom:6px;
+
+font-size:30px;
+
+margin-bottom:8px;
+
 }
 
 .value{
-    font-size:30px;
-    font-weight:bold;
+
+font-size:34px;
+
+font-weight:700;
+
 }
 
 .unit{
-    color:#64748b;
-    font-size:13px;
-    margin-top:5px;
+
+color:#64748b;
+
+margin-top:4px;
+
 }
 
-.status{
-    font-weight:bold;
+
+/* =====================================================
+SECTION
+===================================================== */
+
+.section{
+
+margin-top:20px;
+
+background:white;
+
+border-radius:22px;
+
+padding:22px;
+
+box-shadow:
+0 5px 20px
+rgba(0,0,0,.06);
+
 }
 
-.status.ok{
-    color:#15803d;
+.section-title{
+
+font-size:22px;
+
+font-weight:700;
+
+margin-bottom:18px;
+
 }
 
-.status.warn{
-    color:#d97706;
+
+/* =====================================================
+TORREN
+===================================================== */
+
+.progress{
+
+width:100%;
+
+height:18px;
+
+background:#e2e8f0;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin:12px 0;
+
 }
 
-.tank{
-    width:100%;
-    height:22px;
-    background:#e2e8f0;
-    border-radius:20px;
-    overflow:hidden;
-    margin:15px 0 8px;
+.progress-bar{
+
+height:100%;
+
+width:0%;
+
+transition:.4s;
+
+background:
+linear-gradient(
+90deg,
+#22c55e,
+#16a34a
+);
+
 }
 
-.tank-fill{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg,#38bdf8,#2563eb);
-    transition:.3s;
+
+/* =====================================================
+SCADA
+===================================================== */
+
+.scada-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:12px;
+
 }
 
-.mode{
-    display:inline-block;
-    padding:8px 15px;
-    border-radius:20px;
-    font-weight:bold;
-    background:#ede9fe;
-    color:#6d28d9;
+.scada-button{
+
+border:0;
+
+padding:18px;
+
+border-radius:16px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.2s;
+
 }
 
-button{
-    width:100%;
-    border:none;
-    padding:12px;
-    margin-top:8px;
-    border-radius:10px;
-    font-weight:bold;
-    font-size:14px;
-    cursor:pointer;
+.scada-button:hover{
+
+transform:
+translateY(-2px);
+
 }
 
-button:hover{
-    opacity:.88;
+.air-mati{
+
+background:#fee2e2;
+
+color:#b91c1c;
+
 }
 
-button:active{
-    transform:scale(.98);
+.turbin{
+
+background:#dbeafe;
+
+color:#1d4ed8;
+
 }
 
-.auto{
-    background:#2563eb;
-    color:white;
+.kebun{
+
+background:#dcfce7;
+
+color:#15803d;
+
 }
 
-.manual{
-    background:#7c3aed;
-    color:white;
+.keduanya{
+
+background:#ede9fe;
+
+color:#6d28d9;
+
 }
 
-.relay{
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:15px;
-    margin-top:12px;
+.scada-active{
+
+outline:
+4px solid
+rgba(37,99,235,.25);
+
+transform:
+translateY(-2px);
+
 }
 
-.relay-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
+
+/* =====================================================
+VALVE
+===================================================== */
+
+.valve-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:18px;
+
 }
 
-.relay-name{
-    font-weight:bold;
+.valve{
+
+border:
+1px solid #e2e8f0;
+
+border-radius:18px;
+
+padding:20px;
+
 }
 
-.relay-desc{
-    color:#64748b;
-    font-size:12px;
-    margin-top:5px;
+.valve-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:10px;
+
 }
 
-.state{
-    color:#b91c1c;
-    background:#fee2e2;
-    padding:6px 10px;
-    border-radius:15px;
-    font-size:12px;
-    font-weight:bold;
+.valve-name{
+
+font-size:22px;
+
+font-weight:700;
+
 }
 
-.state.onstate{
-    color:#15803d;
-    background:#dcfce7;
+.position{
+
+padding:8px 14px;
+
+border-radius:20px;
+
+font-weight:700;
+
+font-size:13px;
+
 }
 
-.btnrow{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+.open{
+
+background:#dcfce7;
+
+color:#15803d;
+
 }
 
-.on{
-    background:#16a34a;
-    color:white;
+.close{
+
+background:#fee2e2;
+
+color:#b91c1c;
+
 }
 
-.off{
-    background:#dc2626;
-    color:white;
-}
 
-.timer{
-    font-size:12px;
-    color:#64748b;
-    min-height:18px;
-    margin-top:8px;
-}
+/* =====================================================
+BLUE BROWN
+===================================================== */
 
-.valve-box{
-    background:#f8fafc;
-    border-radius:14px;
-    padding:15px;
-    margin-top:12px;
-}
+.coil{
 
-.valve-status{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+display:flex;
 
-.flag{
-    display:inline-block;
-    padding:7px 12px;
-    border-radius:15px;
-    background:#dcfce7;
-    color:#15803d;
-    font-size:12px;
-    font-weight:bold;
-}
+align-items:center;
 
-.flag.close{
-    background:#fee2e2;
-    color:#b91c1c;
-}
+gap:8px;
 
-.flag-info{
-    margin-top:8px;
-    color:#64748b;
-    font-size:12px;
-}
+margin-top:15px;
 
-.pzem{
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:16px;
-    margin-top:12px;
-}
+font-weight:600;
 
-.pzem-title{
-    font-size:17px;
-    font-weight:bold;
-    margin-bottom:12px;
-}
-
-.pzem-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
-}
-
-.pzem-value{
-    background:#f8fafc;
-    padding:12px;
-    border-radius:10px;
-    text-align:center;
-}
-
-.pzem-value strong{
-    display:block;
-    font-size:16px;
-}
-
-.pzem-value span{
-    color:#64748b;
-    font-size:11px;
-}
-
-.battery-box{
-    background:#f8fafc;
-    border-radius:14px;
-    padding:16px;
-}
-
-.battery-percent{
-    font-size:28px;
-    font-weight:bold;
-}
-
-.battery-bar{
-    width:100%;
-    height:18px;
-    background:#e2e8f0;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:10px;
-}
-
-.battery-fill{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#ef4444,#eab308,#22c55e);
-    transition:.3s;
-}
-
-.summary{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.summary-box{
-    background:#f8fafc;
-    border-radius:14px;
-    padding:16px;
-}
-
-.summary-title{
-    font-size:12px;
-    color:#64748b;
-}
-
-.summary-value{
-    font-size:25px;
-    font-weight:bold;
-    margin-top:5px;
-}
-
-.chart{
-    height:270px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-around;
-    gap:25px;
-    padding:25px 20px 5px;
-    background:#f8fafc;
-    border-radius:16px;
-}
-
-.bar-wrap{
-    height:100%;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-    align-items:center;
-}
-
-.bar-value{
-    font-size:12px;
-    font-weight:bold;
-    margin-bottom:6px;
-}
-
-.bar{
-    width:65%;
-    max-width:100px;
-    min-height:8px;
-    border-radius:10px 10px 3px 3px;
-    background:linear-gradient(to top,#2563eb,#38bdf8);
-    transition:.3s;
-}
-
-.bar-label{
-    margin-top:8px;
-    font-size:12px;
-    color:#64748b;
-}
-
-.system{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:12px;
-}
-
-.system-box{
-    padding:15px;
-    border-radius:14px;
-    background:#f8fafc;
 }
 
 .dot{
-    display:inline-block;
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:#16a34a;
-    margin-right:6px;
+
+width:14px;
+
+height:14px;
+
+border-radius:50%;
+
+display:inline-block;
+
 }
 
-.dot.red{
-    background:#dc2626;
+.blue{
+
+background:#2563eb;
+
 }
 
-.wifi-name{
-    font-size:17px;
-    font-weight:bold;
-    margin-top:5px;
-    word-break:break-word;
+.brown{
+
+background:#8b5e3c;
+
 }
 
-.wifi-rssi{
-    margin-top:5px;
-    font-size:12px;
-    color:#64748b;
+
+/* =====================================================
+RELAY
+===================================================== */
+
+.relay-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:14px;
+
 }
 
-.footer{
-    margin-top:25px;
-    padding:20px;
-    text-align:center;
-    color:#64748b;
-    font-size:12px;
-    border-top:1px solid #dbe3ea;
+.relay{
+
+border:
+1px solid #e2e8f0;
+
+border-radius:18px;
+
+padding:18px;
+
 }
 
-@media(max-width:900px){
+.relay-title{
 
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+font-size:18px;
 
-    .pzem-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+font-weight:700;
 
-    .system{
-        grid-template-columns:repeat(2,1fr);
-    }
 }
 
-@media(max-width:600px){
+.relay-desc{
 
-    .container{
-        width:94%;
-    }
+font-size:13px;
 
-    .header-row{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+color:#64748b;
 
-    .header h1{
-        font-size:23px;
-    }
+margin:5px 0 14px;
 
-    .grid,
-    .grid-2{
-        grid-template-columns:1fr;
-    }
-
-    .summary{
-        grid-template-columns:1fr;
-    }
-
-    .pzem-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .system{
-        grid-template-columns:1fr;
-    }
 }
+
+.relay-status{
+
+display:inline-block;
+
+padding:7px 12px;
+
+border-radius:15px;
+
+font-size:13px;
+
+font-weight:700;
+
+margin-bottom:12px;
+
+}
+
+.relay-on{
+
+background:#dcfce7;
+
+color:#15803d;
+
+}
+
+.relay-off{
+
+background:#fee2e2;
+
+color:#b91c1c;
+
+}
+
+.relay button{
+
+width:100%;
+
+border:0;
+
+padding:12px;
+
+border-radius:12px;
+
+font-size:15px;
+
+font-weight:700;
+
+cursor:pointer;
+
+margin-top:7px;
+
+}
+
+.btn-on{
+
+background:#16a34a;
+
+color:white;
+
+}
+
+.btn-off{
+
+background:#dc2626;
+
+color:white;
+
+}
+
+.btn-disabled{
+
+opacity:.5;
+
+cursor:not-allowed;
+
+}
+
+
+/* =====================================================
+TIMER
+===================================================== */
+
+.timer{
+
+margin-top:10px;
+
+font-size:13px;
+
+color:#64748b;
+
+}
+
+
+/* =====================================================
+PZEM
+===================================================== */
+
+.pzem-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:14px;
+
+}
+
+.pzem{
+
+border:
+1px solid #e2e8f0;
+
+border-radius:16px;
+
+padding:18px;
+
+}
+
+.pzem h3{
+
+margin:0 0 12px;
+
+}
+
+.pzem-row{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:6px 0;
+
+border-bottom:
+1px solid #f1f5f9;
+
+}
+
+.pzem-ok{
+
+color:#15803d;
+
+font-weight:700;
+
+}
+
+.pzem-error{
+
+color:#b91c1c;
+
+font-weight:700;
+
+}
+
+
+/* =====================================================
+WIFI
+===================================================== */
+
+.wifi-box{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:15px;
+
+}
+
+.info-box{
+
+background:#f8fafc;
+
+border-radius:15px;
+
+padding:16px;
+
+}
+
+.info-label{
+
+font-size:13px;
+
+color:#64748b;
+
+}
+
+.info-value{
+
+font-size:20px;
+
+font-weight:700;
+
+margin-top:5px;
+
+}
+
+
+/* =====================================================
+MODE
+===================================================== */
+
+.mode-box{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:15px;
+
+padding:18px;
+
+border-radius:18px;
+
+background:#f8fafc;
+
+}
+
+.mode{
+
+font-size:20px;
+
+font-weight:700;
+
+}
+
+.mode-manual{
+
+color:#2563eb;
+
+}
+
+.mode-auto{
+
+color:#16a34a;
+
+}
+
+
+/* =====================================================
+LAST UPDATE
+===================================================== */
+
+.last-update{
+
+text-align:center;
+
+margin-top:20px;
+
+color:#64748b;
+
+font-size:13px;
+
+}
+
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+
+@media(max-width:1100px){
+
+.grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+.relay-grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+.pzem-grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+.scada-grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+}
+
+
+@media(max-width:700px){
+
+.container{
+
+padding:12px;
+
+}
+
+.header h1{
+
+font-size:24px;
+
+}
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+.valve-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.relay-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.pzem-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.scada-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.wifi-box{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
-<!-- HEADER -->
+
+<!-- =================================================
+HEADER
+================================================= -->
 
 <div class="header">
 
-<div class="header-row">
-
-<div>
-
 <h1>
-💧 Smart Water & Energy
+💧 Smart Water & Energy — SCADA
 </h1>
 
 <p>
-Renewable Energy Monitoring & Control System
+Renewable Energy Monitoring & Manual Valve Control
 </p>
 
-<p id="clock">
-🕐 Loading...
-</p>
+<div class="header-info">
 
+<div
+class="badge"
+id="clock"
+>
+--:--:--
 </div>
 
 <div
 class="badge"
-id="apiBadge">
+id="espStatus"
+>
+ESP32: CHECKING
+</div>
 
-● SYSTEM ONLINE
-
+<div
+class="badge"
+id="wifiStatus"
+>
+WiFi: CHECKING
 </div>
 
 </div>
@@ -525,35 +912,99 @@ id="apiBadge">
 </div>
 
 
-<!-- SENSOR -->
+<!-- =================================================
+WIFI
+================================================= -->
+
+<div class="section">
+
+<div class="section-title">
+📶 Koneksi ESP32
+</div>
+
+<div class="wifi-box">
+
+<div class="info-box">
+
+<div class="info-label">
+SSID WiFi
+</div>
+
+<div
+class="info-value"
+id="wifiSSID"
+>
+tidak terhubung
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<div class="info-label">
+RSSI
+</div>
+
+<div
+class="info-value"
+id="wifiRSSI"
+>
+0 dBm
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<div class="info-label">
+Status ESP32
+</div>
+
+<div
+class="info-value"
+id="espOnline"
+>
+OFFLINE
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+SENSOR
+================================================= -->
 
 <div class="grid">
 
+
 <div class="card">
 
-<div class="icon">🌱</div>
+<div class="icon">
+🌱
+</div>
 
-<h2>Kelembapan Kebun</h2>
+<h3>
+Kelembapan Kebun
+</h3>
 
 <div
 class="value"
-id="humidity">
-
---%
-
+id="humidity"
+>
+0.0%
 </div>
 
 <div class="unit">
-
 Status:
-<span
-class="status ok"
-id="humidityStatus">
-
-LOADING
-
+<span id="humidityStatus">
+KERING
 </span>
-
 </div>
 
 </div>
@@ -561,23 +1012,27 @@ LOADING
 
 <div class="card">
 
-<div class="icon">🚰</div>
+<div class="icon">
+🚰
+</div>
 
-<h2>Level Toren</h2>
+<h3>
+Level Toren
+</h3>
 
 <div
 class="value"
-id="tankLevel">
-
---%
-
+id="tankLevel"
+>
+0.0%
 </div>
 
-<div class="tank">
+<div class="progress">
 
 <div
-class="tank-fill"
-id="tankFill">
+class="progress-bar"
+id="tankBar"
+>
 </div>
 
 </div>
@@ -585,12 +1040,8 @@ id="tankFill">
 <div class="unit">
 
 Kondisi:
-<span
-class="status ok"
-id="tankStatus">
-
-LOADING
-
+<span id="tankStatus">
+RENDAH
 </span>
 
 </div>
@@ -600,16 +1051,19 @@ LOADING
 
 <div class="card">
 
-<div class="icon">💧</div>
+<div class="icon">
+💧
+</div>
 
-<h2>Flow Rate 1</h2>
+<h3>
+Flow Rate 1
+</h3>
 
 <div
 class="value"
-id="flow1">
-
---
-
+id="flow1"
+>
+0.00
 </div>
 
 <div class="unit">
@@ -621,16 +1075,19 @@ L/min
 
 <div class="card">
 
-<div class="icon">💧</div>
+<div class="icon">
+💧
+</div>
 
-<h2>Flow Rate 2</h2>
+<h3>
+Flow Rate 2
+</h3>
 
 <div
 class="value"
-id="flow2">
-
---
-
+id="flow2"
+>
+0.00
 </div>
 
 <div class="unit">
@@ -642,16 +1099,19 @@ L/min
 
 <div class="card">
 
-<div class="icon">⚙️</div>
+<div class="icon">
+⚙️
+</div>
 
-<h2>RPM Generator</h2>
+<h3>
+RPM Generator
+</h3>
 
 <div
 class="value"
-id="rpm">
-
---
-
+id="rpm"
+>
+0
 </div>
 
 <div class="unit">
@@ -660,185 +1120,39 @@ RPM
 
 </div>
 
-</div>
-
-
-<!-- ENERGY -->
-
-<div
-class="card"
-style="margin-top:16px">
-
-<h2>⚡ Ringkasan Energi</h2>
-
-<div class="summary">
-
-<div class="summary-box">
-
-<div class="summary-title">
-TOTAL DAYA
-</div>
-
-<div
-class="summary-value"
-id="totalPower">
-
--- W
-
-</div>
-
-</div>
-
-
-<div class="summary-box">
-
-<div class="summary-title">
-TOTAL ENERGI
-</div>
-
-<div
-class="summary-value"
-id="totalEnergy">
-
--- kWh
-
-</div>
-
-</div>
-
-
-<div class="summary-box">
-
-<div class="summary-title">
-PZEM AKTIF
-</div>
-
-<div
-class="summary-value"
-id="pzemActive">
-
-0 / 4
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- MODE -->
-
-<div class="grid-2">
 
 <div class="card">
 
-<h2>🤖 Mode Sistem</h2>
+<div class="icon">
+🔋
+</div>
+
+<h3>
+Baterai
+</h3>
 
 <div
-class="mode"
-id="modeFlag">
-
-MANUAL
-
-</div>
-
-<button
-class="auto"
-onclick="setMode('AUTO')">
-
-MODE AUTO
-
-</button>
-
-<button
-class="manual"
-onclick="setMode('MANUAL')">
-
-MODE MANUAL
-
-</button>
-
-<p class="unit">
-AUTO belum menjalankan logika valve.
-Saat ini digunakan untuk pengujian manual.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h2>🕐 Status SCADA</h2>
-
-<p>
-🔵 <strong>MANUAL</strong>
-<br>
-Kontrol relay dikirim dari dashboard.
-</p>
-
-<p>
-⏱️ <strong>Valve</strong>
-<br>
-Relay K1–K4 bekerja sebagai pulse.
-</p>
-
-<p>
-🔒 <strong>Interlock</strong>
-<br>
-K1/K2 dan K3/K4 tidak boleh ON bersamaan.
-</p>
-
-</div>
-
-</div>
-
-
-<!-- BATTERY -->
-
-<div
-class="card"
-style="margin-top:16px">
-
-<h2>🔋 Kondisi Baterai</h2>
-
-<div class="battery-box">
-
-<div class="unit">
-PZEM 3 — Tegangan Baterai
+class="value"
+id="batteryVoltage"
+>
+0.00 V
 </div>
 
 <div
 class="value"
-id="batteryV">
-
--- V
-
+style="font-size:25px"
+id="batteryPercent"
+>
+0%
 </div>
+
+<div class="progress">
 
 <div
-class="battery-percent"
-id="batteryP">
-
---%
-
+class="progress-bar"
+id="batteryBar"
+>
 </div>
-
-<div class="battery-bar">
-
-<div
-class="battery-fill"
-id="batteryFill">
-</div>
-
-</div>
-
-<div
-class="unit"
-id="batteryStatus">
-
-STATUS: LOADING
 
 </div>
 
@@ -847,533 +1161,607 @@ STATUS: LOADING
 </div>
 
 
-<!-- CONTROL -->
+<!-- =================================================
+SCADA
+================================================= -->
 
-<div
-class="card"
-style="margin-top:16px">
+<div class="section">
 
-<h2>🔌 Kontrol Sistem — 8 Relay</h2>
+<div class="section-title">
 
-<div class="unit">
-
-Mode pengujian MANUAL.
-K5–K8 ON/OFF manual.
-K1–K4 merupakan relay valve dan akan
-mengikuti timer dari Worker.
+🎛️ SCADA — Kondisi Aliran Air
 
 </div>
 
 
-<!-- VALVE 3 WAY -->
-
-<div class="valve-box">
-
-<div class="valve-status">
-
-<div>
-
-<div class="relay-name">
-🔀 Valve 3-Way
-</div>
-
-<div class="relay-desc">
-K1 = BLUE / OPEN • K2 = BROWN / CLOSE
-</div>
-
-</div>
-
-<div
-class="flag"
-id="v3State">
-
-CLOSE
-
-</div>
-
-</div>
-
-<div
-class="flag-info"
-id="v3Flag">
-
-FLAG: VALVE_3WAY_CLOSE
-
-</div>
-
-<div
-class="timer"
-id="v3Timer">
-
-Relay valve OFF
-
-</div>
-
-</div>
-
-
-<!-- VALVE 2 WAY -->
-
-<div class="valve-box">
-
-<div class="valve-status">
-
-<div>
-
-<div class="relay-name">
-🌱 Valve 2-Way
-</div>
-
-<div class="relay-desc">
-K3 = BLUE / OPEN • K4 = BROWN / CLOSE
-</div>
-
-</div>
-
-<div
-class="flag"
-id="v2State">
-
-CLOSE
-
-</div>
-
-</div>
-
-<div
-class="flag-info"
-id="v2Flag">
-
-FLAG: VALVE_2WAY_CLOSE
-
-</div>
-
-<div
-class="timer"
-id="v2Timer">
-
-Relay valve OFF
-
-</div>
-
-</div>
-
-
-<div id="relayGrid"></div>
-
-</div>
-
-
-<!-- SCADA PRESET -->
-
-<div
-class="card"
-style="margin-top:16px">
-
-<h2>🎛️ SCADA Valve</h2>
-
-<div class="unit">
-Untuk sementara preset digunakan untuk pengujian.
-AUTO sensor belum diaktifkan.
-</div>
+<div class="scada-grid">
 
 <button
-class="off"
-onclick="preset('MATI')">
-
-💧 AIR MATI
-
+class="scada-button air-mati"
+onclick="setScenario('mati')"
+id="scenarioMati"
+>
+🔴 AIR MATI
 </button>
 
+
 <button
-class="on"
-onclick="preset('TURBIN')">
-
-⚙️ AIR KE TURBIN
-
+class="scada-button turbin"
+onclick="setScenario('turbin')"
+id="scenarioTurbin"
+>
+⚙️ KE TURBIN
 </button>
 
+
 <button
-class="on"
-onclick="preset('KEBUN')">
-
-🌱 AIR KE KEBUN
-
+class="scada-button kebun"
+onclick="setScenario('kebun')"
+id="scenarioKebun"
+>
+🌱 KE KEBUN
 </button>
 
+
 <button
-class="on"
-onclick="preset('TURBIN_KEBUN')">
-
-⚙️🌱 TURBIN + KEBUN
-
+class="scada-button keduanya"
+onclick="setScenario('keduanya')"
+id="scenarioKeduanya"
+>
+💧 TURBIN + KEBUN
 </button>
 
 </div>
 
-
-<!-- PZEM -->
-
-<div
-class="card"
-style="margin-top:16px">
-
-<h2>⚡ Monitoring Energi — 4 PZEM</h2>
-
-
-<div class="pzem">
-
-<div class="pzem-title">
-☀️ PZEM 1 — PV
-</div>
-
-<div class="pzem-grid">
-
-<div class="pzem-value">
-<strong id="p1v">--</strong>
-<span>VOLTAGE</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p1c">--</strong>
-<span>CURRENT</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p1p">--</strong>
-<span>POWER</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p1e">--</strong>
-<span>ENERGY</span>
-</div>
-
-</div>
-
 </div>
 
 
-<div class="pzem">
+<!-- =================================================
+VALVE
+================================================= -->
 
-<div class="pzem-title">
-⚙️ PZEM 2 — Generator
-</div>
+<div class="section">
 
-<div class="pzem-grid">
-
-<div class="pzem-value">
-<strong id="p2v">--</strong>
-<span>VOLTAGE</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p2c">--</strong>
-<span>CURRENT</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p2p">--</strong>
-<span>POWER</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p2e">--</strong>
-<span>ENERGY</span>
-</div>
-
-</div>
-
+<div class="section-title">
+🚰 Status Valve
 </div>
 
 
-<div class="pzem">
-
-<div class="pzem-title">
-🔋 PZEM 3 — Baterai
-</div>
-
-<div class="pzem-grid">
-
-<div class="pzem-value">
-<strong id="p3v">--</strong>
-<span>VOLTAGE</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p3c">--</strong>
-<span>CURRENT</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p3p">--</strong>
-<span>POWER</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p3e">--</strong>
-<span>ENERGY</span>
-</div>
-
-</div>
-
-</div>
+<div class="valve-grid">
 
 
-<div class="pzem">
+<!-- 3 WAY -->
 
-<div class="pzem-title">
-🔥 PZEM 4 — Dummy Load
-</div>
+<div class="valve">
 
-<div class="pzem-grid">
+<div class="valve-header">
 
-<div class="pzem-value">
-<strong id="p4v">--</strong>
-<span>VOLTAGE</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p4c">--</strong>
-<span>CURRENT</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p4p">--</strong>
-<span>POWER</span>
-</div>
-
-<div class="pzem-value">
-<strong id="p4e">--</strong>
-<span>ENERGY</span>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- CHART -->
-
-<div
-class="card"
-style="margin-top:16px">
-
-<h2>📊 Grafik Daya PZEM</h2>
-
-<div class="chart">
-
-<div class="bar-wrap">
-
-<div
-class="bar-value"
-id="bp1v">
-
--- W
+<div class="valve-name">
+Valve 3-Way
 </div>
 
 <div
-class="bar"
-id="bp1"
-style="height:5%">
-</div>
-
-<div class="bar-label">
-PV
+class="position close"
+id="valve3Status"
+>
+CLOSED
 </div>
 
 </div>
 
 
-<div class="bar-wrap">
+<div class="coil">
 
-<div
-class="bar-value"
-id="bp2v">
+<span class="dot blue"></span>
 
--- W
-</div>
-
-<div
-class="bar"
-id="bp2"
-style="height:5%">
-</div>
-
-<div class="bar-label">
-GEN
-</div>
+K1 — BLUE — OPEN
 
 </div>
 
 
-<div class="bar-wrap">
+<div class="coil">
 
-<div
-class="bar-value"
-id="bp3v">
+<span class="dot brown"></span>
 
--- W
-</div>
-
-<div
-class="bar"
-id="bp3"
-style="height:5%">
-</div>
-
-<div class="bar-label">
-BATTERY
-</div>
+K2 — BROWN — CLOSE
 
 </div>
 
 
-<div class="bar-wrap">
+<p>
 
-<div
-class="bar-value"
-id="bp4v">
-
--- W
-</div>
-
-<div
-class="bar"
-id="bp4"
-style="height:5%">
-</div>
-
-<div class="bar-label">
-DUMMY
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- SYSTEM -->
-
-<div
-class="card"
-style="margin-top:16px">
-
-<h2>🟢 Status Sistem</h2>
-
-<div class="system">
-
-<div class="system-box">
-
-<span
-class="dot"
-id="espDot">
-</span>
-
-<span id="espStatus">
-ESP32 OFFLINE
-</span>
-
-</div>
-
-
-<div class="system-box">
-
-<span
-class="dot"
-id="wifiDot">
-</span>
-
-📶 WiFi ESP32
-
-<div
-class="wifi-name"
-id="wifiSSID">
-
-tidak terhubung
-
-</div>
-
-<div
-class="wifi-rssi"
-id="wifiRSSI">
-
-RSSI: -- dBm
-
-</div>
-
-</div>
-
-
-<div class="system-box">
-
-<span class="dot">
-</span>
-
-Website ONLINE
-
-</div>
-
-
-<div class="system-box">
-
-<span class="dot">
-</span>
-
-<span id="pzemStatus">
-0 PZEM AKTIF
-</span>
-
-</div>
-
-
-<div class="system-box">
-
-<span class="dot">
-</span>
-
-Mode:
-
-<span id="systemMode">
-MANUAL
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="footer">
-
-<strong>
-Smart Water & Energy System
+Status terakhir:
+<strong id="valve3Text">
+CLOSED
 </strong>
 
-<br><br>
-
-ESP32 • Renewable Energy • IoT
+</p>
 
 </div>
+
+
+<!-- 2 WAY -->
+
+<div class="valve">
+
+<div class="valve-header">
+
+<div class="valve-name">
+Valve 2-Way
+</div>
+
+<div
+class="position close"
+id="valve2Status"
+>
+CLOSED
+</div>
+
+</div>
+
+
+<div class="coil">
+
+<span class="dot blue"></span>
+
+K3 — BLUE — OPEN
+
+</div>
+
+
+<div class="coil">
+
+<span class="dot brown"></span>
+
+K4 — BROWN — CLOSE
+
+</div>
+
+
+<p>
+
+Status terakhir:
+<strong id="valve2Text">
+CLOSED
+</strong>
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+MODE
+================================================= -->
+
+<div class="section">
+
+<div class="section-title">
+🎛️ Kontrol Sistem
+</div>
+
+<div class="mode-box">
+
+<div>
+
+<div>
+Mode Sistem
+</div>
+
+<div
+class="mode"
+id="mode"
+>
+MANUAL
+</div>
+
+</div>
+
+<div>
+Mode manual aktif — relay dapat dikontrol satu per satu.
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+RELAY
+================================================= -->
+
+<div class="section">
+
+<div class="section-title">
+
+🔌 Manual Relay Control
+
+</div>
+
+
+<div class="relay-grid">
+
+
+<!-- K1 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K1 — 3-Way OPEN
+</div>
+
+<div class="relay-desc">
+BLUE
+</div>
+
+<div
+class="relay-status relay-off"
+id="status1"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(1,true)"
+>
+K1 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(1,false)"
+>
+K1 OFF
+</button>
+
+<div
+class="timer"
+id="timer1"
+>
+Siap
+</div>
+
+</div>
+
+
+<!-- K2 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K2 — 3-Way CLOSE
+</div>
+
+<div class="relay-desc">
+BROWN
+</div>
+
+<div
+class="relay-status relay-off"
+id="status2"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(2,true)"
+>
+K2 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(2,false)"
+>
+K2 OFF
+</button>
+
+<div
+class="timer"
+id="timer2"
+>
+Siap
+</div>
+
+</div>
+
+
+<!-- K3 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K3 — 2-Way OPEN
+</div>
+
+<div class="relay-desc">
+BLUE
+</div>
+
+<div
+class="relay-status relay-off"
+id="status3"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(3,true)"
+>
+K3 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(3,false)"
+>
+K3 OFF
+</button>
+
+<div
+class="timer"
+id="timer3"
+>
+Siap
+</div>
+
+</div>
+
+
+<!-- K4 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K4 — 2-Way CLOSE
+</div>
+
+<div class="relay-desc">
+BROWN
+</div>
+
+<div
+class="relay-status relay-off"
+id="status4"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(4,true)"
+>
+K4 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(4,false)"
+>
+K4 OFF
+</button>
+
+<div
+class="timer"
+id="timer4"
+>
+Siap
+</div>
+
+</div>
+
+
+<!-- K5 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K5
+</div>
+
+<div class="relay-desc">
+Relay tambahan
+</div>
+
+<div
+class="relay-status relay-off"
+id="status5"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(5,true)"
+>
+K5 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(5,false)"
+>
+K5 OFF
+</button>
+
+</div>
+
+
+<!-- K6 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K6
+</div>
+
+<div class="relay-desc">
+Relay tambahan
+</div>
+
+<div
+class="relay-status relay-off"
+id="status6"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(6,true)"
+>
+K6 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(6,false)"
+>
+K6 OFF
+</button>
+
+</div>
+
+
+<!-- K7 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K7
+</div>
+
+<div class="relay-desc">
+Relay tambahan
+</div>
+
+<div
+class="relay-status relay-off"
+id="status7"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(7,true)"
+>
+K7 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(7,false)"
+>
+K7 OFF
+</button>
+
+</div>
+
+
+<!-- K8 -->
+
+<div class="relay">
+
+<div class="relay-title">
+K8
+</div>
+
+<div class="relay-desc">
+Relay tambahan
+</div>
+
+<div
+class="relay-status relay-off"
+id="status8"
+>
+OFF
+</div>
+
+<button
+class="btn-on"
+onclick="relayCommand(8,true)"
+>
+K8 ON
+</button>
+
+<button
+class="btn-off"
+onclick="relayCommand(8,false)"
+>
+K8 OFF
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+PZEM
+================================================= -->
+
+<div class="section">
+
+<div class="section-title">
+⚡ Monitoring PZEM
+</div>
+
+<div
+class="pzem-grid"
+id="pzemContainer"
+>
+</div>
+
+</div>
+
+
+<div class="last-update">
+
+Last update:
+<span id="lastUpdate">
+-
+</span>
+
+</div>
+
 
 </div>
 
 
 <script>
 
+
+// =====================================================
+// API
+// =====================================================
+
 const API =
-"https://smart-water-api.agisrifalharianto2.workers.dev/api/data";
-
-const CONTROL =
-"https://smart-water-api.agisrifalharianto2.workers.dev/api/control";
+"https://smart-water-api.agisrifalharianto2.workers.dev";
 
 
-let controlData = null;
+// =====================================================
+// LOCAL TIMER
+// =====================================================
+
+const relayTimers = {
+
+1: null,
+2: null,
+3: null,
+4: null
+
+};
 
 
 // =====================================================
@@ -1382,1149 +1770,1270 @@ let controlData = null;
 
 function updateClock(){
 
-    const now = new Date();
+const now =
+new Date();
 
-    const time =
-        now.toLocaleTimeString(
-            "id-ID",
-            {
-                hour:"2-digit",
-                minute:"2-digit",
-                second:"2-digit",
-                hour12:false
-            }
-        );
+document.getElementById(
+"clock"
+).textContent =
+now.toLocaleTimeString(
+"id-ID"
+) +
+" WIB • " +
+now.toLocaleDateString(
+"id-ID"
+);
 
-    const date =
-        now.toLocaleDateString(
-            "id-ID",
-            {
-                day:"2-digit",
-                month:"long",
-                year:"numeric"
-            }
-        );
-
-    document.getElementById(
-        "clock"
-    ).textContent =
-        "🕐 " +
-        time +
-        " WIB • " +
-        date;
 }
+
+setInterval(
+updateClock,
+1000
+);
 
 updateClock();
 
-setInterval(
-    updateClock,
-    1000
+
+// =====================================================
+// ESCAPE HTML
+// =====================================================
+
+function escapeHTML(
+value
+){
+
+return String(value)
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+
+// =====================================================
+// FETCH DATA
+// =====================================================
+
+async function loadData(){
+
+try{
+
+const response =
+await fetch(
+API +
+"/api/data?t=" +
+Date.now(),
+{
+cache:"no-store"
+}
 );
 
 
-// =====================================================
-// RELAY UI
-// =====================================================
-
-function buildRelays(){
-
-    const grid =
-        document.getElementById(
-            "relayGrid"
-        );
-
-    grid.innerHTML = "";
-
-
-    const names = [
-
-        "K1 — Valve 3-Way BLUE / OPEN",
-
-        "K2 — Valve 3-Way BROWN / CLOSE",
-
-        "K3 — Valve 2-Way BLUE / OPEN",
-
-        "K4 — Valve 2-Way BROWN / CLOSE",
-
-        "K5 — Pompa",
-
-        "K6 — Lampu Kebun",
-
-        "K7 — Lampu Jalan",
-
-        "K8 — Dummy Load"
-
-    ];
-
-
-    for(
-        let i = 1;
-        i <= 8;
-        i++
-    ){
-
-        const valve =
-            i <= 4;
-
-
-        grid.innerHTML += `
-
-        <div class="relay">
-
-            <div class="relay-head">
-
-                <div>
-
-                    <div class="relay-name">
-                        ${names[i-1]}
-                    </div>
-
-                    <div class="relay-desc">
-
-                        ${
-                            valve
-                            ? "PULSE MAKS. 15 DETIK"
-                            : "MANUAL ON / OFF"
-                        }
-
-                    </div>
-
-                </div>
-
-                <span
-                    class="state"
-                    id="rs${i}">
-
-                    OFF
-
-                </span>
-
-            </div>
-
-
-            <div
-                class="timer"
-                id="rt${i}">
-
-                Relay OFF
-
-            </div>
-
-
-            <div class="btnrow">
-
-                <button
-                    class="on"
-                    onclick="setRelay(${i},true)">
-
-                    ON
-
-                </button>
-
-                <button
-                    class="off"
-                    onclick="setRelay(${i},false)">
-
-                    OFF
-
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-    }
-}
-
-buildRelays();
-
-
-// =====================================================
-// CONTROL POST
-// =====================================================
-
-async function postControl(
-    body
+if(
+!response.ok
 ){
 
-    const response =
-        await fetch(
-            CONTROL,
-            {
+throw new Error(
+"HTTP " +
+response.status
+);
 
-                method:"POST",
-
-                headers:{
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body:
-                    JSON.stringify(body),
-
-                cache:"no-store"
-
-            }
-        );
+}
 
 
-    if(!response.ok){
-
-        throw new Error(
-            "HTTP " +
-            response.status
-        );
-
-    }
+const data =
+await response.json();
 
 
-    const result =
-        await response.json();
+updateDashboard(
+data
+);
 
 
-    if(!result.success){
+}
 
-        throw new Error(
-            result.error ||
-            "Control gagal"
-        );
+catch(error){
 
-    }
+console.error(
+error
+);
 
+document.getElementById(
+"espStatus"
+).textContent =
+"ESP32: OFFLINE";
 
-    renderControl(
-        result
-    );
+document.getElementById(
+"espStatus"
+).className =
+"badge offline";
 
+}
 
-    return result;
 }
 
 
 // =====================================================
-// SET RELAY
+// UPDATE DASHBOARD
 // =====================================================
 
-async function setRelay(
-    number,
-    state
+function updateDashboard(
+data
 ){
 
-    try{
+// -----------------------------------------------------
+// ESP
+// -----------------------------------------------------
 
-        await postControl({
+const online =
+data.espOnline === true;
 
-            mode:"MANUAL",
 
-            relay:{
+const espStatus =
+document.getElementById(
+"espStatus"
+);
 
-                ["relay" + number]:
-                    state
 
-            }
+espStatus.textContent =
+online
+? "ESP32: ONLINE"
+: "ESP32: OFFLINE";
 
-        });
 
-    }
+espStatus.className =
+"badge " +
+(
+online
+? "online"
+: "offline"
+);
 
-    catch(error){
 
-        console.error(
-            error
-        );
+document.getElementById(
+"espOnline"
+).textContent =
+online
+? "ONLINE"
+: "OFFLINE";
 
-        alert(
-            "Relay gagal: " +
-            error.message
-        );
 
-    }
+// -----------------------------------------------------
+// WIFI
+// -----------------------------------------------------
+
+const ssid =
+data.wifiSSID &&
+data.wifiSSID !== ""
+? data.wifiSSID
+: "tidak terhubung";
+
+
+document.getElementById(
+"wifiSSID"
+).textContent =
+ssid;
+
+
+const rssi =
+Number(
+data.wifiRSSI
+) || 0;
+
+
+document.getElementById(
+"wifiRSSI"
+).textContent =
+online
+? rssi + " dBm"
+: "0 dBm";
+
+
+document.getElementById(
+"wifiStatus"
+).textContent =
+online
+? "WiFi: TERHUBUNG"
+: "WiFi: TIDAK TERHUBUNG";
+
+
+document.getElementById(
+"wifiStatus"
+).className =
+"badge " +
+(
+online
+? "online"
+: "offline"
+);
+
+
+// -----------------------------------------------------
+// HUMIDITY
+// -----------------------------------------------------
+
+const humidity =
+Number(
+data.kelembapan
+) || 0;
+
+
+document.getElementById(
+"humidity"
+).textContent =
+humidity.toFixed(1) +
+"%";
+
+
+document.getElementById(
+"humidityStatus"
+).textContent =
+humidity >= 60
+? "LEMBAP"
+: "KERING";
+
+
+// -----------------------------------------------------
+// TANK
+// -----------------------------------------------------
+
+const tank =
+Number(
+data.levelToren
+) || 0;
+
+
+document.getElementById(
+"tankLevel"
+).textContent =
+tank.toFixed(1) +
+"%";
+
+
+document.getElementById(
+"tankBar"
+).style.width =
+Math.max(
+0,
+Math.min(
+100,
+tank
+)
+) +
+"%";
+
+
+let tankStatus =
+"RENDAH";
+
+
+if(
+tank >= 70
+){
+
+tankStatus =
+"Tinggi";
+
+}
+
+else if(
+tank >= 30
+){
+
+tankStatus =
+"SEDANG";
+
 }
 
 
-// =====================================================
+document.getElementById(
+"tankStatus"
+).textContent =
+tankStatus;
+
+
+// -----------------------------------------------------
+// FLOW
+// -----------------------------------------------------
+
+document.getElementById(
+"flow1"
+).textContent =
+(
+Number(
+data.flowRate1
+) || 0
+).toFixed(2);
+
+
+document.getElementById(
+"flow2"
+).textContent =
+(
+Number(
+data.flowRate2
+) || 0
+).toFixed(2);
+
+
+// -----------------------------------------------------
+// RPM
+// -----------------------------------------------------
+
+document.getElementById(
+"rpm"
+).textContent =
+(
+Number(
+data.rpmGenerator
+) || 0
+).toFixed(0);
+
+
+// -----------------------------------------------------
+// BATTERY
+// -----------------------------------------------------
+
+const bv =
+Number(
+data.batteryVoltage
+) || 0;
+
+
+const bp =
+Number(
+data.batteryPercent
+) || 0;
+
+
+document.getElementById(
+"batteryVoltage"
+).textContent =
+bv.toFixed(2) +
+" V";
+
+
+document.getElementById(
+"batteryPercent"
+).textContent =
+bp.toFixed(0) +
+"%";
+
+
+document.getElementById(
+"batteryBar"
+).style.width =
+Math.max(
+0,
+Math.min(
+100,
+bp
+)
+) +
+"%";
+
+
+// -----------------------------------------------------
 // MODE
-// =====================================================
+// -----------------------------------------------------
 
-async function setMode(
-    mode
-){
+const mode =
+data.mode ===
+"AUTO"
+? "AUTO"
+: "MANUAL";
 
-    try{
 
-        await postControl({
-
-            mode:mode
-
-        });
-
-    }
-
-    catch(error){
-
-        alert(
-            "Mode gagal: " +
-            error.message
-        );
-
-    }
-}
-
-
-// =====================================================
-// PRESET
-// =====================================================
-
-async function preset(
-    name
-){
-
-    try{
-
-        await postControl({
-
-            mode:"MANUAL",
-
-            preset:name
-
-        });
-
-    }
-
-    catch(error){
-
-        alert(
-            "Preset gagal: " +
-            error.message
-        );
-
-    }
-}
-
-
-// =====================================================
-// RENDER CONTROL
-// =====================================================
-
-function renderControl(
-    data
-){
-
-    if(!data)
-        return;
-
-
-    controlData =
-        data;
-
-
-    const mode =
-        data.mode ||
-        "MANUAL";
-
-
-    document.getElementById(
-        "modeFlag"
-    ).textContent =
-        mode;
-
-
-    document.getElementById(
-        "systemMode"
-    ).textContent =
-        mode;
-
-
-    const relay =
-        data.relay ||
-        {};
-
-
-    for(
-        let i = 1;
-        i <= 8;
-        i++
-    ){
-
-        const state =
-            relay[
-                "relay" + i
-            ] === true;
-
-
-        const el =
-            document.getElementById(
-                "rs" + i
-            );
-
-
-        if(!el)
-            continue;
-
-
-        el.textContent =
-            state
-            ? "ON"
-            : "OFF";
-
-
-        el.className =
-            state
-            ? "state onstate"
-            : "state";
-
-    }
-
-
-    const v3 =
-        data.valve3Way ||
-        "CLOSE";
-
-
-    const v2 =
-        data.valve2Way ||
-        "CLOSE";
-
-
-    const v3El =
-        document.getElementById(
-            "v3State"
-        );
-
-
-    const v2El =
-        document.getElementById(
-            "v2State"
-        );
-
-
-    v3El.textContent =
-        v3;
-
-
-    v3El.className =
-        v3 === "OPEN"
-        ? "flag"
-        : "flag close";
-
-
-    v2El.textContent =
-        v2;
-
-
-    v2El.className =
-        v2 === "OPEN"
-        ? "flag"
-        : "flag close";
-
-
-    document.getElementById(
-        "v3Flag"
-    ).textContent =
-        "FLAG: " +
-        (
-            data.valve3Flag ||
-            "VALVE_3WAY_CLOSE"
-        );
-
-
-    document.getElementById(
-        "v2Flag"
-    ).textContent =
-        "FLAG: " +
-        (
-            data.valve2Flag ||
-            "VALVE_2WAY_CLOSE"
-        );
-
-}
-
-
-// =====================================================
-// TIMER
-// =====================================================
-
-function updateTimers(){
-
-    if(!controlData)
-        return;
-
-
-    const until =
-        controlData.relayUntil ||
-        {};
-
-
-    const now =
-        Date.now();
-
-
-    for(
-        let i = 1;
-        i <= 8;
-        i++
-    ){
-
-        const end =
-            Number(
-                until[
-                    "relay" + i
-                ]
-            ) || 0;
-
-
-        const remaining =
-            Math.max(
-                0,
-                end - now
-            );
-
-
-        const el =
-            document.getElementById(
-                "rt" + i
-            );
-
-
-        if(!el)
-            continue;
-
-
-        if(
-            remaining > 0
-        ){
-
-            el.textContent =
-                "⏱ " +
-                Math.ceil(
-                    remaining / 1000
-                ) +
-                " detik";
-
-        }
-
-        else{
-
-            el.textContent =
-                "Relay OFF";
-
-        }
-
-    }
-
-
-    const valve3End =
-        Math.max(
-
-            Number(
-                until.relay1
-            ) || 0,
-
-            Number(
-                until.relay2
-            ) || 0
-
-        );
-
-
-    const valve2End =
-        Math.max(
-
-            Number(
-                until.relay3
-            ) || 0,
-
-            Number(
-                until.relay4
-            ) || 0
-
-        );
-
-
-    const left3 =
-        Math.max(
-            0,
-            valve3End - now
-        );
-
-
-    const left2 =
-        Math.max(
-            0,
-            valve2End - now
-        );
-
-
-    document.getElementById(
-        "v3Timer"
-    ).textContent =
-
-        left3 > 0
-
-        ? "⏱ Pulsa aktif " +
-          Math.ceil(
-              left3 / 1000
-          ) +
-          " detik"
-
-        : "Relay valve OFF";
-
-
-    document.getElementById(
-        "v2Timer"
-    ).textContent =
-
-        left2 > 0
-
-        ? "⏱ Pulsa aktif " +
-          Math.ceil(
-              left2 / 1000
-          ) +
-          " detik"
-
-        : "Relay valve OFF";
-
-}
-
-setInterval(
-    updateTimers,
-    250
+const modeElement =
+document.getElementById(
+"mode"
 );
 
 
-// =====================================================
-// NUMBER
-// =====================================================
+modeElement.textContent =
+mode;
 
-function number(
-    value
+
+modeElement.className =
+"mode " +
+(
+mode === "AUTO"
+? "mode-auto"
+: "mode-manual"
+);
+
+
+// -----------------------------------------------------
+// VALVE
+// -----------------------------------------------------
+
+updateValveStatus(
+"valve3Status",
+"valve3Text",
+data.valve3Position
+);
+
+
+updateValveStatus(
+"valve2Status",
+"valve2Text",
+data.valve2Position
+);
+
+
+// -----------------------------------------------------
+// RELAY
+// -----------------------------------------------------
+
+if(
+data.relay
 ){
 
-    const x =
-        Number(value);
-
-
-    return Number.isFinite(x)
-        ? x
-        : 0;
-}
-
-
-// =====================================================
-// SET TEXT
-// =====================================================
-
-function text(
-    id,
-    value
+for(
+let i=1;
+i<=8;
+i++
 ){
 
-    const el =
-        document.getElementById(
-            id
-        );
+updateRelayVisual(
+i,
+Boolean(
+data.relay[
+"relay" + i
+]
+)
+);
 
-
-    if(el)
-        el.textContent =
-            value;
+}
 
 }
 
 
-// =====================================================
-// UPDATE DATA
-// =====================================================
+// -----------------------------------------------------
+// PZEM
+// -----------------------------------------------------
 
-function updateData(
-    data
+updatePZEM(
+data.pzem
+);
+
+
+// -----------------------------------------------------
+// SCADA
+// -----------------------------------------------------
+
+detectScenario(
+data
+);
+
+
+// -----------------------------------------------------
+// LAST UPDATE
+// -----------------------------------------------------
+
+if(
+data.created_at
 ){
 
-    if(!data)
-        return;
-
-
-    // HUMIDITY
-
-    const humidity =
-        number(
-            data.kelembapan
-        );
-
-
-    text(
-        "humidity",
-        humidity.toFixed(1) +
-        "%"
-    );
-
-
-    text(
-        "humidityStatus",
-        humidity < 30
-            ? "KERING"
-            : humidity >= 70
-                ? "BASAH"
-                : "NORMAL"
-    );
-
-
-    // TANK
-
-    const level =
-        number(
-            data.levelToren
-        );
-
-
-    text(
-        "tankLevel",
-        level.toFixed(1) +
-        "%"
-    );
-
-
-    document.getElementById(
-        "tankFill"
-    ).style.width =
-
-        Math.max(
-            0,
-            Math.min(
-                100,
-                level
-            )
-        ) +
-        "%";
-
-
-    text(
-        "tankStatus",
-        level < 30
-            ? "RENDAH"
-            : level >= 99
-                ? "PENUH"
-                : "AMAN"
-    );
-
-
-    // FLOW
-
-    text(
-        "flow1",
-        number(
-            data.flowRate1
-        ).toFixed(2)
-    );
-
-
-    text(
-        "flow2",
-        number(
-            data.flowRate2
-        ).toFixed(2)
-    );
-
-
-    // RPM
-
-    text(
-        "rpm",
-        number(
-            data.rpmGenerator
-        ).toFixed(0)
-    );
-
-
-    // BATTERY
-
-    const batteryV =
-        number(
-            data.batteryVoltage
-        );
-
-
-    const batteryP =
-        number(
-            data.batteryPercent
-        );
-
-
-    text(
-        "batteryV",
-        batteryV.toFixed(2) +
-        " V"
-    );
-
-
-    text(
-        "batteryP",
-        batteryP.toFixed(0) +
-        "%"
-    );
-
-
-    document.getElementById(
-        "batteryFill"
-    ).style.width =
-
-        Math.max(
-            0,
-            Math.min(
-                100,
-                batteryP
-            )
-        ) +
-        "%";
-
-
-    text(
-        "batteryStatus",
-
-        "STATUS: " +
-
-        (
-            batteryP < 20
-                ? "KRITIS"
-                : batteryP < 60
-                    ? "RENDAH"
-                    : batteryP >= 90
-                        ? "TINGGI"
-                        : "NORMAL"
-        )
-    );
-
-
-    // PZEM
-
-    const pzem =
-        Array.isArray(
-            data.pzem
-        )
-        ? data.pzem
-        : [];
-
-
-    let totalPower = 0;
-    let totalEnergy = 0;
-    let active = 0;
-
-
-    for(
-        let i = 0;
-        i < 4;
-        i++
-    ){
-
-        const p =
-            pzem[i] ||
-            {};
-
-
-        const v =
-            number(
-                p.voltage
-            );
-
-
-        const c =
-            number(
-                p.current
-            );
-
-
-        const power =
-            number(
-                p.power
-            );
-
-
-        const energy =
-            number(
-                p.energy
-            );
-
-
-        const n =
-            i + 1;
-
-
-        text(
-            "p" + n + "v",
-            v.toFixed(1) +
-            " V"
-        );
-
-
-        text(
-            "p" + n + "c",
-            c.toFixed(2) +
-            " A"
-        );
-
-
-        text(
-            "p" + n + "p",
-            power.toFixed(0) +
-            " W"
-        );
-
-
-        text(
-            "p" + n + "e",
-            energy.toFixed(2) +
-            " kWh"
-        );
-
-
-        totalPower +=
-            power;
-
-
-        totalEnergy +=
-            energy;
-
-
-        if(
-            p.status === "OK"
-        )
-            active++;
-
-
-        text(
-            "bp" + n + "v",
-            power.toFixed(0) +
-            " W"
-        );
-
-
-        const bar =
-            document.getElementById(
-                "bp" + n
-            );
-
-
-        if(bar){
-
-            bar.style.height =
-
-                Math.max(
-                    5,
-                    Math.min(
-                        100,
-                        Math.abs(power)
-                        / 500
-                        * 100
-                    )
-                ) +
-                "%";
-
-        }
-
-    }
-
-
-    text(
-        "totalPower",
-        totalPower.toFixed(0) +
-        " W"
-    );
-
-
-    text(
-        "totalEnergy",
-        totalEnergy.toFixed(2) +
-        " kWh"
-    );
-
-
-    text(
-        "pzemActive",
-        active +
-        " / 4"
-    );
-
-
-    text(
-        "pzemStatus",
-        active +
-        " PZEM AKTIF"
-    );
-
-
-    // ESP
-
-    const online =
-        data.espOnline === true;
-
-
-    text(
-        "espStatus",
-        online
-            ? "ESP32 ONLINE"
-            : "ESP32 OFFLINE"
-    );
-
-
-    document.getElementById(
-        "espDot"
-    ).className =
-        online
-        ? "dot"
-        : "dot red";
-
-
-    // WIFI
-
-    text(
-        "wifiSSID",
-
-        online && data.wifiSSID
-
-            ? data.wifiSSID
-
-            : "tidak terhubung"
-    );
-
-
-    const rssi =
-        number(
-            data.wifiRSSI
-        );
-
-
-    text(
-        "wifiRSSI",
-
-        online && rssi !== 0
-
-            ? "RSSI: " +
-              rssi +
-              " dBm"
-
-            : "RSSI: -- dBm"
-    );
-
-
-    document.getElementById(
-        "wifiDot"
-    ).className =
-
-        online && data.wifiSSID
-
-        ? "dot"
-
-        : "dot red";
-
-
-    // API BADGE
-
-    const badge =
-        document.getElementById(
-            "apiBadge"
-        );
-
-
-    badge.textContent =
-        online
-        ? "● SYSTEM ONLINE"
-        : "● ESP32 OFFLINE";
-
-
-    badge.className =
-        online
-        ? "badge"
-        : "badge off";
-
-
-    // CONTROL
-
-    renderControl(
-        data
-    );
+const date =
+new Date(
+data.created_at
+);
+
+
+document.getElementById(
+"lastUpdate"
+).textContent =
+date.toLocaleString(
+"id-ID"
+);
+
+}
 
 }
 
 
 // =====================================================
-// GET DATA
+// VALVE STATUS
 // =====================================================
 
-async function refresh(){
+function updateValveStatus(
+statusID,
+textID,
+position
+){
 
-    try{
-
-        const response =
-            await fetch(
-                API +
-                "?t=" +
-                Date.now(),
-                {
-                    cache:
-                        "no-store"
-                }
-            );
+const normalized =
+String(
+position || "CLOSED"
+).toUpperCase();
 
 
-        if(!response.ok){
-
-            throw new Error(
-                "HTTP " +
-                response.status
-            );
-
-        }
+const status =
+document.getElementById(
+statusID
+);
 
 
-        const data =
-            await response.json();
+const text =
+document.getElementById(
+textID
+);
 
 
-        updateData(
-            data
-        );
+if(
+normalized === "OPEN"
+){
 
-    }
+status.textContent =
+"OPEN";
 
-    catch(error){
+status.className =
+"position open";
 
-        console.error(
-            "API ERROR:",
-            error
-        );
+text.textContent =
+"OPEN";
 
+}
 
-        const badge =
-            document.getElementById(
-                "apiBadge"
-            );
+else{
 
+status.textContent =
+"CLOSED";
 
-        badge.textContent =
-            "● API ERROR";
+status.className =
+"position close";
 
+text.textContent =
+"CLOSED";
 
-        badge.className =
-            "badge off";
-
-    }
+}
 
 }
 
 
 // =====================================================
-// START
+// RELAY VISUAL
 // =====================================================
 
-refresh();
+function updateRelayVisual(
+number,
+state
+){
+
+const element =
+document.getElementById(
+"status" + number
+);
+
+
+if(
+!element
+)
+return;
+
+
+if(
+state
+){
+
+element.textContent =
+"ON";
+
+element.className =
+"relay-status relay-on";
+
+}
+
+else{
+
+element.textContent =
+"OFF";
+
+element.className =
+"relay-status relay-off";
+
+}
+
+}
+
+
+// =====================================================
+// RELAY COMMAND
+// =====================================================
+
+async function relayCommand(
+number,
+state
+){
+
+// -----------------------------------------------------
+// K1/K2 INTERLOCK
+// -----------------------------------------------------
+
+if(
+number === 1 &&
+state === true
+){
+
+await sendRelay(
+2,
+false
+);
+
+}
+
+
+if(
+number === 2 &&
+state === true
+){
+
+await sendRelay(
+1,
+false
+);
+
+}
+
+
+// -----------------------------------------------------
+// K3/K4 INTERLOCK
+// -----------------------------------------------------
+
+if(
+number === 3 &&
+state === true
+){
+
+await sendRelay(
+4,
+false
+);
+
+}
+
+
+if(
+number === 4 &&
+state === true
+){
+
+await sendRelay(
+3,
+false
+);
+
+}
+
+
+// -----------------------------------------------------
+// SEND COMMAND
+// -----------------------------------------------------
+
+await sendRelay(
+number,
+state
+);
+
+
+// -----------------------------------------------------
+// LOCAL TIMER
+// -----------------------------------------------------
+
+if(
+state &&
+number <= 4
+){
+
+startLocalTimer(
+number
+);
+
+}
+
+}
+
+
+// =====================================================
+// SEND RELAY
+// =====================================================
+
+async function sendRelay(
+number,
+state
+){
+
+try{
+
+const body = {
+
+mode:
+"MANUAL",
+
+relay:{
+
+}
+
+};
+
+
+body.relay[
+"relay" +
+number
+] =
+state;
+
+
+const response =
+await fetch(
+API +
+"/api/control",
+{
+
+method:
+"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(
+body
+)
+
+}
+);
+
+
+if(
+!response.ok
+){
+
+throw new Error(
+"HTTP " +
+response.status
+);
+
+}
+
+
+const result =
+await response.json();
+
+
+if(
+result.relay
+){
+
+for(
+let i=1;
+i<=8;
+i++
+){
+
+if(
+result.relay[
+"relay" + i
+] !== undefined
+){
+
+updateRelayVisual(
+i,
+Boolean(
+result.relay[
+"relay" + i
+]
+)
+);
+
+}
+
+}
+
+}
+
+
+}
+
+catch(error){
+
+console.error(
+error
+);
+
+alert(
+"Gagal mengirim perintah relay."
+);
+
+}
+
+}
+
+
+// =====================================================
+// TIMER 15 DETIK DASHBOARD
+// =====================================================
+
+function startLocalTimer(
+relay
+){
+
+if(
+relayTimers[relay]
+){
+
+clearInterval(
+relayTimers[relay]
+);
+
+}
+
+
+let remaining =
+15;
+
+
+const timerElement =
+document.getElementById(
+"timer" + relay
+);
+
+
+timerElement.textContent =
+"Relay aktif: " +
+remaining +
+" detik";
+
+
+relayTimers[relay] =
+setInterval(
+async () => {
+
+remaining--;
+
+
+if(
+remaining <= 0
+){
+
+clearInterval(
+relayTimers[relay]
+);
+
+relayTimers[relay] =
+null;
+
+
+timerElement.textContent =
+"15 detik selesai — relay OFF";
+
+
+updateRelayVisual(
+relay,
+false
+);
+
+
+return;
+
+}
+
+
+timerElement.textContent =
+"Relay aktif: " +
+remaining +
+" detik";
+
+},
+1000
+);
+
+}
+
+
+// =====================================================
+// PZEM
+// =====================================================
+
+function updatePZEM(
+pzem
+){
+
+const container =
+document.getElementById(
+"pzemContainer"
+);
+
+
+if(
+!Array.isArray(
+pzem
+)
+){
+
+container.innerHTML =
+"<div>PZEM tidak tersedia</div>";
+
+return;
+
+}
+
+
+container.innerHTML =
+pzem.map(
+(item,index)=>{
+
+const status =
+item.status === "OK";
+
+
+return `
+
+<div class="pzem">
+
+<h3>
+PZEM ${index + 1}
+</h3>
+
+<div class="pzem-row">
+<span>Status</span>
+<strong class="${
+status
+? "pzem-ok"
+: "pzem-error"
+}">
+${
+status
+? "OK"
+: "ERROR"
+}
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Tegangan</span>
+<strong>
+${Number(item.voltage || 0).toFixed(2)}
+V
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Arus</span>
+<strong>
+${Number(item.current || 0).toFixed(2)}
+A
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Daya</span>
+<strong>
+${Number(item.power || 0).toFixed(2)}
+W
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Energi</span>
+<strong>
+${Number(item.energy || 0).toFixed(3)}
+kWh
+</strong>
+</div>
+
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
+
+// =====================================================
+// SCENARIO
+// =====================================================
+
+function clearScenario(){
+
+[
+"scenarioMati",
+"scenarioTurbin",
+"scenarioKebun",
+"scenarioKeduanya"
+]
+.forEach(
+id=>{
+document.getElementById(
+id
+).classList.remove(
+"scada-active"
+);
+}
+);
+
+}
+
+
+function setScenario(
+scenario
+){
+
+clearScenario();
+
+
+if(
+scenario === "mati"
+){
+
+document.getElementById(
+"scenarioMati"
+).classList.add(
+"scada-active"
+);
+
+
+// 3 WAY CLOSE = K2
+// 2 WAY CLOSE = K4
+
+relayCommand(
+2,
+true
+);
+
+setTimeout(
+()=>{
+relayCommand(
+4,
+true
+);
+},
+300
+);
+
+}
+
+
+if(
+scenario === "turbin"
+){
+
+document.getElementById(
+"scenarioTurbin"
+).classList.add(
+"scada-active"
+);
+
+
+// 3 WAY OPEN = K1
+// 2 WAY CLOSE = K4
+
+relayCommand(
+1,
+true
+);
+
+setTimeout(
+()=>{
+relayCommand(
+4,
+true
+);
+},
+300
+);
+
+}
+
+
+if(
+scenario === "kebun"
+){
+
+document.getElementById(
+"scenarioKebun"
+).classList.add(
+"scada-active"
+);
+
+
+// 3 WAY CLOSE = K2
+// 2 WAY OPEN = K3
+
+relayCommand(
+2,
+true
+);
+
+setTimeout(
+()=>{
+relayCommand(
+3,
+true
+);
+},
+300
+);
+
+}
+
+
+if(
+scenario === "keduanya"
+){
+
+document.getElementById(
+"scenarioKeduanya"
+).classList.add(
+"scada-active"
+);
+
+
+// 3 WAY OPEN = K1
+// 2 WAY OPEN = K3
+//
+// K1 + K3 BOLEH BERSAMA
+
+relayCommand(
+1,
+true
+);
+
+setTimeout(
+()=>{
+relayCommand(
+3,
+true
+);
+},
+300
+);
+
+}
+
+}
+
+
+// =====================================================
+// DETEKSI SCADA
+// =====================================================
+
+function detectScenario(
+data
+){
+
+const v3 =
+String(
+data.valve3Position ||
+"CLOSED"
+).toUpperCase();
+
+
+const v2 =
+String(
+data.valve2Position ||
+"CLOSED"
+).toUpperCase();
+
+
+clearScenario();
+
+
+if(
+v3 === "CLOSED" &&
+v2 === "CLOSED"
+){
+
+document.getElementById(
+"scenarioMati"
+).classList.add(
+"scada-active"
+);
+
+}
+
+
+else if(
+v3 === "OPEN" &&
+v2 === "CLOSED"
+){
+
+document.getElementById(
+"scenarioTurbin"
+).classList.add(
+"scada-active"
+);
+
+}
+
+
+else if(
+v3 === "CLOSED" &&
+v2 === "OPEN"
+){
+
+document.getElementById(
+"scenarioKebun"
+).classList.add(
+"scada-active"
+);
+
+}
+
+
+else if(
+v3 === "OPEN" &&
+v2 === "OPEN"
+){
+
+document.getElementById(
+"scenarioKeduanya"
+).classList.add(
+"scada-active"
+);
+
+}
+
+}
+
+
+// =====================================================
+// AUTO REFRESH
+// =====================================================
+
+loadData();
+
 
 setInterval(
-    refresh,
-    1500
+loadData,
+3000
 );
+
 
 </script>
 
 </body>
+
 </html>
