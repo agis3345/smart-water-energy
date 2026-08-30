@@ -7,7 +7,7 @@
 
 <meta
 name="viewport"
-content="width=device-width, initial-scale=1.0"
+content="width=device-width,initial-scale=1.0"
 >
 
 <title>
@@ -21,841 +21,405 @@ box-sizing:border-box;
 }
 
 body{
-
 margin:0;
-
-font-family:
-Arial,
-Helvetica,
-sans-serif;
-
+font-family:Arial,Helvetica,sans-serif;
 background:#eef3f8;
-
 color:#172033;
-
 }
 
 .container{
-
 max-width:1400px;
-
 margin:auto;
-
 padding:20px;
-
 }
 
-
-/* =====================================================
-HEADER
-===================================================== */
-
 .header{
-
 background:
 linear-gradient(
 135deg,
 #173b8f,
 #2457d6
 );
-
 color:white;
-
 border-radius:24px;
-
 padding:28px;
-
 margin-bottom:20px;
-
-box-shadow:
-0 10px 30px
-rgba(0,0,0,.12);
-
+box-shadow:0 10px 30px rgba(0,0,0,.12);
 }
 
 .header h1{
-
 margin:0;
-
 font-size:32px;
-
 }
 
 .header p{
-
 margin:8px 0 0;
-
 opacity:.85;
-
 }
 
 .header-info{
-
 margin-top:16px;
-
 display:flex;
-
 flex-wrap:wrap;
-
 gap:10px;
-
 }
 
 .badge{
-
 padding:8px 14px;
-
 border-radius:20px;
-
-background:
-rgba(255,255,255,.15);
-
+background:rgba(255,255,255,.15);
 font-size:14px;
-
 }
 
-
-/* =====================================================
-ONLINE
-===================================================== */
-
 .online{
-
 background:#d9f7e2;
-
 color:#15803d;
-
 }
 
 .offline{
-
 background:#ffe1e1;
-
 color:#b42318;
-
 }
 
-
-/* =====================================================
-GRID
-===================================================== */
-
 .grid{
-
 display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:16px;
-
 }
 
 .card{
-
 background:white;
-
 border-radius:20px;
-
 padding:22px;
-
-box-shadow:
-0 5px 20px
-rgba(0,0,0,.06);
-
+box-shadow:0 5px 20px rgba(0,0,0,.06);
 }
 
 .card h3{
-
 margin:0 0 12px;
-
 font-size:18px;
-
 }
 
 .icon{
-
 font-size:30px;
-
 margin-bottom:8px;
-
 }
 
 .value{
-
 font-size:34px;
-
 font-weight:700;
-
 }
 
 .unit{
-
 color:#64748b;
-
 margin-top:4px;
-
 }
 
-
-/* =====================================================
-SECTION
-===================================================== */
-
 .section{
-
 margin-top:20px;
-
 background:white;
-
 border-radius:22px;
-
 padding:22px;
-
-box-shadow:
-0 5px 20px
-rgba(0,0,0,.06);
-
+box-shadow:0 5px 20px rgba(0,0,0,.06);
 }
 
 .section-title{
-
 font-size:22px;
-
 font-weight:700;
-
 margin-bottom:18px;
-
 }
-
-
-/* =====================================================
-TORREN
-===================================================== */
-
-.progress{
-
-width:100%;
-
-height:18px;
-
-background:#e2e8f0;
-
-border-radius:20px;
-
-overflow:hidden;
-
-margin:12px 0;
-
-}
-
-.progress-bar{
-
-height:100%;
-
-width:0%;
-
-transition:.4s;
-
-background:
-linear-gradient(
-90deg,
-#22c55e,
-#16a34a
-);
-
-}
-
-
-/* =====================================================
-SCADA
-===================================================== */
 
 .scada-grid{
-
 display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:12px;
-
 }
 
 .scada-button{
-
 border:0;
-
 padding:18px;
-
 border-radius:16px;
-
 font-size:16px;
-
 font-weight:700;
-
 cursor:pointer;
-
 transition:.2s;
-
 }
 
 .scada-button:hover{
-
-transform:
-translateY(-2px);
-
+transform:translateY(-2px);
 }
 
 .air-mati{
-
 background:#fee2e2;
-
 color:#b91c1c;
-
 }
 
 .turbin{
-
 background:#dbeafe;
-
 color:#1d4ed8;
-
 }
 
 .kebun{
-
 background:#dcfce7;
-
 color:#15803d;
-
 }
 
 .keduanya{
-
 background:#ede9fe;
-
 color:#6d28d9;
-
 }
 
 .scada-active{
-
-outline:
-4px solid
-rgba(37,99,235,.25);
-
-transform:
-translateY(-2px);
-
+outline:4px solid rgba(37,99,235,.25);
+transform:translateY(-2px);
 }
 
-
-/* =====================================================
-VALVE
-===================================================== */
-
 .valve-grid{
-
 display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
+grid-template-columns:repeat(2,1fr);
 gap:18px;
-
 }
 
 .valve{
-
-border:
-1px solid #e2e8f0;
-
+border:1px solid #e2e8f0;
 border-radius:18px;
-
 padding:20px;
-
 }
 
 .valve-header{
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
 gap:10px;
-
 }
 
 .valve-name{
-
 font-size:22px;
-
 font-weight:700;
-
 }
 
 .position{
-
 padding:8px 14px;
-
 border-radius:20px;
-
 font-weight:700;
-
 font-size:13px;
-
 }
 
 .open{
-
 background:#dcfce7;
-
 color:#15803d;
-
 }
 
 .close{
-
 background:#fee2e2;
-
 color:#b91c1c;
-
 }
 
-
-/* =====================================================
-BLUE BROWN
-===================================================== */
-
 .coil{
-
 display:flex;
-
 align-items:center;
-
 gap:8px;
-
 margin-top:15px;
-
 font-weight:600;
-
 }
 
 .dot{
-
 width:14px;
-
 height:14px;
-
 border-radius:50%;
-
 display:inline-block;
-
 }
 
 .blue{
-
 background:#2563eb;
-
 }
 
 .brown{
-
 background:#8b5e3c;
-
 }
 
-
-/* =====================================================
-RELAY
-===================================================== */
-
 .relay-grid{
-
 display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:14px;
-
 }
 
 .relay{
-
-border:
-1px solid #e2e8f0;
-
+border:1px solid #e2e8f0;
 border-radius:18px;
-
 padding:18px;
-
 }
 
 .relay-title{
-
 font-size:18px;
-
 font-weight:700;
-
 }
 
 .relay-desc{
-
 font-size:13px;
-
 color:#64748b;
-
 margin:5px 0 14px;
-
 }
 
 .relay-status{
-
 display:inline-block;
-
 padding:7px 12px;
-
 border-radius:15px;
-
 font-size:13px;
-
 font-weight:700;
-
 margin-bottom:12px;
-
 }
 
 .relay-on{
-
 background:#dcfce7;
-
 color:#15803d;
-
 }
 
 .relay-off{
-
 background:#fee2e2;
-
 color:#b91c1c;
-
 }
 
 .relay button{
-
 width:100%;
-
 border:0;
-
 padding:12px;
-
 border-radius:12px;
-
 font-size:15px;
-
 font-weight:700;
-
 cursor:pointer;
-
 margin-top:7px;
-
 }
 
 .btn-on{
-
 background:#16a34a;
-
 color:white;
-
 }
 
 .btn-off{
-
 background:#dc2626;
-
 color:white;
-
 }
-
-.btn-disabled{
-
-opacity:.5;
-
-cursor:not-allowed;
-
-}
-
-
-/* =====================================================
-TIMER
-===================================================== */
 
 .timer{
-
 margin-top:10px;
-
 font-size:13px;
-
 color:#64748b;
-
 }
 
-
-/* =====================================================
-PZEM
-===================================================== */
-
 .pzem-grid{
-
 display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:14px;
-
 }
 
 .pzem{
-
-border:
-1px solid #e2e8f0;
-
+border:1px solid #e2e8f0;
 border-radius:16px;
-
 padding:18px;
-
 }
 
 .pzem h3{
-
 margin:0 0 12px;
-
 }
 
 .pzem-row{
-
 display:flex;
-
 justify-content:space-between;
-
 padding:6px 0;
-
-border-bottom:
-1px solid #f1f5f9;
-
+border-bottom:1px solid #f1f5f9;
 }
 
 .pzem-ok{
-
 color:#15803d;
-
 font-weight:700;
-
 }
 
 .pzem-error{
-
 color:#b91c1c;
-
 font-weight:700;
-
 }
 
-
-/* =====================================================
-WIFI
-===================================================== */
-
 .wifi-box{
-
 display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
+grid-template-columns:repeat(3,1fr);
 gap:15px;
-
 }
 
 .info-box{
-
 background:#f8fafc;
-
 border-radius:15px;
-
 padding:16px;
-
 }
 
 .info-label{
-
 font-size:13px;
-
 color:#64748b;
-
 }
 
 .info-value{
-
 font-size:20px;
-
 font-weight:700;
-
 margin-top:5px;
-
 }
 
-
-/* =====================================================
-MODE
-===================================================== */
-
 .mode-box{
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
 gap:15px;
-
 padding:18px;
-
 border-radius:18px;
-
 background:#f8fafc;
-
 }
 
 .mode{
-
 font-size:20px;
-
 font-weight:700;
-
 }
 
 .mode-manual{
-
 color:#2563eb;
-
 }
 
 .mode-auto{
-
 color:#16a34a;
-
 }
-
-
-/* =====================================================
-LAST UPDATE
-===================================================== */
 
 .last-update{
-
 text-align:center;
-
 margin-top:20px;
-
 color:#64748b;
-
 font-size:13px;
-
 }
-
-
-/* =====================================================
-RESPONSIVE
-===================================================== */
 
 @media(max-width:1100px){
 
-.grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
-.relay-grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
-.pzem-grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
+.grid,
+.relay-grid,
+.pzem-grid,
 .scada-grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
+grid-template-columns:repeat(2,1fr);
 }
 
 }
-
 
 @media(max-width:700px){
 
 .container{
-
 padding:12px;
-
 }
 
 .header h1{
-
 font-size:24px;
-
 }
 
-.grid{
-
-grid-template-columns:1fr;
-
-}
-
-.valve-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.relay-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.pzem-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.scada-grid{
-
-grid-template-columns:1fr;
-
-}
-
+.grid,
+.valve-grid,
+.relay-grid,
+.pzem-grid,
+.scada-grid,
 .wifi-box{
-
 grid-template-columns:1fr;
-
 }
 
 }
@@ -870,9 +434,7 @@ grid-template-columns:1fr;
 <div class="container">
 
 
-<!-- =================================================
-HEADER
-================================================= -->
+<!-- HEADER -->
 
 <div class="header">
 
@@ -912,9 +474,7 @@ WiFi: CHECKING
 </div>
 
 
-<!-- =================================================
-WIFI
-================================================= -->
+<!-- WIFI -->
 
 <div class="section">
 
@@ -939,7 +499,6 @@ tidak terhubung
 
 </div>
 
-
 <div class="info-box">
 
 <div class="info-label">
@@ -954,7 +513,6 @@ id="wifiRSSI"
 </div>
 
 </div>
-
 
 <div class="info-box">
 
@@ -976,9 +534,7 @@ OFFLINE
 </div>
 
 
-<!-- =================================================
-SENSOR
-================================================= -->
+<!-- SENSOR -->
 
 <div class="grid">
 
@@ -1017,33 +573,18 @@ KERING
 </div>
 
 <h3>
-Level Toren
+Jarak Sensor ke Air
 </h3>
 
 <div
 class="value"
-id="tankLevel"
+id="tankDistance"
 >
-0.0%
-</div>
-
-<div class="progress">
-
-<div
-class="progress-bar"
-id="tankBar"
->
-</div>
-
+0.0
 </div>
 
 <div class="unit">
-
-Kondisi:
-<span id="tankStatus">
-RENDAH
-</span>
-
+cm
 </div>
 
 </div>
@@ -1146,33 +687,18 @@ id="batteryPercent"
 0%
 </div>
 
-<div class="progress">
-
-<div
-class="progress-bar"
-id="batteryBar"
->
-</div>
-
-</div>
-
 </div>
 
 </div>
 
 
-<!-- =================================================
-SCADA
-================================================= -->
+<!-- SCADA -->
 
 <div class="section">
 
 <div class="section-title">
-
 🎛️ SCADA — Kondisi Aliran Air
-
 </div>
-
 
 <div class="scada-grid">
 
@@ -1184,7 +710,6 @@ id="scenarioMati"
 🔴 AIR MATI
 </button>
 
-
 <button
 class="scada-button turbin"
 onclick="setScenario('turbin')"
@@ -1193,7 +718,6 @@ id="scenarioTurbin"
 ⚙️ KE TURBIN
 </button>
 
-
 <button
 class="scada-button kebun"
 onclick="setScenario('kebun')"
@@ -1201,7 +725,6 @@ id="scenarioKebun"
 >
 🌱 KE KEBUN
 </button>
-
 
 <button
 class="scada-button keduanya"
@@ -1216,9 +739,7 @@ id="scenarioKeduanya"
 </div>
 
 
-<!-- =================================================
-VALVE
-================================================= -->
+<!-- VALVE -->
 
 <div class="section">
 
@@ -1226,11 +747,8 @@ VALVE
 🚰 Status Valve
 </div>
 
-
 <div class="valve-grid">
 
-
-<!-- 3 WAY -->
 
 <div class="valve">
 
@@ -1249,7 +767,6 @@ CLOSED
 
 </div>
 
-
 <div class="coil">
 
 <span class="dot blue"></span>
@@ -1257,7 +774,6 @@ CLOSED
 K1 — BLUE — OPEN
 
 </div>
-
 
 <div class="coil">
 
@@ -1267,20 +783,15 @@ K2 — BROWN — CLOSE
 
 </div>
 
-
 <p>
-
 Status terakhir:
 <strong id="valve3Text">
 CLOSED
 </strong>
-
 </p>
 
 </div>
 
-
-<!-- 2 WAY -->
 
 <div class="valve">
 
@@ -1299,7 +810,6 @@ CLOSED
 
 </div>
 
-
 <div class="coil">
 
 <span class="dot blue"></span>
@@ -1307,7 +817,6 @@ CLOSED
 K3 — BLUE — OPEN
 
 </div>
-
 
 <div class="coil">
 
@@ -1317,14 +826,11 @@ K4 — BROWN — CLOSE
 
 </div>
 
-
 <p>
-
 Status terakhir:
 <strong id="valve2Text">
 CLOSED
 </strong>
-
 </p>
 
 </div>
@@ -1334,9 +840,7 @@ CLOSED
 </div>
 
 
-<!-- =================================================
-MODE
-================================================= -->
+<!-- MODE -->
 
 <div class="section">
 
@@ -1362,7 +866,7 @@ MANUAL
 </div>
 
 <div>
-Mode manual aktif — relay dapat dikontrol satu per satu.
+Relay dapat dikontrol secara manual.
 </div>
 
 </div>
@@ -1370,18 +874,13 @@ Mode manual aktif — relay dapat dikontrol satu per satu.
 </div>
 
 
-<!-- =================================================
-RELAY
-================================================= -->
+<!-- RELAY -->
 
 <div class="section">
 
 <div class="section-title">
-
 🔌 Manual Relay Control
-
 </div>
-
 
 <div class="relay-grid">
 
@@ -1391,11 +890,11 @@ RELAY
 <div class="relay">
 
 <div class="relay-title">
-TURBIN— 3-Way OPEN
+Turbin — 3-Way OPEN
 </div>
 
 <div class="relay-desc">
-K1-BLUE
+K1 — BLUE
 </div>
 
 <div
@@ -1434,11 +933,11 @@ Siap
 <div class="relay">
 
 <div class="relay-title">
-TURBIN — 3-Way CLOSE
+Turbin — 3-Way CLOSE
 </div>
 
 <div class="relay-desc">
-K2-BROWN
+K2 — BROWN
 </div>
 
 <div
@@ -1477,11 +976,11 @@ Siap
 <div class="relay">
 
 <div class="relay-title">
-KEBUN — 2-Way OPEN
+Kebun — 2-Way OPEN
 </div>
 
 <div class="relay-desc">
-K3-BLUE
+K3 — BLUE
 </div>
 
 <div
@@ -1520,11 +1019,11 @@ Siap
 <div class="relay">
 
 <div class="relay-title">
-KEBUN — 2-Way CLOSE
+Kebun — 2-Way CLOSE
 </div>
 
 <div class="relay-desc">
-K4-BROWN
+K4 — BROWN
 </div>
 
 <div
@@ -1567,7 +1066,7 @@ Pompa
 </div>
 
 <div class="relay-desc">
-Relay Pompa
+K5 — Pompa
 </div>
 
 <div
@@ -1603,7 +1102,7 @@ Lampu Kebun
 </div>
 
 <div class="relay-desc">
-Relay Lampu Kebun
+K6 — Lampu Kebun
 </div>
 
 <div
@@ -1639,7 +1138,7 @@ Lampu Jalan
 </div>
 
 <div class="relay-desc">
-Relay Lampu Jalan
+K7 — Lampu Jalan
 </div>
 
 <div
@@ -1675,7 +1174,7 @@ Dummy Load
 </div>
 
 <div class="relay-desc">
-Relay Dummy Load
+K8 — Dummy Load
 </div>
 
 <div
@@ -1701,15 +1200,12 @@ K8 OFF
 
 </div>
 
-
 </div>
 
 </div>
 
 
-<!-- =================================================
-PZEM
-================================================= -->
+<!-- PZEM -->
 
 <div class="section">
 
@@ -1735,12 +1231,10 @@ Last update:
 
 </div>
 
-
 </div>
 
 
 <script>
-
 
 // =====================================================
 // API
@@ -1751,16 +1245,14 @@ const API =
 
 
 // =====================================================
-// LOCAL TIMER
+// TIMER
 // =====================================================
 
 const relayTimers = {
-
-1: null,
-2: null,
-3: null,
-4: null
-
+1:null,
+2:null,
+3:null,
+4:null
 };
 
 
@@ -1795,40 +1287,7 @@ updateClock();
 
 
 // =====================================================
-// ESCAPE HTML
-// =====================================================
-
-function escapeHTML(
-value
-){
-
-return String(value)
-.replace(
-/&/g,
-"&amp;"
-)
-.replace(
-/</g,
-"&lt;"
-)
-.replace(
-/>/g,
-"&gt;"
-)
-.replace(
-/"/g,
-"&quot;"
-)
-.replace(
-/'/g,
-"&#039;"
-);
-
-}
-
-
-// =====================================================
-// FETCH DATA
+// LOAD DATA
 // =====================================================
 
 async function loadData(){
@@ -1845,27 +1304,21 @@ cache:"no-store"
 }
 );
 
-
 if(
 !response.ok
 ){
-
 throw new Error(
 "HTTP " +
 response.status
 );
-
 }
-
 
 const data =
 await response.json();
 
-
 updateDashboard(
 data
 );
-
 
 }
 
@@ -1894,38 +1347,30 @@ document.getElementById(
 // UPDATE DASHBOARD
 // =====================================================
 
-function updateDashboard(
-data
-){
+function updateDashboard(data){
 
-// -----------------------------------------------------
 // ESP
-// -----------------------------------------------------
 
 const online =
 data.espOnline === true;
 
-
-const espStatus =
+const esp =
 document.getElementById(
 "espStatus"
 );
 
-
-espStatus.textContent =
+esp.textContent =
 online
 ? "ESP32: ONLINE"
 : "ESP32: OFFLINE";
 
-
-espStatus.className =
+esp.className =
 "badge " +
 (
 online
 ? "online"
 : "offline"
 );
-
 
 document.getElementById(
 "espOnline"
@@ -1935,9 +1380,7 @@ online
 : "OFFLINE";
 
 
-// -----------------------------------------------------
 // WIFI
-// -----------------------------------------------------
 
 const ssid =
 data.wifiSSID &&
@@ -1945,18 +1388,15 @@ data.wifiSSID !== ""
 ? data.wifiSSID
 : "tidak terhubung";
 
-
 document.getElementById(
 "wifiSSID"
 ).textContent =
 ssid;
 
-
 const rssi =
 Number(
 data.wifiRSSI
 ) || 0;
-
 
 document.getElementById(
 "wifiRSSI"
@@ -1965,14 +1405,12 @@ online
 ? rssi + " dBm"
 : "0 dBm";
 
-
 document.getElementById(
 "wifiStatus"
 ).textContent =
 online
 ? "WiFi: TERHUBUNG"
 : "WiFi: TIDAK TERHUBUNG";
-
 
 document.getElementById(
 "wifiStatus"
@@ -1985,22 +1423,18 @@ online
 );
 
 
-// -----------------------------------------------------
 // HUMIDITY
-// -----------------------------------------------------
 
 const humidity =
 Number(
 data.kelembapan
 ) || 0;
 
-
 document.getElementById(
 "humidity"
 ).textContent =
 humidity.toFixed(1) +
 "%";
-
 
 document.getElementById(
 "humidityStatus"
@@ -2010,68 +1444,20 @@ humidity >= 60
 : "KERING";
 
 
-// -----------------------------------------------------
-// TANK
-// -----------------------------------------------------
+// TORREN DISTANCE
 
-const tank =
+const distance =
 Number(
-data.levelToren
+data.torenDistance
 ) || 0;
 
-
 document.getElementById(
-"tankLevel"
+"tankDistance"
 ).textContent =
-tank.toFixed(1) +
-"%";
+distance.toFixed(1);
 
 
-document.getElementById(
-"tankBar"
-).style.width =
-Math.max(
-0,
-Math.min(
-100,
-tank
-)
-) +
-"%";
-
-
-let tankStatus =
-"RENDAH";
-
-
-if(
-tank >= 70
-){
-
-tankStatus =
-"Tinggi";
-
-}
-
-else if(
-tank >= 30
-){
-
-tankStatus =
-"SEDANG";
-
-}
-
-
-document.getElementById(
-"tankStatus"
-).textContent =
-tankStatus;
-
-
-// -----------------------------------------------------
 // FLOW
-// -----------------------------------------------------
 
 document.getElementById(
 "flow1"
@@ -2081,7 +1467,6 @@ Number(
 data.flowRate1
 ) || 0
 ).toFixed(2);
-
 
 document.getElementById(
 "flow2"
@@ -2093,9 +1478,7 @@ data.flowRate2
 ).toFixed(2);
 
 
-// -----------------------------------------------------
 // RPM
-// -----------------------------------------------------
 
 document.getElementById(
 "rpm"
@@ -2107,28 +1490,23 @@ data.rpmGenerator
 ).toFixed(0);
 
 
-// -----------------------------------------------------
 // BATTERY
-// -----------------------------------------------------
 
 const bv =
 Number(
 data.batteryVoltage
 ) || 0;
 
-
 const bp =
 Number(
 data.batteryPercent
 ) || 0;
-
 
 document.getElementById(
 "batteryVoltage"
 ).textContent =
 bv.toFixed(2) +
 " V";
-
 
 document.getElementById(
 "batteryPercent"
@@ -2137,41 +1515,22 @@ bp.toFixed(0) +
 "%";
 
 
-document.getElementById(
-"batteryBar"
-).style.width =
-Math.max(
-0,
-Math.min(
-100,
-bp
-)
-) +
-"%";
-
-
-// -----------------------------------------------------
 // MODE
-// -----------------------------------------------------
 
 const mode =
-data.mode ===
-"AUTO"
+data.mode === "AUTO"
 ? "AUTO"
 : "MANUAL";
 
-
-const modeElement =
+const modeEl =
 document.getElementById(
 "mode"
 );
 
-
-modeElement.textContent =
+modeEl.textContent =
 mode;
 
-
-modeElement.className =
+modeEl.className =
 "mode " +
 (
 mode === "AUTO"
@@ -2180,16 +1539,13 @@ mode === "AUTO"
 );
 
 
-// -----------------------------------------------------
 // VALVE
-// -----------------------------------------------------
 
 updateValveStatus(
 "valve3Status",
 "valve3Text",
 data.valve3Position
 );
-
 
 updateValveStatus(
 "valve2Status",
@@ -2198,9 +1554,7 @@ data.valve2Position
 );
 
 
-// -----------------------------------------------------
 // RELAY
-// -----------------------------------------------------
 
 if(
 data.relay
@@ -2226,42 +1580,35 @@ data.relay[
 }
 
 
-// -----------------------------------------------------
 // PZEM
-// -----------------------------------------------------
 
 updatePZEM(
 data.pzem
 );
 
 
-// -----------------------------------------------------
 // SCADA
-// -----------------------------------------------------
 
 detectScenario(
 data
 );
 
 
-// -----------------------------------------------------
 // LAST UPDATE
-// -----------------------------------------------------
 
 if(
 data.created_at
 ){
 
-const date =
+const d =
 new Date(
 data.created_at
 );
 
-
 document.getElementById(
 "lastUpdate"
 ).textContent =
-date.toLocaleString(
+d.toLocaleString(
 "id-ID"
 );
 
@@ -2271,7 +1618,7 @@ date.toLocaleString(
 
 
 // =====================================================
-// VALVE STATUS
+// VALVE
 // =====================================================
 
 function updateValveStatus(
@@ -2280,26 +1627,23 @@ textID,
 position
 ){
 
-const normalized =
+const p =
 String(
 position || "CLOSED"
 ).toUpperCase();
-
 
 const status =
 document.getElementById(
 statusID
 );
 
-
 const text =
 document.getElementById(
 textID
 );
 
-
 if(
-normalized === "OPEN"
+p === "OPEN"
 ){
 
 status.textContent =
@@ -2312,7 +1656,6 @@ text.textContent =
 "OPEN";
 
 }
-
 else{
 
 status.textContent =
@@ -2338,136 +1681,25 @@ number,
 state
 ){
 
-const element =
+const el =
 document.getElementById(
 "status" + number
 );
 
+if(!el) return;
 
-if(
-!element
-)
-return;
-
-
-if(
+el.textContent =
 state
-){
+? "ON"
+: "OFF";
 
-element.textContent =
-"ON";
-
-element.className =
-"relay-status relay-on";
-
-}
-
-else{
-
-element.textContent =
-"OFF";
-
-element.className =
-"relay-status relay-off";
-
-}
-
-}
-
-
-// =====================================================
-// RELAY COMMAND
-// =====================================================
-
-async function relayCommand(
-number,
+el.className =
+"relay-status " +
+(
 state
-){
-
-// -----------------------------------------------------
-// K1/K2 INTERLOCK
-// -----------------------------------------------------
-
-if(
-number === 1 &&
-state === true
-){
-
-await sendRelay(
-2,
-false
+? "relay-on"
+: "relay-off"
 );
-
-}
-
-
-if(
-number === 2 &&
-state === true
-){
-
-await sendRelay(
-1,
-false
-);
-
-}
-
-
-// -----------------------------------------------------
-// K3/K4 INTERLOCK
-// -----------------------------------------------------
-
-if(
-number === 3 &&
-state === true
-){
-
-await sendRelay(
-4,
-false
-);
-
-}
-
-
-if(
-number === 4 &&
-state === true
-){
-
-await sendRelay(
-3,
-false
-);
-
-}
-
-
-// -----------------------------------------------------
-// SEND COMMAND
-// -----------------------------------------------------
-
-await sendRelay(
-number,
-state
-);
-
-
-// -----------------------------------------------------
-// LOCAL TIMER
-// -----------------------------------------------------
-
-if(
-state &&
-number <= 4
-){
-
-startLocalTimer(
-number
-);
-
-}
 
 }
 
@@ -2484,62 +1716,41 @@ state
 try{
 
 const body = {
-
-mode:
-"MANUAL",
-
-relay:{
-
-}
-
+mode:"MANUAL",
+relay:{}
 };
 
-
 body.relay[
-"relay" +
-number
+"relay" + number
 ] =
 state;
-
 
 const response =
 await fetch(
 API +
 "/api/control",
 {
-
-method:
-"POST",
-
+method:"POST",
 headers:{
 "Content-Type":
 "application/json"
 },
-
 body:
-JSON.stringify(
-body
-)
-
+JSON.stringify(body)
 }
 );
-
 
 if(
 !response.ok
 ){
-
 throw new Error(
 "HTTP " +
 response.status
 );
-
 }
-
 
 const result =
 await response.json();
-
 
 if(
 result.relay
@@ -2572,9 +1783,7 @@ result.relay[
 
 }
 
-
 }
-
 catch(error){
 
 console.error(
@@ -2591,7 +1800,94 @@ alert(
 
 
 // =====================================================
-// TIMER 15 DETIK DASHBOARD
+// RELAY COMMAND
+// =====================================================
+
+async function relayCommand(
+number,
+state
+){
+
+// -----------------------------------------------------
+// K1 / K2
+// -----------------------------------------------------
+
+if(
+number === 1 &&
+state
+){
+
+await sendRelay(
+2,
+false
+);
+
+}
+
+if(
+number === 2 &&
+state
+){
+
+await sendRelay(
+1,
+false
+);
+
+}
+
+
+// -----------------------------------------------------
+// K3 / K4
+// -----------------------------------------------------
+
+if(
+number === 3 &&
+state
+){
+
+await sendRelay(
+4,
+false
+);
+
+}
+
+if(
+number === 4 &&
+state
+){
+
+await sendRelay(
+3,
+false
+);
+
+}
+
+
+await sendRelay(
+number,
+state
+);
+
+
+if(
+state &&
+number <= 4
+){
+
+startLocalTimer(
+number
+);
+
+}
+
+}
+
+
+// =====================================================
+// LOCAL TIMER
 // =====================================================
 
 function startLocalTimer(
@@ -2608,29 +1904,23 @@ relayTimers[relay]
 
 }
 
+let remaining = 15;
 
-let remaining =
-15;
-
-
-const timerElement =
+const timer =
 document.getElementById(
 "timer" + relay
 );
 
-
-timerElement.textContent =
+timer.textContent =
 "Relay aktif: " +
 remaining +
 " detik";
 
-
 relayTimers[relay] =
 setInterval(
-async () => {
+()=>{
 
 remaining--;
-
 
 if(
 remaining <= 0
@@ -2643,23 +1933,19 @@ relayTimers[relay]
 relayTimers[relay] =
 null;
 
-
-timerElement.textContent =
+timer.textContent =
 "15 detik selesai — relay OFF";
-
 
 updateRelayVisual(
 relay,
 false
 );
 
-
 return;
 
 }
 
-
-timerElement.textContent =
+timer.textContent =
 "Relay aktif: " +
 remaining +
 " detik";
@@ -2667,107 +1953,6 @@ remaining +
 },
 1000
 );
-
-}
-
-
-// =====================================================
-// PZEM
-// =====================================================
-
-function updatePZEM(
-pzem
-){
-
-const container =
-document.getElementById(
-"pzemContainer"
-);
-
-
-if(
-!Array.isArray(
-pzem
-)
-){
-
-container.innerHTML =
-"<div>PZEM tidak tersedia</div>";
-
-return;
-
-}
-
-
-container.innerHTML =
-pzem.map(
-(item,index)=>{
-
-const status =
-item.status === "OK";
-
-
-return `
-
-<div class="pzem">
-
-<h3>
-PZEM ${index + 1}
-</h3>
-
-<div class="pzem-row">
-<span>Status</span>
-<strong class="${
-status
-? "pzem-ok"
-: "pzem-error"
-}">
-${
-status
-? "OK"
-: "ERROR"
-}
-</strong>
-</div>
-
-<div class="pzem-row">
-<span>Tegangan</span>
-<strong>
-${Number(item.voltage || 0).toFixed(2)}
-V
-</strong>
-</div>
-
-<div class="pzem-row">
-<span>Arus</span>
-<strong>
-${Number(item.current || 0).toFixed(2)}
-A
-</strong>
-</div>
-
-<div class="pzem-row">
-<span>Daya</span>
-<strong>
-${Number(item.power || 0).toFixed(2)}
-W
-</strong>
-</div>
-
-<div class="pzem-row">
-<span>Energi</span>
-<strong>
-${Number(item.energy || 0).toFixed(3)}
-kWh
-</strong>
-</div>
-
-</div>
-
-`;
-
-}
-).join("");
 
 }
 
@@ -2786,16 +1971,22 @@ function clearScenario(){
 ]
 .forEach(
 id=>{
+
 document.getElementById(
 id
 ).classList.remove(
 "scada-active"
 );
+
 }
 );
 
 }
 
+
+// =====================================================
+// SCENARIO
+// =====================================================
 
 function setScenario(
 scenario
@@ -2814,9 +2005,8 @@ document.getElementById(
 "scada-active"
 );
 
-
-// 3 WAY CLOSE = K2
-// 2 WAY CLOSE = K4
+// 3-WAY CLOSE = K2
+// 2-WAY CLOSE = K4
 
 relayCommand(
 2,
@@ -2836,7 +2026,7 @@ true
 }
 
 
-if(
+else if(
 scenario === "turbin"
 ){
 
@@ -2846,9 +2036,8 @@ document.getElementById(
 "scada-active"
 );
 
-
-// 3 WAY OPEN = K1
-// 2 WAY CLOSE = K4
+// 3-WAY OPEN = K1
+// 2-WAY CLOSE = K4
 
 relayCommand(
 1,
@@ -2868,7 +2057,7 @@ true
 }
 
 
-if(
+else if(
 scenario === "kebun"
 ){
 
@@ -2878,9 +2067,8 @@ document.getElementById(
 "scada-active"
 );
 
-
-// 3 WAY CLOSE = K2
-// 2 WAY OPEN = K3
+// 3-WAY CLOSE = K2
+// 2-WAY OPEN = K3
 
 relayCommand(
 2,
@@ -2900,7 +2088,7 @@ true
 }
 
 
-if(
+else if(
 scenario === "keduanya"
 ){
 
@@ -2910,11 +2098,8 @@ document.getElementById(
 "scada-active"
 );
 
-
-// 3 WAY OPEN = K1
-// 2 WAY OPEN = K3
-//
-// K1 + K3 BOLEH BERSAMA
+// 3-WAY OPEN = K1
+// 2-WAY OPEN = K3
 
 relayCommand(
 1,
@@ -2937,7 +2122,7 @@ true
 
 
 // =====================================================
-// DETEKSI SCADA
+// DETECT SCENARIO
 // =====================================================
 
 function detectScenario(
@@ -2950,16 +2135,13 @@ data.valve3Position ||
 "CLOSED"
 ).toUpperCase();
 
-
 const v2 =
 String(
 data.valve2Position ||
 "CLOSED"
 ).toUpperCase();
 
-
 clearScenario();
-
 
 if(
 v3 === "CLOSED" &&
@@ -2974,7 +2156,6 @@ document.getElementById(
 
 }
 
-
 else if(
 v3 === "OPEN" &&
 v2 === "CLOSED"
@@ -2988,7 +2169,6 @@ document.getElementById(
 
 }
 
-
 else if(
 v3 === "CLOSED" &&
 v2 === "OPEN"
@@ -3001,7 +2181,6 @@ document.getElementById(
 );
 
 }
-
 
 else if(
 v3 === "OPEN" &&
@@ -3020,17 +2199,107 @@ document.getElementById(
 
 
 // =====================================================
-// AUTO REFRESH
+// PZEM
+// =====================================================
+
+function updatePZEM(
+pzem
+){
+
+const container =
+document.getElementById(
+"pzemContainer"
+);
+
+if(
+!Array.isArray(pzem)
+){
+
+container.innerHTML =
+"<div>PZEM tidak tersedia</div>";
+
+return;
+
+}
+
+container.innerHTML =
+pzem.map(
+(item,index)=>{
+
+const ok =
+item.status === "OK";
+
+return `
+
+<div class="pzem">
+
+<h3>
+PZEM ${index + 1}
+</h3>
+
+<div class="pzem-row">
+<span>Status</span>
+<strong class="${
+ok
+? "pzem-ok"
+: "pzem-error"
+}">
+${
+ok
+? "OK"
+: "ERROR"
+}
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Tegangan</span>
+<strong>
+${Number(item.voltage || 0).toFixed(2)} V
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Arus</span>
+<strong>
+${Number(item.current || 0).toFixed(2)} A
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Daya</span>
+<strong>
+${Number(item.power || 0).toFixed(2)} W
+</strong>
+</div>
+
+<div class="pzem-row">
+<span>Energi</span>
+<strong>
+${Number(item.energy || 0).toFixed(3)} kWh
+</strong>
+</div>
+
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
+
+// =====================================================
+// START
 // =====================================================
 
 loadData();
-
 
 setInterval(
 loadData,
 3000
 );
-
 
 </script>
 
