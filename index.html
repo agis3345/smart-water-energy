@@ -2745,109 +2745,217 @@ id
 }
 
 
-async function setScenario(
-scenario
-){
+// =====================================================
+// SCENARIO CONTROL - FINAL
+// KHUSUS SHORTCUT K1/K2/K3/K4
+// =====================================================
 
-clearScenario();
+async function setScenario(scenario) {
 
-const buttonMap = {
-  mati: "scenarioMati",
-  turbin: "scenarioTurbin",
-  kebun: "scenarioKebun",
-  keduanya: "scenarioKeduanya"
-};
+    clearScenario();
 
-const button =
-document.getElementById(
-buttonMap[scenario]
-);
-
-if(button){
-  button.classList.add("scada-active");
-}
+    // STATE LENGKAP K1-K4
+    let relayState = {
+        relay1: false,
+        relay2: false,
+        relay3: false,
+        relay4: false
+    };
 
 
-// ===================================================
-// URUTAN SCENARIO
-// ===================================================
-// K1/K2 dan K3/K4 adalah coil pembuka/penutup.
-// Jangan menyalakan BLUE + BROWN bersamaan.
-// Karena itu perintah dijalankan berurutan.
-//
-// MATI      = K2 -> K4
-// TURBIN    = K1 -> K4
-// KEBUN     = K2 -> K3
-// KEDUANYA  = K1 -> K3
-// ===================================================
+    // =================================================
+    // AIR MATI
+    // =================================================
 
-try{
+    if (scenario === "mati") {
 
-  if(scenario === "mati"){
+        document
+            .getElementById("scenarioMati")
+            .classList.add("scada-active");
 
-    await relayCommand(2,true);
+        relayState = {
+            relay1: false,
+            relay2: true,
+            relay3: false,
+            relay4: true
+        };
+    }
 
-    await new Promise(
-      resolve => setTimeout(resolve,300)
+
+    // =================================================
+    // KE TURBIN
+    // =================================================
+
+    else if (scenario === "turbin") {
+
+        document
+            .getElementById("scenarioTurbin")
+            .classList.add("scada-active");
+
+        relayState = {
+            relay1: true,
+            relay2: false,
+            relay3: false,
+            relay4: true
+        };
+    }
+
+
+    // =================================================
+    // KE KEBUN
+    // =================================================
+
+    else if (scenario === "kebun") {
+
+        document
+            .getElementById("scenarioKebun")
+            .classList.add("scada-active");
+
+        relayState = {
+            relay1: false,
+            relay2: true,
+            relay3: true,
+            relay4: false
+        };
+    }
+
+
+    // =================================================
+    // TURBIN + KEBUN
+    // =================================================
+
+    else if (scenario === "keduanya") {
+
+        document
+            .getElementById("scenarioKeduanya")
+            .classList.add("scada-active");
+
+        relayState = {
+            relay1: true,
+            relay2: false,
+            relay3: true,
+            relay4: false
+        };
+    }
+
+
+    // =================================================
+    // KIRIM SATU REQUEST
+    // =================================================
+
+    console.log(
+        "SCENARIO SEND:",
+        scenario,
+        relayState
     );
 
-    await relayCommand(4,true);
 
-  }
+    try {
 
-  else if(scenario === "turbin"){
+        const response = await fetch(
+            API + "/api/control",
+            {
+                method: "POST",
 
-    await relayCommand(1,true);
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-    await new Promise(
-      resolve => setTimeout(resolve,300)
-    );
+                body: JSON.stringify({
 
-    await relayCommand(4,true);
+                    mode: "MANUAL",
 
-  }
+                    relay: {
 
-  else if(scenario === "kebun"){
+                        relay1:
+                            relayState.relay1,
 
-    await relayCommand(2,true);
+                        relay2:
+                            relayState.relay2,
 
-    await new Promise(
-      resolve => setTimeout(resolve,300)
-    );
+                        relay3:
+                            relayState.relay3,
 
-    await relayCommand(3,true);
+                        relay4:
+                            relayState.relay4
 
-  }
+                    }
 
-  else if(scenario === "keduanya"){
+                })
 
-    await relayCommand(1,true);
+            }
+        );
 
-    await new Promise(
-      resolve => setTimeout(resolve,300)
-    );
 
-    await relayCommand(3,true);
+        if (!response.ok) {
 
-  }
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
 
-  else{
-    return;
-  }
+        }
 
-}
-catch(error){
 
-  console.error(
-    "Scenario error:",
-    error
-  );
+        const result =
+            await response.json();
 
-  alert(
-    "Gagal mengirim scenario."
-  );
 
-}
+        console.log(
+            "SCENARIO RESULT:",
+            result
+        );
+
+
+        // =================================================
+        // TAMPILKAN HASIL DARI WORKER
+        // =================================================
+
+        if (result.relay) {
+
+            for (
+                let i = 1;
+                i <= 8;
+                i++
+            ) {
+
+                const key =
+                    "relay" + i;
+
+
+                if (
+                    result.relay[key]
+                    !== undefined
+                ) {
+
+                    updateRelayVisual(
+                        i,
+                        Boolean(
+                            result.relay[key]
+                        )
+                    );
+
+                }
+
+            }
+
+        }
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "SCENARIO ERROR:",
+            error
+        );
+
+        alert(
+            "Gagal mengirim kondisi SCADA."
+        );
+
+    }
 
 }
 
