@@ -1017,7 +1017,7 @@ KERING
 </div>
 
 <h3>
-Jarak Permukaan Air
+Level Air Toren
 </h3>
 
 <div
@@ -1028,7 +1028,7 @@ id="tankDistance"
 </div>
 
 <div class="unit">
-cm — sensor → permukaan air
+% kapasitas toren
 </div>
 
 <div class="unit">
@@ -2002,43 +2002,27 @@ humidity >= 60
 
 
 // -----------------------------------------------------
-// TANK — RAW DISTANCE
+// TANK — LEVEL PERCENTAGE FROM ESP32
 // -----------------------------------------------------
 
-const tankDistance =
-Number(
-data.torenDistance
-);
+const tankLevel = Number(data.levelToren);
+const tankLevelElement = document.getElementById("tankDistance");
+const tankStatusElement = document.getElementById("tankStatus");
 
-const tankDistanceElement =
-document.getElementById(
-"tankDistance"
-);
-
-if(
-Number.isFinite(tankDistance) &&
-tankDistance > 0
-){
-
-tankDistanceElement.textContent =
-tankDistance.toFixed(1);
-
-document.getElementById(
-"tankStatus"
-).textContent =
-"TERBACA";
-
-}
-else{
-
-tankDistanceElement.textContent =
-"0.0";
-
-document.getElementById(
-"tankStatus"
-).textContent =
-"TIDAK TERBACA";
-
+if (Number.isFinite(tankLevel) && tankLevel >= 0 && tankLevel <= 100) {
+  tankLevelElement.textContent = tankLevel.toFixed(1) + "%";
+  if (tankLevel >= 95) {
+    tankStatusElement.textContent = "PENUH";
+  } else if (tankLevel >= 60) {
+    tankStatusElement.textContent = "TINGGI";
+  } else if (tankLevel >= 25) {
+    tankStatusElement.textContent = "SEDANG";
+  } else {
+    tankStatusElement.textContent = "RENDAH";
+  }
+} else {
+  tankLevelElement.textContent = "—";
+  tankStatusElement.textContent = "DATA TIDAK TERSEDIA";
 }
 
 
