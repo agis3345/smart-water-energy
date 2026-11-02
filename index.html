@@ -1,1737 +1,235 @@
 <!DOCTYPE html>
-<html lang="id">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
-
-<title>
-Smart Water & Energy — SCADA
-</title>
-
-<style>
-
-*{
-box-sizing:border-box;
-}
-
-body{
-
-margin:0;
-
-font-family:
-Arial,
-Helvetica,
-sans-serif;
-
-background:#eef3f8;
-
-color:#172033;
-
-}
-
-.container{
-
-max-width:1400px;
-
-margin:auto;
-
-padding:20px;
-
-}
-
-
-/* =====================================================
-HEADER
-===================================================== */
-
-.header{
-
-background:
-linear-gradient(
-135deg,
-#173b8f,
-#2457d6
-);
-
-color:white;
-
-border-radius:24px;
-
-padding:28px;
-
-margin-bottom:20px;
-
-box-shadow:
-0 10px 30px
-rgba(0,0,0,.12);
-
-}
-
-.header h1{
-
-margin:0;
-
-font-size:32px;
-
-}
-
-.header p{
-
-margin:8px 0 0;
-
-opacity:.85;
-
-}
-
-.header-info{
-
-margin-top:16px;
-
-display:flex;
-
-flex-wrap:wrap;
-
-gap:10px;
-
-}
-
-.badge{
-
-padding:8px 14px;
-
-border-radius:20px;
-
-background:
-rgba(255,255,255,.15);
-
-font-size:14px;
-
-}
-
-
-/* =====================================================
-ONLINE
-===================================================== */
-
-.online{
-
-background:#d9f7e2;
-
-color:#15803d;
-
-}
-
-.offline{
-
-background:#ffe1e1;
-
-color:#b42318;
-
-}
-
-
-/* =====================================================
-GRID
-===================================================== */
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:16px;
-
-}
-
-.card{
-
-background:white;
-
-border-radius:20px;
-
-padding:22px;
-
-box-shadow:
-0 5px 20px
-rgba(0,0,0,.06);
-
-}
-
-.card h3{
-
-margin:0 0 12px;
-
-font-size:18px;
-
-}
-
-.icon{
-
-font-size:30px;
-
-margin-bottom:8px;
-
-}
-
-.value{
-
-font-size:34px;
-
-font-weight:700;
-
-}
-
-.unit{
-
-color:#64748b;
-
-margin-top:4px;
-
-}
-
-
-/* =====================================================
-SECTION
-===================================================== */
-
-.section{
-
-margin-top:20px;
-
-background:white;
-
-border-radius:22px;
-
-padding:22px;
-
-box-shadow:
-0 5px 20px
-rgba(0,0,0,.06);
-
-}
-
-.section-title{
-
-font-size:22px;
-
-font-weight:700;
-
-margin-bottom:18px;
-
-}
-
-
-/* =====================================================
-TORREN
-===================================================== */
-
-.progress{
-
-width:100%;
-
-height:18px;
-
-background:#e2e8f0;
-
-border-radius:20px;
-
-overflow:hidden;
-
-margin:12px 0;
-
-}
-
-.progress-bar{
-
-height:100%;
-
-width:0%;
-
-transition:.4s;
-
-background:
-linear-gradient(
-90deg,
-#22c55e,
-#16a34a
-);
-
-}
-
-
-/* =====================================================
-SCADA
-===================================================== */
-
-.scada-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:12px;
-
-}
-
-.scada-button{
-
-border:0;
-
-padding:18px;
-
-border-radius:16px;
-
-font-size:16px;
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.scada-button:hover{
-
-transform:
-translateY(-2px);
-
-}
-
-.air-mati{
-
-background:#fee2e2;
-
-color:#b91c1c;
-
-}
-
-.turbin{
-
-background:#dbeafe;
-
-color:#1d4ed8;
-
-}
-
-.kebun{
-
-background:#dcfce7;
-
-color:#15803d;
-
-}
-
-.keduanya{
-
-background:#ede9fe;
-
-color:#6d28d9;
-
-}
-
-.scada-active{
-
-outline:
-4px solid
-rgba(37,99,235,.25);
-
-transform:
-translateY(-2px);
-
-}
-
-
-/* =====================================================
-VALVE
-===================================================== */
-
-.valve-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:18px;
-
-}
-
-.valve{
-
-border:
-1px solid #e2e8f0;
-
-border-radius:18px;
-
-padding:20px;
-
-}
-
-.valve-header{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-gap:10px;
-
-}
-
-.valve-name{
-
-font-size:22px;
-
-font-weight:700;
-
-}
-
-.position{
-
-padding:8px 14px;
-
-border-radius:20px;
-
-font-weight:700;
-
-font-size:13px;
-
-}
-
-.open{
-
-background:#dcfce7;
-
-color:#15803d;
-
-}
-
-.close{
-
-background:#fee2e2;
-
-color:#b91c1c;
-
-}
-
-
-/* =====================================================
-BLUE BROWN
-===================================================== */
-
-.coil{
-
-display:flex;
-
-align-items:center;
-
-gap:8px;
-
-margin-top:15px;
-
-font-weight:600;
-
-}
-
-.dot{
-
-width:14px;
-
-height:14px;
-
-border-radius:50%;
-
-display:inline-block;
-
-}
-
-.blue{
-
-background:#2563eb;
-
-}
-
-.brown{
-
-background:#8b5e3c;
-
-}
-
-
-/* =====================================================
-RELAY
-===================================================== */
-
-.relay-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:14px;
-
-}
-
-.relay{
-
-border:
-1px solid #e2e8f0;
-
-border-radius:18px;
-
-padding:18px;
-
-}
-
-.relay-title{
-
-font-size:18px;
-
-font-weight:700;
-
-}
-
-.relay-desc{
-
-font-size:13px;
-
-color:#64748b;
-
-margin:5px 0 14px;
-
-}
-
-.relay-status{
-
-display:inline-block;
-
-padding:7px 12px;
-
-border-radius:15px;
-
-font-size:13px;
-
-font-weight:700;
-
-margin-bottom:12px;
-
-}
-
-.relay-on{
-
-background:#dcfce7;
-
-color:#15803d;
-
-}
-
-.relay-off{
-
-background:#fee2e2;
-
-color:#b91c1c;
-
-}
-
-.relay button{
-
-width:100%;
-
-border:0;
-
-padding:12px;
-
-border-radius:12px;
-
-font-size:15px;
-
-font-weight:700;
-
-cursor:pointer;
-
-margin-top:7px;
-
-}
-
-.btn-on{
-
-background:#16a34a;
-
-color:white;
-
-}
-
-.btn-off{
-
-background:#dc2626;
-
-color:white;
-
-}
-
-.btn-disabled{
-
-opacity:.5;
-
-cursor:not-allowed;
-
-}
-
-
-/* =====================================================
-TIMER
-===================================================== */
-
-.timer{
-
-margin-top:10px;
-
-font-size:13px;
-
-color:#64748b;
-
-}
-
-
-/* =====================================================
-PZEM
-===================================================== */
-
-.pzem-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:14px;
-
-}
-
-.pzem{
-
-border:
-1px solid #e2e8f0;
-
-border-radius:16px;
-
-padding:18px;
-
-}
-
-.pzem h3{
-
-margin:0 0 12px;
-
-}
-
-.pzem-row{
-
-display:flex;
-
-justify-content:space-between;
-
-padding:6px 0;
-
-border-bottom:
-1px solid #f1f5f9;
-
-}
-
-.pzem-ok{
-
-color:#15803d;
-
-font-weight:700;
-
-}
-
-.pzem-error{
-
-color:#b91c1c;
-
-font-weight:700;
-
-}
-
-
-/* =====================================================
-WIFI
-===================================================== */
-
-.wifi-box{
-
-display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
-gap:15px;
-
-}
-
-.info-box{
-
-background:#f8fafc;
-
-border-radius:15px;
-
-padding:16px;
-
-}
-
-.info-label{
-
-font-size:13px;
-
-color:#64748b;
-
-}
-
-.info-value{
-
-font-size:20px;
-
-font-weight:700;
-
-margin-top:5px;
-
-}
-
-
-/* =====================================================
-MODE
-===================================================== */
-
-.mode-box{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-gap:15px;
-
-padding:18px;
-
-border-radius:18px;
-
-background:#f8fafc;
-
-}
-
-.mode{
-
-font-size:20px;
-
-font-weight:700;
-
-}
-
-.mode-manual{
-
-color:#2563eb;
-
-}
-
-.mode-auto{
-
-color:#16a34a;
-
-}
-
-
-/* =====================================================
-LAST UPDATE
-===================================================== */
-
-.last-update{
-
-text-align:center;
-
-margin-top:20px;
-
-color:#64748b;
-
-font-size:13px;
-
-}
-
-
-/* =====================================================
-RESPONSIVE
-===================================================== */
-
-@media(max-width:1100px){
-
-.grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
-.relay-grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
-.pzem-grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
-.scada-grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
-}
-
-
-@media(max-width:700px){
-
-.container{
-
-padding:12px;
-
-}
-
-.header h1{
-
-font-size:24px;
-
-}
-
-.grid{
-
-grid-template-columns:1fr;
-
-}
-
-.valve-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.relay-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.pzem-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.scada-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.wifi-box{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-<div class="container">
-
-
-<!-- =================================================
-HEADER
-================================================= -->
-
-<div class="header">
-
-<h1>
-💧 Smart Water & Energy
-</h1>
-
-<p>
-Renewable Energy Monitoring & Manual Valve Control
-</p>
-
-<div class="header-info">
-
-<div
-class="badge"
-id="clock"
->
---:--:--
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Smart Water &amp; Energy</title><style>
+:root{--bg:#f4f6f2;--ink:#1c302b;--muted:#75817a;--line:#e2e8df;--green:#245f48;--lime:#d6ed8a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px}button{font:inherit;cursor:pointer}button:focus-visible,summary:focus-visible{outline:3px solid #a4bd67;outline-offset:4px}.shell{max-width:1500px;margin:auto;display:grid;grid-template-columns:220px 1fr;min-height:100vh}.sidebar{padding:36px 24px;background:#163e31;color:#fff;display:flex;flex-direction:column;gap:42px;position:sticky;top:0;height:100vh}.brand{display:flex;gap:12px;align-items:center;font-weight:650;font-size:17px}.brand-mark{background:var(--lime);color:#163e31;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:23px}.brand small{display:block;font-size:10px;letter-spacing:2px;margin-top:5px;color:#b9cabc}.nav-label,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:650;text-transform:uppercase}.nav-label{color:#90ae9c;margin-bottom:15px}.nav-button{border:0;background:none;color:#b9ccc0;display:flex;gap:12px;align-items:center;width:100%;padding:14px 15px;text-align:left;border-radius:10px;margin:5px 0}.nav-button.active{background:var(--lime);color:#183b2b;font-weight:650}.nav-button:hover:not(.active){background:#24513f}.side-foot{margin-top:auto;color:#9cb6a6;font-size:11px;line-height:1.7}.side-foot b{display:block;color:#e5eee7;font-weight:500}main{min-width:0;padding:32px 38px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:26px;border-bottom:1px solid var(--line);margin-bottom:28px}.topbar strong{font-weight:600}.topbar-right{display:flex;gap:10px;align-items:center}.badge{font-size:11px;border-radius:30px;padding:7px 11px;background:#e8eee6;white-space:nowrap}.online{color:#296449;background:#e3efdf}.offline{color:#916349;background:#f2e8df}.clock{font-size:11px;color:var(--muted)}.eyebrow{color:#719378}h1{font-size:34px;letter-spacing:-1.3px;font-weight:600;margin:8px 0} .intro{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.intro p{margin:8px 0;color:var(--muted);font-size:13px}.live-label{display:flex;gap:7px;align-items:center;font-size:11px;color:var(--green)}.live-label i{width:6px;height:6px;border-radius:50%;background:#7f956e}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:18px}.card,.section{background:white;border:1px solid var(--line);border-radius:18px;padding:24px}.card{min-height:190px;position:relative}.card h3{font-size:12px;font-weight:500;color:var(--muted);margin:0 0 26px}.value{font-size:40px;letter-spacing:-1.5px;font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums}.unit{color:var(--muted);font-size:11px;margin-top:9px;line-height:1.6}.tank-card{background:#245f48;color:white;border-color:#245f48}.tank-card h3,.tank-card .unit{color:#c8ded0}.tank-card .value{font-size:52px}.calibration{display:block;color:#bed4c3;font-size:10px;margin-top:14px}.section{margin:18px 0}.section-title{font-size:15px;font-weight:600;margin-bottom:20px;letter-spacing:-.2px}.wifi-box{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.info-label{font-size:11px;color:var(--muted);margin-bottom:8px}.info-value{font-size:14px;font-weight:500}.info-box+.info-box{border-left:1px solid var(--line);padding-left:24px}.scada-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.scada-button{border:1px solid var(--line);background:#f7f9f5;color:var(--green);padding:15px 8px;border-radius:10px;font-size:12px;font-weight:500}.scada-button:hover{border-color:#749f7d}.scada-active{background:#e8f0d7;border-color:#729553;box-shadow:inset 0 0 0 1px #729553}.valve-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.valve{padding:18px;background:#f7f9f6;border-radius:12px}.valve-header{display:flex;justify-content:space-between;align-items:center;gap:12px}.valve-name{font-size:13px;font-weight:500}.position,.relay-status{display:inline-block;font-size:10px;border-radius:20px;padding:5px 9px}.close,.relay-off{background:#edf0ea;color:#788078}.open,.relay-on{background:#e2efcb;color:#386234}.relay-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.relay{border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.relay-title{grid-column:1/-1;font-size:12px;font-weight:600}.relay-desc{color:var(--muted);font-size:10px;align-self:center}.relay-status{justify-self:end}.btn-on,.btn-off{border:1px solid var(--line);border-radius:8px;padding:9px;font-size:11px}.btn-on{background:#245f48;border-color:#245f48;color:white}.btn-off{background:#fff;color:#6d786e}.btn-on:hover{background:#174b37}.btn-off:hover{background:#f5eee8}.timer{font-size:10px;color:var(--muted);grid-column:1/-1}.pzem-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.pzem{border:1px solid var(--line);border-radius:12px;padding:20px}.pzem h3{font-size:14px;margin-top:0}.pzem-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #edf0eb;font-size:12px}.pzem-row:last-child{border:0}.pzem-label{color:var(--muted)}.error{color:#ac674f}.ok{color:var(--green)}.progress{height:5px;background:#eef1e9;border-radius:4px;margin-top:14px;overflow:hidden}.progress-bar{height:100%;background:#9aba63}.last-update{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding-top:20px;margin-top:18px;border-top:1px solid var(--line)}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}[hidden]{display:none!important}.details{margin-top:22px}.details summary{cursor:pointer;font-size:12px;color:var(--muted);padding:12px 0}.secondary .card{min-height:155px}.secondary .value{font-size:30px}.secondary .card h3{margin-bottom:18px}.mode-tag{font-size:10px;color:#718372;display:flex;align-items:center;gap:8px}.mode-tag strong{font-size:11px;background:#e7eddf;padding:6px 9px;border-radius:6px;font-weight:500}
+@media(min-width:1500px){.shell{border-left:1px solid var(--line);border-right:1px solid var(--line)}}@media(max-width:1100px){.shell{grid-template-columns:180px 1fr}.sidebar{padding:30px 16px}main{padding:28px 24px}.relay-grid{grid-template-columns:repeat(2,1fr)}.value{font-size:32px}.tank-card .value{font-size:42px}.card{padding:20px}.clock{display:none}}@media(max-width:760px){.shell{display:block}.sidebar{position:static;height:auto;padding:18px 20px;gap:18px}.brand small,.nav-label,.side-foot{display:none}.sidebar nav{display:flex;gap:8px}.nav-button{margin:0;padding:10px 12px;justify-content:center;font-size:12px}.brand{font-size:15px}.brand-mark{width:30px;height:30px;font-size:18px}main{padding:22px 18px}.topbar{padding-bottom:18px;margin-bottom:22px}.topbar>strong{font-size:12px}.badge{font-size:10px}.topbar-right #wifiStatus{display:none}h1{font-size:29px}.live-label{display:none}.grid{grid-template-columns:1fr 1fr;gap:12px}.tank-card{grid-column:1/-1;min-height:180px}.card{min-height:160px}.tank-card .value{font-size:48px}.scada-grid{grid-template-columns:1fr 1fr}.section{padding:20px}.valve-grid,.pzem-grid{grid-template-columns:1fr}.wifi-box{gap:8px}.info-box+.info-box{padding-left:10px}.info-value{font-size:11px;overflow-wrap:anywhere}.secondary .card:last-child{grid-column:1/-1}.intro{gap:8px}.relay-grid{gap:10px}.relay{padding:12px}.last-update{gap:10px;line-height:1.7}}
+</style></head><body><div class="shell"><aside class="sidebar"><div class="brand"><span class="brand-mark">◈</span><div>Smart Water<small>&amp; ENERGY</small></div></div><nav aria-label="Dashboard" role="tablist"><div class="nav-label">Workspace</div><button aria-selected="true" class="nav-button active" onclick="switchPanel('overview',this)" role="tab"><span>◫</span> Ringkasan</button><button aria-selected="false" class="nav-button" onclick="switchPanel('control',this)" role="tab"><span>⌘</span> Kontrol</button><button aria-selected="false" class="nav-button" onclick="switchPanel('energy',this)" role="tab"><span>ϟ</span> Energi</button></nav><div class="side-foot"><b>Kebun pintar</b>Water &amp; energy monitoring<br/>ESP32 · Connected system</div></aside><main><header class="topbar"><strong>Dashboard kebun</strong><div class="topbar-right"><span class="clock" id="clock"></span><span class="badge" id="espStatus">Menghubungkan…</span><span class="badge" id="wifiStatus">Wi-Fi</span></div></header><div data-panel="overview"><div class="intro"><div><div class="eyebrow">Water monitoring</div><h1>Kebun dalam pantauan.</h1><p>Aliran dan level air, dalam satu tampilan.</p></div><span class="live-label"><i></i> Pembaruan otomatis</span></div><div class="grid"><div class="card tank-card">
+<h3>Jarak permukaan air</h3>
+<div class="value" id="tankDistance">—</div>
+<div class="unit">cm dari sensor<span class="calibration" id="tankPercent"></span></div>
+<div class="unit"><span id="tankStatus">
+TIDAK TERBACA
+</span>
 </div>
-
-<div
-class="badge"
-id="espStatus"
->
-ESP32: CHECKING
+</div><div class="card">
+<h3>Debit aliran 01</h3>
+<div class="value" id="flow1">—</div>
+<div class="unit">
+L/min
 </div>
-
-<div
-class="badge"
-id="wifiStatus"
->
-WiFi: CHECKING
+</div><div class="card">
+<h3>Debit aliran 02</h3>
+<div class="value" id="flow2">—</div>
+<div class="unit">
+L/min
 </div>
-
-</div>
-
-</div>
-
-
-<!-- =================================================
-WIFI
-================================================= -->
-
-<div class="section">
-
-<div class="section-title">
-📶 Koneksi ESP32
-</div>
-
+</div></div><div class="section">
+<div class="section-title">Koneksi perangkat</div>
 <div class="wifi-box">
-
 <div class="info-box">
-
 <div class="info-label">
 SSID WiFi
 </div>
-
-<div
-class="info-value"
-id="wifiSSID"
->
+<div class="info-value" id="wifiSSID">
 tidak terhubung
 </div>
-
 </div>
-
-
 <div class="info-box">
-
 <div class="info-label">
 RSSI
 </div>
-
-<div
-class="info-value"
-id="wifiRSSI"
->
+<div class="info-value" id="wifiRSSI">
 0 dBm
 </div>
-
 </div>
-
-
 <div class="info-box">
-
 <div class="info-label">
 Status ESP32
 </div>
-
-<div
-class="info-value"
-id="espOnline"
->
+<div class="info-value" id="espOnline">
 OFFLINE
 </div>
-
 </div>
-
 </div>
-
-</div>
-
-
-<!-- =================================================
-SENSOR
-================================================= -->
-
-<div class="grid">
-
-
-<div class="card">
-
-<div class="icon">
-🌱
-</div>
-
-<h3>
-Kelembapan Kebun
-</h3>
-
-<div
-class="value"
-id="humidity"
->
+</div><details class="details"><summary>Sensor lainnya</summary><div class="grid secondary"><div class="card">
+<h3>Kelembapan</h3>
+<div class="value" id="humidity">
 0.0%
 </div>
-
 <div class="unit">
 Status:
 <span id="humidityStatus">
 KERING
 </span>
 </div>
-
-</div>
-
-
-<div class="card">
-
-<div class="icon">
-🚰
-</div>
-
-<h3>
-Level Air Toren
-</h3>
-
-<div
-class="value"
-id="tankDistance"
->
-0.0
-</div>
-
-<div class="unit">
-Jarak sensor ke permukaan air (cm)<br><span id="tankPercent">Persen belum terkalibrasi</span>
-</div>
-
-<div class="unit">
-Status:
-<span id="tankStatus">
-TIDAK TERBACA
-</span>
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="icon">
-💧
-</div>
-
-<h3>
-Flow Rate 1
-</h3>
-
-<div
-class="value"
-id="flow1"
->
-0.00
-</div>
-
-<div class="unit">
-L/min
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="icon">
-💧
-</div>
-
-<h3>
-Flow Rate 2
-</h3>
-
-<div
-class="value"
-id="flow2"
->
-0.00
-</div>
-
-<div class="unit">
-L/min
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="icon">
-⚙️
-</div>
-
-<h3>
-RPM Generator
-</h3>
-
-<div
-class="value"
-id="rpm"
->
+</div><div class="card">
+<h3>Putaran generator</h3>
+<div class="value" id="rpm">
 0
 </div>
-
 <div class="unit">
 RPM
 </div>
-
-</div>
-
-
-<div class="card">
-
-<div class="icon">
-🔋
-</div>
-
-<h3>
-Baterai
-</h3>
-
-<div
-class="value"
-id="batteryVoltage"
->
+</div><div class="card">
+<h3>Baterai</h3>
+<div class="value" id="batteryVoltage">
 0.00 V
 </div>
-
-<div
-class="value"
-style="font-size:25px"
-id="batteryPercent"
->
+<div class="value" id="batteryPercent" style="font-size:25px">
 0%
 </div>
-
 <div class="progress">
-
-<div
-class="progress-bar"
-id="batteryBar"
->
+<div class="progress-bar" id="batteryBar">
 </div>
-
 </div>
-
-</div>
-
-</div>
-
-
-<!-- =================================================
-SCADA
-================================================= -->
-
-<div class="section">
-
-<div class="section-title">
-
-🎛️ SCADA — Kondisi Aliran Air
-
-</div>
-
-
+</div></div></details></div><div data-panel="control" hidden=""><div class="intro"><div><div class="eyebrow">System control</div><h1>Atur aliran air.</h1><p>Kontrol valve dan perangkat kebun.</p></div><div class="mode-tag">MODE <strong id="mode">MANUAL</strong></div></div><div class="section">
+<div class="section-title">Arah aliran</div>
 <div class="scada-grid">
-
-<button
-class="scada-button air-mati"
-onclick="setScenario('mati')"
-id="scenarioMati"
->
-🔴 AIR MATI
-</button>
-
-
-<button
-class="scada-button turbin"
-onclick="setScenario('turbin')"
-id="scenarioTurbin"
->
-⚙️ KE TURBIN
-</button>
-
-
-<button
-class="scada-button kebun"
-onclick="setScenario('kebun')"
-id="scenarioKebun"
->
-🌱 KE KEBUN
-</button>
-
-
-<button
-class="scada-button keduanya"
-onclick="setScenario('keduanya')"
-id="scenarioKeduanya"
->
-💧 TURBIN + KEBUN
-</button>
-
+<button class="scada-button air-mati" id="scenarioMati" onclick="setScenario('mati')">Hentikan aliran</button>
+<button class="scada-button turbin" id="scenarioTurbin" onclick="setScenario('turbin')">Ke turbin</button>
+<button class="scada-button kebun" id="scenarioKebun" onclick="setScenario('kebun')">Ke kebun</button>
+<button class="scada-button keduanya" id="scenarioKeduanya" onclick="setScenario('keduanya')">Turbin + kebun</button>
 </div>
-
-</div>
-
-
-<!-- =================================================
-VALVE
-================================================= -->
-
-<div class="section">
-
-<div class="section-title">
-🚰 Status Valve
-</div>
-
-
+</div><div class="section">
+<div class="section-title">Posisi valve</div>
 <div class="valve-grid">
-
-
 <!-- 3 WAY -->
-
 <div class="valve">
-
 <div class="valve-header">
-
 <div class="valve-name">
 Valve 3-Way
 </div>
-
-<div
-class="position close"
-id="valve3Status"
->
+<div class="position close" id="valve3Status">
 CLOSED
 </div>
-
 </div>
-
-
-<div class="coil">
-
-<span class="dot blue"></span>
-
-K1 — BLUE — OPEN
-
-</div>
-
-
-<div class="coil">
-
-<span class="dot brown"></span>
-
-K2 — BROWN — CLOSE
-
-</div>
-
-
-<p>
+<p class="sr-only">
 
 Status terakhir:
 <strong id="valve3Text">
 CLOSED
 </strong>
-
 </p>
-
 </div>
-
-
 <!-- 2 WAY -->
-
 <div class="valve">
-
 <div class="valve-header">
-
 <div class="valve-name">
 Valve 2-Way
 </div>
-
-<div
-class="position close"
-id="valve2Status"
->
+<div class="position close" id="valve2Status">
 CLOSED
 </div>
-
 </div>
-
-
-<div class="coil">
-
-<span class="dot blue"></span>
-
-K3 — BLUE — OPEN
-
-</div>
-
-
-<div class="coil">
-
-<span class="dot brown"></span>
-
-K4 — BROWN — CLOSE
-
-</div>
-
-
-<p>
+<p class="sr-only">
 
 Status terakhir:
 <strong id="valve2Text">
 CLOSED
 </strong>
-
 </p>
-
 </div>
-
 </div>
-
-</div>
-
-
-<!-- =================================================
-MODE
-================================================= -->
-
-<div class="section">
-
-<div class="section-title">
-🎛️ Kontrol Sistem
-</div>
-
-<div class="mode-box">
-
-<div>
-
-<div>
-Mode Sistem
-</div>
-
-<div
-class="mode"
-id="mode"
->
-MANUAL
-</div>
-
-</div>
-
-<div>
-Mode manual aktif — relay dapat dikontrol satu per satu.
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =================================================
-RELAY
-================================================= -->
-
-<div class="section">
-
-<div class="section-title">
-
-🔌 Manual Relay Control
-
-</div>
-
-
+</div><div class="section">
+<div class="section-title">Kontrol relay</div>
 <div class="relay-grid">
-
-
 <!-- K1 -->
-
 <div class="relay">
-
-<div class="relay-title">
-TURBIN — 3-Way OPEN
-</div>
-
-<div class="relay-desc">
-BLUE
-</div>
-
-<div
-class="relay-status relay-off"
-id="status1"
->
+<div class="relay-title">Turbin · buka</div>
+<div class="relay-desc">K1</div>
+<div class="relay-status relay-off" id="status1">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(1,true)"
->
-K1 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(1,false)"
->
-K1 OFF
-</button>
-
-<div
-class="timer"
-id="timer1"
->
+<button aria-label="Turbin · buka ON" class="btn-on" onclick="relayCommand(1,true)">ON</button>
+<button aria-label="Turbin · buka OFF" class="btn-off" onclick="relayCommand(1,false)">OFF</button>
+<div class="timer" id="timer1">
 Siap
 </div>
-
 </div>
-
-
 <!-- K2 -->
-
 <div class="relay">
-
-<div class="relay-title">
-TURBIN — 3-Way CLOSE
-</div>
-
-<div class="relay-desc">
-BROWN
-</div>
-
-<div
-class="relay-status relay-off"
-id="status2"
->
+<div class="relay-title">Turbin · tutup</div>
+<div class="relay-desc">K2</div>
+<div class="relay-status relay-off" id="status2">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(2,true)"
->
-K2 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(2,false)"
->
-K2 OFF
-</button>
-
-<div
-class="timer"
-id="timer2"
->
+<button aria-label="Turbin · tutup ON" class="btn-on" onclick="relayCommand(2,true)">ON</button>
+<button aria-label="Turbin · tutup OFF" class="btn-off" onclick="relayCommand(2,false)">OFF</button>
+<div class="timer" id="timer2">
 Siap
 </div>
-
 </div>
-
-
 <!-- K3 -->
-
 <div class="relay">
-
-<div class="relay-title">
-KEBUN — 2-Way OPEN
-</div>
-
-<div class="relay-desc">
-BLUE
-</div>
-
-<div
-class="relay-status relay-off"
-id="status3"
->
+<div class="relay-title">Kebun · buka</div>
+<div class="relay-desc">K3</div>
+<div class="relay-status relay-off" id="status3">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(3,true)"
->
-K3 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(3,false)"
->
-K3 OFF
-</button>
-
-<div
-class="timer"
-id="timer3"
->
+<button aria-label="Kebun · buka ON" class="btn-on" onclick="relayCommand(3,true)">ON</button>
+<button aria-label="Kebun · buka OFF" class="btn-off" onclick="relayCommand(3,false)">OFF</button>
+<div class="timer" id="timer3">
 Siap
 </div>
-
 </div>
-
-
 <!-- K4 -->
-
 <div class="relay">
-
-<div class="relay-title">
-KEBUN — 2-Way CLOSE
-</div>
-
-<div class="relay-desc">
-BROWN
-</div>
-
-<div
-class="relay-status relay-off"
-id="status4"
->
+<div class="relay-title">Kebun · tutup</div>
+<div class="relay-desc">K4</div>
+<div class="relay-status relay-off" id="status4">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(4,true)"
->
-K4 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(4,false)"
->
-K4 OFF
-</button>
-
-<div
-class="timer"
-id="timer4"
->
+<button aria-label="Kebun · tutup ON" class="btn-on" onclick="relayCommand(4,true)">ON</button>
+<button aria-label="Kebun · tutup OFF" class="btn-off" onclick="relayCommand(4,false)">OFF</button>
+<div class="timer" id="timer4">
 Siap
 </div>
-
 </div>
-
-
 <!-- K5 -->
-
 <div class="relay">
-
-<div class="relay-title">
-Pompa
-</div>
-
-<div class="relay-desc">
-Relay 5
-</div>
-
-<div
-class="relay-status relay-off"
-id="status5"
->
+<div class="relay-title">Pompa air</div>
+<div class="relay-desc">K5</div>
+<div class="relay-status relay-off" id="status5">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(5,true)"
->
-K5 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(5,false)"
->
-K5 OFF
-</button>
-
+<button aria-label="Pompa air ON" class="btn-on" onclick="relayCommand(5,true)">ON</button>
+<button aria-label="Pompa air OFF" class="btn-off" onclick="relayCommand(5,false)">OFF</button>
 </div>
-
-
 <!-- K6 -->
-
 <div class="relay">
-
-<div class="relay-title">
-Lampu Kebun
-</div>
-
-<div class="relay-desc">
-Relay 6
-</div>
-
-<div
-class="relay-status relay-off"
-id="status6"
->
+<div class="relay-title">Lampu kebun</div>
+<div class="relay-desc">K6</div>
+<div class="relay-status relay-off" id="status6">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(6,true)"
->
-K6 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(6,false)"
->
-K6 OFF
-</button>
-
+<button aria-label="Lampu kebun ON" class="btn-on" onclick="relayCommand(6,true)">ON</button>
+<button aria-label="Lampu kebun OFF" class="btn-off" onclick="relayCommand(6,false)">OFF</button>
 </div>
-
-
 <!-- K7 -->
-
 <div class="relay">
-
-<div class="relay-title">
-Lampu Jalan
-</div>
-
-<div class="relay-desc">
-Relay 7
-</div>
-
-<div
-class="relay-status relay-off"
-id="status7"
->
+<div class="relay-title">Lampu jalan</div>
+<div class="relay-desc">K7</div>
+<div class="relay-status relay-off" id="status7">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(7,true)"
->
-K7 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(7,false)"
->
-K7 OFF
-</button>
-
+<button aria-label="Lampu jalan ON" class="btn-on" onclick="relayCommand(7,true)">ON</button>
+<button aria-label="Lampu jalan OFF" class="btn-off" onclick="relayCommand(7,false)">OFF</button>
 </div>
-
-
 <!-- K8 -->
-
 <div class="relay">
-
-<div class="relay-title">
-Dummy Load
-</div>
-
-<div class="relay-desc">
-Relay 8
-</div>
-
-<div
-class="relay-status relay-off"
-id="status8"
->
+<div class="relay-title">Dummy load</div>
+<div class="relay-desc">K8</div>
+<div class="relay-status relay-off" id="status8">
 OFF
 </div>
-
-<button
-class="btn-on"
-onclick="relayCommand(8,true)"
->
-K8 ON
-</button>
-
-<button
-class="btn-off"
-onclick="relayCommand(8,false)"
->
-K8 OFF
-</button>
-
+<button aria-label="Dummy load ON" class="btn-on" onclick="relayCommand(8,true)">ON</button>
+<button aria-label="Dummy load OFF" class="btn-off" onclick="relayCommand(8,false)">OFF</button>
 </div>
-
-
 </div>
-
+</div><p class="unit">Status mengikuti perintah tersimpan, bukan umpan balik posisi fisik.</p></div><div data-panel="energy" hidden=""><div class="intro"><div><div class="eyebrow">Energy monitoring</div><h1>Pantau energi.</h1><p>Tegangan, arus, daya, dan energi.</p></div></div><div class="section">
+<div class="section-title">Monitoring energi</div>
+<div class="pzem-grid" id="pzemContainer">
 </div>
-
-
-<!-- =================================================
-PZEM
-================================================= -->
-
-<div class="section">
-
-<div class="section-title">
-⚡ Monitoring PZEM
-</div>
-
-<div
-class="pzem-grid"
-id="pzemContainer"
->
-</div>
-
-</div>
-
-
-<div class="last-update">
-
-Last update:
-<span id="lastUpdate">
--
-</span>
-
-</div>
-
-
-</div>
-
-
-<script>
+</div></div><footer class="last-update"><span>SMART WATER &amp; ENERGY</span><span>Pembaruan terakhir · <span id="lastUpdate">—</span></span></footer></main></div><script>
 
 
 // =====================================================
@@ -1875,7 +373,7 @@ error
 document.getElementById(
 "espStatus"
 ).textContent =
-"ESP32: OFFLINE";
+"Perangkat offline";
 
 document.getElementById(
 "espStatus"
@@ -1917,8 +415,8 @@ document.getElementById(
 
 espStatus.textContent =
 online
-? "ESP32: ONLINE"
-: "ESP32: OFFLINE";
+? "Perangkat online"
+: "Perangkat offline";
 
 
 espStatus.className =
@@ -1973,8 +471,8 @@ document.getElementById(
 "wifiStatus"
 ).textContent =
 online
-? "WiFi: TERHUBUNG"
-: "WiFi: TIDAK TERHUBUNG";
+? "Wi-Fi terhubung"
+: "Wi-Fi terputus";
 
 
 document.getElementById(
@@ -2023,13 +521,13 @@ const tankLevelElement = document.getElementById("tankDistance");
 const tankStatusElement = document.getElementById("tankStatus");
 const validDistance = rawDistance != null && rawDistance !== "" && Number.isFinite(dist) && dist > 0;
 tankLevelElement.textContent = validDistance ? dist.toFixed(1) : "—";
-tankStatusElement.textContent = !online ? "DATA LAMA / ESP32 OFFLINE" :
-  validDistance ? "JARAK TERBACA" : "SENSOR TIDAK TERBACA";
+tankStatusElement.textContent = !online ? "Data terakhir · offline" :
+  validDistance ? "Terbaca" : "Belum terbaca";
 const pct = Number(data.levelToren);
 document.getElementById("tankPercent").textContent = validDistance &&
   data.levelToren != null && Number.isFinite(pct) && pct >= 0 && pct <= 100
-  ? "Estimasi " + pct.toFixed(1) + "% • belum terkalibrasi (acuan 125/20 cm)"
-  : "Persen belum tersedia";
+  ? "≈ " + pct.toFixed(1) + "% · belum dikalibrasi"
+  : "Belum dikalibrasi";
 
 for (const [id, key] of [["flow1", "flowRate1"], ["flow2", "flowRate2"]]) {
   const value = data[key];
@@ -3026,8 +1524,9 @@ loadData,
 );
 
 
-</script>
 
-</body>
-
-</html>
+function switchPanel(name, button) {
+ document.querySelectorAll('[data-panel]').forEach(el => el.hidden = el.dataset.panel !== name);
+ document.querySelectorAll('.nav-button').forEach(el => {el.classList.toggle('active',el === button);el.setAttribute('aria-selected',String(el===button));});
+}
+</script></body></html>
